@@ -1,6 +1,41 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "sections": {},
+    "search_enable_suggestions": true,
+    "search_show_images": true,
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo": "shopify://shop_images/logo-white.avif",
+          "promotional_text": "ENVÍO GRATIS A TODA ARGENTINA",
+          "menu": "main-menu"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "tagline": "Los mejores jerseys de fútbol importados. Autenticidad garantizada, envío a toda Argentina.",
+          "instagram_url": "",
+          "facebook_url": "",
+          "twitter_url": "",
+          "email": "contacto@foltzfanwear.com",
+          "phone": "+54 9 11 1234-5678",
+          "address": "Buenos Aires, Argentina",
+          "payment_title": "Métodos de pago aceptados",
+          "copyright_text": "Todos los derechos reservados.",
+          "made_with": "Hecho con ⚽ en Argentina"
+        }
+      }
+    },
     "content_for_index": []
   }
 }

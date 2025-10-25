@@ -1,27 +1,43 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
-        "badge": "New Collection",
+        "background_image": "shopify://shop_images/replicate-prediction-t2vebz5qshrm80ct2hn8ec59e4.jpg",
+        "badge_text": "Camisas Exclusivas",
         "title": "FOLTZ Fanwear",
-        "subtitle": "Premium soccer jerseys for the ultimate fan experience",
-        "cta_text": "Shop Now",
-        "cta_url": "/collections/all",
-        "show_scroll_indicator": true
+        "button_text": "Explorar Colección",
+        "button_link": ""
       }
     },
     "featured-collections": {
       "type": "featured-collections",
-      "settings": {}
+      "settings": {
+        "title": "Shop by League"
+      }
     },
     "best-sellers": {
       "type": "best-sellers",
-      "settings": {}
+      "settings": {
+        "title": "Best Sellers",
+        "collection": "",
+        "products_to_show": 8
+      }
     },
     "featured-products": {
       "type": "featured-products",
-      "settings": {}
+      "settings": {
+        "title": "Featured Products"
+      }
     }
   },
   "order": [
