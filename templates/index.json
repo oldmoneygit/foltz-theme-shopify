@@ -13,10 +13,10 @@
       "type": "hero",
       "settings": {
         "background_image": "shopify://shop_images/replicate-prediction-t2vebz5qshrm80ct2hn8ec59e4.jpg",
-        "badge_text": "Camisas Exclusivas",
-        "title": "FOLTZ Fanwear",
+        "badge_text": "",
+        "title": "",
         "button_text": "Explorar Colección",
-        "button_link": ""
+        "button_link": "shopify://collections"
       }
     },
     "featured-collections": {
@@ -29,7 +29,7 @@
       "type": "best-sellers",
       "settings": {
         "title": "Best Sellers",
-        "collection": "",
+        "collection": "frontpage",
         "products_to_show": 8
       }
     },
