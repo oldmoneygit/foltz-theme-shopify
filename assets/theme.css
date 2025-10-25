@@ -353,15 +353,34 @@ ul, ol {
   }
 }
 
-.header-search input {
+.header-search form {
+  position: relative;
   width: 100%;
-  padding: var(--spacing-3) var(--spacing-4);
-  padding-right: 48px;
+  display: flex;
+  align-items: center;
   background: var(--color-white-10);
   border: 2px solid var(--color-white-20);
   border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+}
+
+.header-search form:focus-within {
+  border-color: var(--color-brand-yellow);
+  background: var(--color-white-5);
+  box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+}
+
+.header-search input {
+  flex: 1;
+  width: 100%;
+  min-height: 48px;
+  padding: var(--spacing-3) var(--spacing-4);
+  padding-right: 12px;
+  background: transparent;
+  border: none;
   color: var(--color-brand-white);
-  transition: border-color var(--transition-base);
+  font-size: var(--font-size-base);
+  transition: none;
 }
 
 .header-search input::placeholder {
@@ -369,24 +388,33 @@ ul, ol {
 }
 
 .header-search input:focus {
-  border-color: var(--color-brand-yellow);
   outline: none;
 }
 
 .header-search button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  height: 100%;
-  padding: 0 var(--spacing-4);
-  background: var(--color-brand-yellow);
-  color: var(--color-brand-black);
-  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
-  transition: background var(--transition-base);
+  flex-shrink: 0;
+  min-height: 48px;
+  width: 48px;
+  padding: var(--spacing-3);
+  background: transparent;
+  color: var(--color-brand-yellow);
+  border: none;
+  border-left: 1px solid var(--color-white-20);
+  transition: all var(--transition-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-search button:hover {
-  background: #c5d60b;
+  background: var(--color-brand-yellow);
+  color: var(--color-brand-black);
+  border-left-color: var(--color-brand-yellow);
+}
+
+.header-search form:focus-within button {
+  color: var(--color-brand-yellow);
+  border-left-color: var(--color-brand-yellow);
 }
 
 .header-actions {
