@@ -1,0 +1,105 @@
+<!--
+  Section: Featured Collections
+  Descrição: Coleções em destaque
+-->
+
+<style>
+  .featured-collections {
+    padding: 80px 0;
+    background: #000000;
+  }
+
+  .featured-collections__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .featured-collections__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .featured-collections__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+  }
+
+  .featured-collections__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .featured-collections {
+      padding: 60px 0;
+    }
+
+    .featured-collections__title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<div class="featured-collections">
+  <div class="featured-collections__container">
+    <div class="featured-collections__header">
+      <h2 class="featured-collections__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="featured-collections__grid">
+      {%- for block in section.blocks -%}
+        {%- assign collection = collections[block.settings.collection] -%}
+        {%- if collection -%}
+          <a href="{{ collection.url }}" class="collection-item">
+            <div class="collection-item__image">
+              {%- if collection.image -%}
+                <img src="{{ collection.image | img_url: '600x' }}" alt="{{ collection.title }}" loading="lazy">
+              {%- elsif collection.products.first -%}
+                <img src="{{ collection.products.first.featured_media | img_url: '600x' }}" alt="{{ collection.title }}" loading="lazy">
+              {%- endif -%}
+            </div>
+            <div class="collection-item__content">
+              <h3 class="collection-item__title">{{ collection.title }}</h3>
+              <p class="collection-item__count">{{ collection.products_count }} products</p>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Shop by League"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": "Collection",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collections"
+    }
+  ]
+}
+{% endschema %}

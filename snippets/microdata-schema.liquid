@@ -37,7 +37,7 @@
         "@type": "SearchAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": {{ routes.search_url | append: '?q={search_term_string}' | json }}
+          "urlTemplate": "{{ routes.search_url }}?q={search_term_string}"
         },
         "query-input": "required name=search_term_string"
       }

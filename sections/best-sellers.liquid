@@ -1,0 +1,94 @@
+<!--
+  Section: Best Sellers
+  Descrição: Produtos mais vendidos
+-->
+
+<style>
+  .best-sellers {
+    padding: 80px 0;
+    background: #000000;
+  }
+
+  .best-sellers__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .best-sellers__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .best-sellers__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+  }
+
+  .best-sellers__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .best-sellers {
+      padding: 60px 0;
+    }
+
+    .best-sellers__title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<div class="best-sellers">
+  <div class="best-sellers__container">
+    <div class="best-sellers__header">
+      <h2 class="best-sellers__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="best-sellers__grid">
+      {%- assign collection = collections[section.settings.collection] -%}
+      {%- if collection -%}
+        {%- for product in collection.products limit: section.settings.products_to_show -%}
+          {%- render 'product-card', product: product -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Best Sellers",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Best Sellers"
+    }
+  ]
+}
+{% endschema %}

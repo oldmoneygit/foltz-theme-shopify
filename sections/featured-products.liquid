@@ -1,0 +1,93 @@
+<!--
+  Section: Featured Products
+  Descrição: Produtos em destaque
+-->
+
+<style>
+  .featured-products {
+    padding: 80px 0;
+    background: #000000;
+  }
+
+  .featured-products__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .featured-products__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .featured-products__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+  }
+
+  .featured-products__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .featured-products {
+      padding: 60px 0;
+    }
+
+    .featured-products__title {
+      font-size: 2rem;
+    }
+  }
+</style>
+
+<div class="featured-products">
+  <div class="featured-products__container">
+    <div class="featured-products__header">
+      <h2 class="featured-products__title">{{ section.settings.title }}</h2>
+    </div>
+
+    <div class="featured-products__grid">
+      {%- for block in section.blocks -%}
+        {%- assign product = all_products[block.settings.product] -%}
+        {%- if product -%}
+          {%- render 'product-card', product: product -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured Products"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Products"
+    }
+  ]
+}
+{% endschema %}
