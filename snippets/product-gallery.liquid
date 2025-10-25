@@ -139,63 +139,45 @@
   }
 </style>
 
-{%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+{%- assign featured_media = product.featured_image -%}
 
 <div class="product-gallery product-gallery--thumbnails-left" data-product-gallery>
-  {%- if product.media.size > 1 -%}
+  {%- if product.images.size > 1 -%}
     <div class="product-gallery__thumbnails">
-      {%- for media in product.media limit: 6 -%}
+      {%- for image in product.images limit: 6 -%}
         <div
-          class="product-gallery__thumbnail {% if media.id == featured_media.id %}active{% endif %}"
+          class="product-gallery__thumbnail {% if forloop.first %}active{% endif %}"
           data-thumbnail
-          data-media-id="{{ media.id }}"
+          data-media-id="{{ forloop.index }}"
         >
-          {%- if media.media_type == 'image' -%}
-            <img
-              src="{{ media | img_url: '200x' }}"
-              alt="{{ media.alt | escape }}"
-              class="product-gallery__thumbnail-image"
-              loading="lazy"
-            >
-          {%- elsif media.media_type == 'video' -%}
-            <img
-              src="{{ media.preview_image | img_url: '200x' }}"
-              alt="{{ media.alt | escape }}"
-              class="product-gallery__thumbnail-image"
-              loading="lazy"
-            >
-          {%- endif -%}
+          <img
+            src="{{ image | img_url: '200x' }}"
+            alt="{{ product.title }}"
+            class="product-gallery__thumbnail-image"
+            loading="lazy"
+          >
         </div>
       {%- endfor -%}
     </div>
   {%- endif -%}
 
   <div class="product-gallery__main" data-main-image>
-    {%- if featured_media -%}
-      {%- if featured_media.media_type == 'image' -%}
-        <img
-          src="{{ featured_media | img_url: '1200x' }}"
-          alt="{{ featured_media.alt | escape }}"
-          class="product-gallery__main-image"
-          data-zoom-image="{{ featured_media | img_url: 'master' }}"
-          loading="eager"
-        >
-      {%- elsif featured_media.media_type == 'video' -%}
-        {{ featured_media | video_tag: autoplay: false, loop: true, controls: true }}
-      {%- endif -%}
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | img_url: '1200x' }}"
+        alt="{{ product.title }}"
+        class="product-gallery__main-image"
+        data-zoom-image="{{ product.featured_image | img_url: 'master' }}"
+        loading="eager"
+      >
     {%- else -%}
       {{ 'product-1' | placeholder_svg_tag: 'product-gallery__main-image' }}
     {%- endif -%}
 
-    {%- assign current_variant = product.selected_or_first_available_variant -%}
-    {%- if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price -%}
-      {%- assign savings_percent = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round -%}
+    {%- if product.compare_at_price_max > product.price -%}
+      {%- assign savings_percent = product.compare_at_price_max | minus: product.price | times: 100 | divided_by: product.compare_at_price_max -%}
       <div class="product-gallery__badge">
         -{{ savings_percent }}%
-      </div>
-    {%- elsif product.tags contains 'new' -%}
-      <div class="product-gallery__badge">
-        {{ 'products.product.new' | t }}
       </div>
     {%- endif -%}
   </div>

@@ -156,9 +156,8 @@
 
 {%- unless product.has_only_default_variant -%}
   <div class="variant-picker" data-product-id="{{ product.id }}">
-    {%- for option in product.options_with_values -%}
+    {%- for option in product.options_with_values limit: 3 -%}
       {%- assign option_index = forloop.index0 -%}
-      {%- assign option_name = option.name | downcase -%}
 
       <div class="variant-picker__option">
         <div class="variant-picker__label-wrapper">
@@ -168,62 +167,18 @@
           </span>
         </div>
 
-        {%- comment -%} Detectar se é cor para usar color swatches {%- endcomment -%}
-        {%- assign is_color = false -%}
-        {%- if option_name contains 'color' or option_name contains 'cor' or option_name contains 'colour' -%}
-          {%- assign is_color = true -%}
-        {%- endif -%}
-
-        {%- if is_color -%}
-          {%- comment -%} Color Swatches {%- endcomment -%}
-          <div class="variant-picker__color-swatches">
-            {%- for value in option.values -%}
-              {%- assign color_value = value | handleize -%}
-              <div
-                class="variant-picker__color-swatch {% if value == option.selected_value %}active{% endif %}"
-                data-option-value="{{ value | escape }}"
-                data-option-index="{{ option_index }}"
-                style="background-color: {{ color_value }};"
-                title="{{ value }}"
-                role="button"
-                aria-label="{{ option.name }}: {{ value }}"
-              ></div>
-            {%- endfor -%}
-          </div>
-        {%- elsif option.values.size > 4 -%}
-          {%- comment -%} Dropdown for many options {%- endcomment -%}
-          <div class="variant-picker__dropdown">
-            <select
-              class="variant-picker__select"
+        <div class="variant-picker__buttons">
+          {%- for value in option.values limit: 20 -%}
+            <button
+              type="button"
+              class="variant-picker__button {% if value == option.selected_value %}active{% endif %}"
+              data-option-value="{{ value }}"
               data-option-index="{{ option_index }}"
-              aria-label="{{ option.name }}"
             >
-              {%- for value in option.values -%}
-                <option
-                  value="{{ value | escape }}"
-                  {% if value == option.selected_value %}selected{% endif %}
-                >
-                  {{ value }}
-                </option>
-              {%- endfor -%}
-            </select>
-          </div>
-        {%- else -%}
-          {%- comment -%} Buttons for few options {%- endcomment -%}
-          <div class="variant-picker__buttons">
-            {%- for value in option.values -%}
-              <button
-                type="button"
-                class="variant-picker__button {% if value == option.selected_value %}active{% endif %}"
-                data-option-value="{{ value | escape }}"
-                data-option-index="{{ option_index }}"
-                aria-label="{{ option.name }}: {{ value }}"
-              >
-                {{ value }}
-              </button>
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
+              {{ value }}
+            </button>
+          {%- endfor -%}
+        </div>
       </div>
     {%- endfor -%}
 

@@ -1,0 +1,40 @@
+{
+  "general": {
+    "breadcrumb": {
+      "home": "Início"
+    },
+    "search": {
+      "placeholder": "Buscar produtos...",
+      "submit": "Buscar"
+    }
+  },
+  "products": {
+    "product": {
+      "reviews": "avaliações",
+      "description": "Descrição",
+      "details": "Detalhes do Produto",
+      "sku": "SKU",
+      "vendor": "Marca",
+      "type": "Tipo",
+      "availability": "Disponibilidade",
+      "in_stock": "Em estoque",
+      "out_of_stock": "Fora de estoque",
+      "tags": "Tags",
+      "quantity": "Quantidade",
+      "increase_quantity": "Aumentar quantidade",
+      "decrease_quantity": "Diminuir quantidade",
+      "add_to_cart": "Adicionar ao Carrinho",
+      "sold_out": "Esgotado",
+      "buy_now": "Comprar Agora",
+      "adding": "Adicionando...",
+      "added_to_cart": "Produto adicionado ao carrinho!",
+      "error_adding_to_cart": "Erro ao adicionar produto ao carrinho",
+      "shipping": "Envio e Entrega",
+      "shipping_info": "Envio grátis para todo Brasil. Prazo de entrega: 5-10 dias úteis.",
+      "returns": "Devoluções",
+      "returns_info": "Aceitamos devoluções em até 30 dias após a compra. Produto deve estar sem uso e com etiquetas.",
+      "share": "Compartilhar",
+      "new": "Novo"
+    }
+  }
+}

@@ -1,5 +1,8 @@
 {
   "general": {
+    "breadcrumb": {
+      "home": "Home"
+    },
     "search": {
       "placeholder": "Search jerseys...",
       "submit": "Search"
@@ -13,6 +16,33 @@
   "products": {
     "add_to_cart": "Add to Cart",
     "sold_out": "Sold Out",
-    "limited_stock": "Limited Stock"
+    "limited_stock": "Limited Stock",
+    "product": {
+      "reviews": "reviews",
+      "description": "Description",
+      "details": "Product Details",
+      "sku": "SKU",
+      "vendor": "Brand",
+      "type": "Type",
+      "availability": "Availability",
+      "in_stock": "In Stock",
+      "out_of_stock": "Out of Stock",
+      "tags": "Tags",
+      "quantity": "Quantity",
+      "increase_quantity": "Increase quantity",
+      "decrease_quantity": "Decrease quantity",
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "buy_now": "Buy Now",
+      "adding": "Adding...",
+      "added_to_cart": "Product added to cart!",
+      "error_adding_to_cart": "Error adding product to cart",
+      "shipping": "Shipping & Delivery",
+      "shipping_info": "Free shipping to all of Brazil. Delivery time: 5-10 business days.",
+      "returns": "Returns",
+      "returns_info": "We accept returns within 30 days of purchase. Product must be unused with tags.",
+      "share": "Share",
+      "new": "New"
+    }
   }
 }

@@ -234,10 +234,9 @@
     <div class="product-info__section">
       <h2 class="product-info__title">{{ 'products.product.tags' | t }}</h2>
       <div class="product-info__tags">
-        {%- for tag in product.tags -%}
-          <a href="{{ routes.collections_url }}/all/{{ tag | handle }}" class="product-info__tag">
-            {{ tag }}
-          </a>
+        {%- assign tag_limit = 10 -%}
+        {%- for tag in product.tags limit: tag_limit -%}
+          <span class="product-info__tag">{{ tag }}</span>
         {%- endfor -%}
       </div>
     </div>
