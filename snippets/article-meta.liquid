@@ -1,0 +1,120 @@
+<!--
+  Snippet: Article Meta
+  Descrição: Metadados do artigo (autor, data, tempo de leitura)
+
+  Uso:
+  {% render 'article-meta', article: article, show_author: true, show_date: true %}
+-->
+
+<style>
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .article-meta--compact {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .article-meta__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+  }
+
+  .article-meta--compact .article-meta__item {
+    font-size: 0.75rem;
+  }
+
+  .article-meta__icon {
+    width: 16px;
+    height: 16px;
+    color: var(--color-text-subdued);
+  }
+
+  .article-meta--compact .article-meta__icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .article-meta__author {
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .article-meta__divider {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-text-subdued);
+  }
+</style>
+
+{%- liquid
+  assign meta_article = article
+  assign meta_show_author = show_author | default: true
+  assign meta_show_date = show_date | default: true
+  assign meta_show_reading_time = show_reading_time | default: false
+  assign meta_compact = compact | default: false
+
+  # Calculate reading time (assumes 200 words per minute)
+  assign word_count = meta_article.content | strip_html | number_of_words
+  assign reading_time = word_count | divided_by: 200
+  if reading_time < 1
+    assign reading_time = 1
+  endif
+
+  assign meta_classes = 'article-meta'
+  if meta_compact
+    assign meta_classes = meta_classes | append: ' article-meta--compact'
+  endif
+-%}
+
+<div class="{{ meta_classes }}">
+  {%- if meta_show_author and meta_article.author -%}
+    <div class="article-meta__item">
+      <svg class="article-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span class="article-meta__author">{{ meta_article.author }}</span>
+    </div>
+  {%- endif -%}
+
+  {%- if meta_show_author and meta_article.author and meta_show_date -%}
+    <span class="article-meta__divider"></span>
+  {%- endif -%}
+
+  {%- if meta_show_date -%}
+    <div class="article-meta__item">
+      <svg class="article-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+        <line x1="16" y1="2" x2="16" y2="6"></line>
+        <line x1="8" y1="2" x2="8" y2="6"></line>
+        <line x1="3" y1="10" x2="21" y2="10"></line>
+      </svg>
+      <time datetime="{{ meta_article.published_at | date: '%Y-%m-%d' }}">
+        {{ meta_article.published_at | date: '%B %d, %Y' }}
+      </time>
+    </div>
+  {%- endif -%}
+
+  {%- if meta_show_reading_time -%}
+    {%- if (meta_show_author and meta_article.author) or meta_show_date -%}
+      <span class="article-meta__divider"></span>
+    {%- endif -%}
+    <div class="article-meta__item">
+      <svg class="article-meta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      <span>{{ reading_time }} min read</span>
+    </div>
+  {%- endif -%}
+</div>

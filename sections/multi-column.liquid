@@ -1,0 +1,278 @@
+<!--
+  Section: Multi Column
+  Descrição: Seção de múltiplas colunas com ícones/features
+-->
+
+<style>
+  .multi-column-section {
+    padding: 80px 0;
+    background: #000000;
+  }
+
+  .multi-column-section__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .multi-column-section__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .multi-column-section__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 16px;
+  }
+
+  .multi-column-section__text {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+  }
+
+  .multi-column-section__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+  }
+
+  .column-item {
+    text-align: center;
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .column-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(218, 241, 13, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .column-item__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 24px;
+    color: var(--color-brand-yellow);
+  }
+
+  .column-item__image {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 24px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .column-item__image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .column-item__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 12px;
+  }
+
+  .column-item__text {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-subdued);
+  }
+
+  .column-item__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-brand-yellow);
+    text-decoration: none;
+    transition: gap 0.3s ease;
+  }
+
+  .column-item__link:hover {
+    gap: 10px;
+  }
+
+  @media (max-width: 768px) {
+    .multi-column-section {
+      padding: 60px 0;
+    }
+
+    .multi-column-section__container {
+      padding: 0 16px;
+    }
+
+    .multi-column-section__title {
+      font-size: 2rem;
+    }
+
+    .multi-column-section__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .column-item {
+      padding: 24px;
+    }
+  }
+</style>
+
+<div class="multi-column-section">
+  <div class="multi-column-section__container">
+    {%- if section.settings.title != blank or section.settings.text != blank -%}
+      <div class="multi-column-section__header">
+        {%- if section.settings.title != blank -%}
+          <h2 class="multi-column-section__title">{{ section.settings.title }}</h2>
+        {%- endif -%}
+        {%- if section.settings.text != blank -%}
+          <p class="multi-column-section__text">{{ section.settings.text }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="multi-column-section__grid">
+      {%- for block in section.blocks -%}
+        <div class="column-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="column-item__image">
+              <img
+                src="{{ block.settings.image | img_url: '400x' }}"
+                alt="{{ block.settings.title | escape }}"
+                loading="lazy"
+              >
+            </div>
+          {%- elsif block.settings.icon != blank -%}
+            <div class="column-item__icon">
+              {%- render 'icon', name: block.settings.icon, size: 64 -%}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="column-item__title">{{ block.settings.title }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <p class="column-item__text">{{ block.settings.text }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.link != blank and block.settings.link_text != blank -%}
+            <a href="{{ block.settings.link }}" class="column-item__link">
+              {{ block.settings.link_text }}
+              {%- render 'icon', name: 'arrow-right', size: 14 -%}
+            </a>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Multi Column",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (if no image)",
+          "options": [
+            { "value": "", "label": "None" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "package", "label": "Package" },
+            { "value": "credit-card", "label": "Credit Card" },
+            { "value": "lock", "label": "Lock (Security)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "check", "label": "Check" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "On orders over $100"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Learn more"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multi Column",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "icon": "truck",
+            "title": "Free Shipping",
+            "text": "On orders over $100"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure Payment",
+            "text": "100% secure transactions"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "icon": "star",
+            "title": "Premium Quality",
+            "text": "Official licensed products"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

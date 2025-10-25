@@ -1,0 +1,371 @@
+<!--
+  Snippet: Facets (Filters)
+  Descrição: Sistema de filtros para coleções com design FOLTZ
+
+  Uso:
+  {% render 'facets', results: collection %}
+-->
+
+<style>
+  .facets {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .facets__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .facets__clear {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-brand-yellow);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+  }
+
+  .facets__clear:hover {
+    opacity: 0.8;
+  }
+
+  .facets__filter {
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .facets__filter:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .facets__filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    cursor: pointer;
+  }
+
+  .facets__filter-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .facets__filter-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-subdued);
+    transition: transform 0.3s ease;
+  }
+
+  .facets__filter.collapsed .facets__filter-icon {
+    transform: rotate(-90deg);
+  }
+
+  .facets__filter-body {
+    max-height: 300px;
+    overflow-y: auto;
+    transition: max-height 0.3s ease;
+  }
+
+  .facets__filter.collapsed .facets__filter-body {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .facets__option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .facets__option:hover {
+    color: var(--color-brand-yellow);
+  }
+
+  .facets__checkbox {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+
+  .facets__checkbox.checked {
+    background: var(--color-brand-yellow);
+    border-color: var(--color-brand-yellow);
+  }
+
+  .facets__checkbox svg {
+    width: 12px;
+    height: 12px;
+    color: #000000;
+    display: none;
+  }
+
+  .facets__checkbox.checked svg {
+    display: block;
+  }
+
+  .facets__option-label {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+  }
+
+  .facets__option-count {
+    font-size: 0.75rem;
+    color: var(--color-text-subdued);
+  }
+
+  .facets__price-range {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .facets__price-input {
+    flex: 1;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+  }
+
+  .facets__price-input:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+  }
+
+  .facets__apply {
+    width: 100%;
+    padding: 12px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .facets__apply:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    .facets {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      max-width: 400px;
+      height: 100vh;
+      z-index: 999;
+      overflow-y: auto;
+      transition: left 0.3s ease;
+    }
+
+    .facets.active {
+      left: 0;
+    }
+
+    .facets__backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 998;
+      display: none;
+    }
+
+    .facets__backdrop.active {
+      display: block;
+    }
+  }
+</style>
+
+{%- if results.filters.size > 0 -%}
+  <div class="facets" data-facets>
+    <div class="facets__title">
+      <span>{{ 'collections.facets.title' | t }}</span>
+      <button class="facets__clear" data-clear-filters>
+        {{ 'collections.facets.clear_all' | t }}
+      </button>
+    </div>
+
+    <form data-facets-form>
+      {%- for filter in results.filters -%}
+        <div class="facets__filter" data-filter="{{ filter.param_name }}">
+          <div class="facets__filter-header" data-filter-toggle>
+            <h3 class="facets__filter-title">{{ filter.label }}</h3>
+            <svg class="facets__filter-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+
+          <div class="facets__filter-body">
+            {%- case filter.type -%}
+              {%- when 'list' -%}
+                {%- for value in filter.values -%}
+                  <label class="facets__option">
+                    <div class="facets__checkbox {% if value.active %}checked{% endif %}">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                      </svg>
+                    </div>
+                    <input
+                      type="checkbox"
+                      name="{{ value.param_name }}"
+                      value="{{ value.value }}"
+                      {% if value.active %}checked{% endif %}
+                      style="display: none;"
+                    >
+                    <span class="facets__option-label">{{ value.label }}</span>
+                    <span class="facets__option-count">({{ value.count }})</span>
+                  </label>
+                {%- endfor -%}
+
+              {%- when 'price_range' -%}
+                <div class="facets__price-range">
+                  <input
+                    type="number"
+                    class="facets__price-input"
+                    name="{{ filter.min_value.param_name }}"
+                    placeholder="{{ 'collections.facets.from' | t }}"
+                    min="0"
+                    max="{{ filter.range_max }}"
+                    {% if filter.min_value.value %}value="{{ filter.min_value.value }}"{% endif %}
+                  >
+                  <span style="color: var(--color-text-subdued);">-</span>
+                  <input
+                    type="number"
+                    class="facets__price-input"
+                    name="{{ filter.max_value.param_name }}"
+                    placeholder="{{ 'collections.facets.to' | t }}"
+                    min="0"
+                    max="{{ filter.range_max }}"
+                    {% if filter.max_value.value %}value="{{ filter.max_value.value }}"{% endif %}
+                  >
+                </div>
+            {%- endcase -%}
+          </div>
+        </div>
+      {%- endfor -%}
+
+      <button type="submit" class="facets__apply">
+        {{ 'collections.facets.apply' | t }}
+      </button>
+    </form>
+  </div>
+
+  <div class="facets__backdrop" data-facets-backdrop></div>
+
+  <script>
+    (function() {
+      const facets = document.querySelector('[data-facets]');
+      const form = document.querySelector('[data-facets-form]');
+      const clearBtn = document.querySelector('[data-clear-filters]');
+      const filterToggles = document.querySelectorAll('[data-filter-toggle]');
+
+      // Toggle filter collapse
+      filterToggles.forEach(toggle => {
+        toggle.addEventListener('click', () => {
+          toggle.parentElement.classList.toggle('collapsed');
+        });
+      });
+
+      // Checkbox visual update
+      form.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox') {
+          const checkbox = e.target.previousElementSibling;
+          checkbox.classList.toggle('checked', e.target.checked);
+        }
+      });
+
+      // Form submit
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams(window.location.search);
+
+        // Clear existing filter params
+        for (const key of Array.from(params.keys())) {
+          if (key.startsWith('filter.')) {
+            params.delete(key);
+          }
+        }
+
+        // Add new filter params
+        for (const [key, value] of formData.entries()) {
+          if (value) {
+            params.append(key, value);
+          }
+        }
+
+        // Redirect with new filters
+        window.location.search = params.toString();
+      });
+
+      // Clear all filters
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          const params = new URLSearchParams(window.location.search);
+
+          // Remove all filter params
+          for (const key of Array.from(params.keys())) {
+            if (key.startsWith('filter.')) {
+              params.delete(key);
+            }
+          }
+
+          window.location.search = params.toString();
+        });
+      }
+
+      // Mobile toggle
+      const backdrop = document.querySelector('[data-facets-backdrop]');
+      if (backdrop) {
+        backdrop.addEventListener('click', () => {
+          facets.classList.remove('active');
+          backdrop.classList.remove('active');
+        });
+      }
+
+      // Expose toggle function for mobile
+      window.toggleFacets = function() {
+        facets.classList.toggle('active');
+        if (backdrop) {
+          backdrop.classList.toggle('active');
+        }
+      };
+    })();
+  </script>
+{%- endif -%}

@@ -1,0 +1,114 @@
+<!--
+  Snippet: CSS Variables
+  Descrição: Variáveis CSS dinâmicas baseadas nas configurações do tema
+
+  Uso (no <head> do theme.liquid):
+  {% render 'css-variables' %}
+-->
+
+<style>
+  :root {
+    /* Brand Colors */
+    --color-brand-yellow: {{ settings.color_brand_yellow | default: '#DAF10D' }};
+    --color-background: {{ settings.color_background | default: '#000000' }};
+
+    /* Text Colors */
+    --color-text-primary: {{ settings.color_text_primary | default: '#FFFFFF' }};
+    --color-text-subdued: {{ settings.color_text_subdued | default: '#9CA3AF' }};
+
+    /* Status Colors */
+    --color-success: {{ settings.color_success | default: '#16A34A' }};
+    --color-error: {{ settings.color_error | default: '#EF4444' }};
+    --color-warning: {{ settings.color_warning | default: '#F59E0B' }};
+
+    /* Typography */
+    {%- if settings.font_body -%}
+      --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
+      --font-body-weight: {{ settings.font_body.weight }};
+      --font-body-style: {{ settings.font_body.style }};
+    {%- else -%}
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-body-weight: 400;
+      --font-body-style: normal;
+    {%- endif -%}
+
+    {%- if settings.font_heading -%}
+      --font-heading: {{ settings.font_heading.family }}, {{ settings.font_heading.fallback_families }};
+      --font-heading-weight: {{ settings.font_heading.weight }};
+      --font-heading-style: {{ settings.font_heading.style }};
+    {%- else -%}
+      --font-heading: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-heading-weight: 700;
+      --font-heading-style: normal;
+    {%- endif -%}
+
+    /* Font Sizes */
+    --font-size-base: {{ settings.font_size_base | default: 16 }}px;
+    --font-size-h1: {{ settings.font_size_h1 | default: 48 }}px;
+    --font-size-h2: {{ settings.font_size_h2 | default: 40 }}px;
+    --font-size-h3: {{ settings.font_size_h3 | default: 32 }}px;
+
+    /* Logo */
+    --logo-width: {{ settings.logo_width | default: 150 }}px;
+    --footer-logo-width: {{ settings.footer_logo_width | default: 120 }}px;
+
+    /* Spacing */
+    --spacing-unit: 8px;
+    --container-max-width: 1400px;
+
+    /* Border Radius */
+    --radius-small: 6px;
+    --radius-medium: 8px;
+    --radius-large: 12px;
+    --radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Z-index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+  }
+
+  /* Apply font families */
+  body {
+    font-family: var(--font-body);
+    font-weight: var(--font-body-weight);
+    font-style: var(--font-body-style);
+    font-size: var(--font-size-base);
+    background: var(--color-background);
+    color: var(--color-text-primary);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .heading {
+    font-family: var(--font-heading);
+    font-weight: var(--font-heading-weight);
+    font-style: var(--font-heading-style);
+  }
+
+  h1 { font-size: var(--font-size-h1); }
+  h2 { font-size: var(--font-size-h2); }
+  h3 { font-size: var(--font-size-h3); }
+</style>
+
+{%- comment -%} Load custom fonts {%- endcomment -%}
+{%- if settings.font_body -%}
+  {{ settings.font_body | font_face: font_display: 'swap' }}
+{%- endif -%}
+
+{%- if settings.font_heading -%}
+  {{ settings.font_heading | font_face: font_display: 'swap' }}
+{%- endif -%}

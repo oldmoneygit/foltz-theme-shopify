@@ -1,0 +1,153 @@
+<!--
+  Snippet: Breadcrumb
+  Descrição: Navegação breadcrumb para SEO e UX
+
+  Uso:
+  {% render 'breadcrumb' %}
+-->
+
+<style>
+  .breadcrumb {
+    padding: 16px 0;
+    font-size: 0.875rem;
+  }
+
+  .breadcrumb__list {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumb__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-subdued);
+  }
+
+  .breadcrumb__link {
+    color: var(--color-text-subdued);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .breadcrumb__link:hover {
+    color: var(--color-brand-yellow);
+  }
+
+  .breadcrumb__current {
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+
+  .breadcrumb__separator {
+    width: 16px;
+    height: 16px;
+    color: var(--color-text-subdued);
+  }
+</style>
+
+{%- liquid
+  assign breadcrumb_items = ''
+  assign current_page = page_title
+
+  # Build breadcrumb based on template
+  case template.name
+    when 'product'
+      if product.collections.size > 0
+        assign collection = product.collections.first
+      endif
+    when 'collection'
+      assign collection = collection
+    when 'article'
+      assign blog = blog
+    when 'page'
+      assign page = page
+  endcase
+-%}
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol class="breadcrumb__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+    <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+      <a href="{{ routes.root_url }}" class="breadcrumb__link" itemprop="item">
+        <span itemprop="name">{{ 'general.breadcrumb.home' | t }}</span>
+      </a>
+      <meta itemprop="position" content="1">
+      <svg class="breadcrumb__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </li>
+
+    {%- if template.name == 'collection' and collection -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ collection.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'product' and product -%}
+      {%- if collection -%}
+        <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a href="{{ collection.url }}" class="breadcrumb__link" itemprop="item">
+            <span itemprop="name">{{ collection.title }}</span>
+          </a>
+          <meta itemprop="position" content="2">
+          <svg class="breadcrumb__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </li>
+        <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="breadcrumb__current" itemprop="name">{{ product.title }}</span>
+          <meta itemprop="position" content="3">
+        </li>
+      {%- else -%}
+        <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <span class="breadcrumb__current" itemprop="name">{{ product.title }}</span>
+          <meta itemprop="position" content="2">
+        </li>
+      {%- endif -%}
+
+    {%- elsif template.name == 'blog' and blog -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ blog.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'article' and article -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a href="{{ blog.url }}" class="breadcrumb__link" itemprop="item">
+          <span itemprop="name">{{ blog.title }}</span>
+        </a>
+        <meta itemprop="position" content="2">
+        <svg class="breadcrumb__separator" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </li>
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ article.title }}</span>
+        <meta itemprop="position" content="3">
+      </li>
+
+    {%- elsif template.name == 'page' and page -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ page.title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- elsif template.name == 'search' -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ 'search.general.title' | t }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+
+    {%- else -%}
+      <li class="breadcrumb__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb__current" itemprop="name">{{ page_title }}</span>
+        <meta itemprop="position" content="2">
+      </li>
+    {%- endif -%}
+  </ol>
+</nav>

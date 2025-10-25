@@ -1,0 +1,252 @@
+<!--
+  Snippet: Quantity Selector
+  Descrição: Componente reusável para seleção de quantidade
+
+  Uso:
+  {% render 'qty-selector', value: 1, min: 1, max: 10, name: 'quantity' %}
+  {% render 'qty-selector', value: item.quantity, size: 'small' %}
+
+  Parâmetros:
+  - value: Valor inicial (padrão: 1)
+  - min: Valor mínimo (padrão: 1)
+  - max: Valor máximo (padrão: 99)
+  - name: Nome do campo (padrão: 'quantity')
+  - size: 'small', 'default', 'large' (padrão: 'default')
+  - disabled: true/false
+  - class: Classes CSS adicionais
+-->
+
+<style>
+  .qty-selector {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+
+  .qty-selector--small {
+    padding: 4px 8px;
+    gap: 8px;
+  }
+
+  .qty-selector--large {
+    padding: 12px 16px;
+    gap: 16px;
+  }
+
+  .qty-selector:focus-within {
+    border-color: var(--color-brand-yellow);
+  }
+
+  .qty-selector__button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+  }
+
+  .qty-selector--small .qty-selector__button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .qty-selector--large .qty-selector__button {
+    width: 40px;
+    height: 40px;
+  }
+
+  .qty-selector__button:hover:not(:disabled) {
+    background: rgba(218, 241, 13, 0.1);
+    color: var(--color-brand-yellow);
+  }
+
+  .qty-selector__button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .qty-selector__button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .qty-selector--small .qty-selector__button svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .qty-selector--large .qty-selector__button svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .qty-selector__input {
+    width: 50px;
+    text-align: center;
+    background: none;
+    border: none;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+  }
+
+  .qty-selector--small .qty-selector__input {
+    width: 40px;
+    font-size: 0.875rem;
+  }
+
+  .qty-selector--large .qty-selector__input {
+    width: 60px;
+    font-size: 1.125rem;
+  }
+
+  .qty-selector__input:focus {
+    outline: none;
+  }
+
+  .qty-selector__input::-webkit-outer-spin-button,
+  .qty-selector__input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .qty-selector__input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+  .qty-selector--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+</style>
+
+{%- liquid
+  assign qty_value = value | default: 1
+  assign qty_min = min | default: 1
+  assign qty_max = max | default: 99
+  assign qty_name = name | default: 'quantity'
+  assign qty_size = size | default: 'default'
+  assign qty_disabled = disabled
+  assign qty_class = class | default: ''
+
+  assign wrapper_classes = 'qty-selector'
+  assign wrapper_classes = wrapper_classes | append: ' qty-selector--' | append: qty_size
+
+  if qty_disabled
+    assign wrapper_classes = wrapper_classes | append: ' qty-selector--disabled'
+  endif
+
+  if qty_class != blank
+    assign wrapper_classes = wrapper_classes | append: ' ' | append: qty_class
+  endif
+-%}
+
+<div class="{{ wrapper_classes }}" data-qty-selector>
+  <button
+    type="button"
+    class="qty-selector__button"
+    data-qty-decrease
+    aria-label="{{ 'products.product.quantity_decrease' | t }}"
+    {%- if qty_disabled or qty_value <= qty_min %}disabled{% endif -%}
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+
+  <input
+    type="number"
+    name="{{ qty_name }}"
+    value="{{ qty_value }}"
+    min="{{ qty_min }}"
+    max="{{ qty_max }}"
+    class="qty-selector__input"
+    data-qty-input
+    aria-label="{{ 'products.product.quantity' | t }}"
+    {%- if qty_disabled %}disabled{% endif -%}
+  >
+
+  <button
+    type="button"
+    class="qty-selector__button"
+    data-qty-increase
+    aria-label="{{ 'products.product.quantity_increase' | t }}"
+    {%- if qty_disabled or qty_value >= qty_max %}disabled{% endif -%}
+  >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+</div>
+
+<script>
+  (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+      const qtySelectors = document.querySelectorAll('[data-qty-selector]');
+
+      qtySelectors.forEach(selector => {
+        const input = selector.querySelector('[data-qty-input]');
+        const decreaseBtn = selector.querySelector('[data-qty-decrease]');
+        const increaseBtn = selector.querySelector('[data-qty-increase]');
+
+        if (!input || !decreaseBtn || !increaseBtn) return;
+
+        const min = parseInt(input.getAttribute('min')) || 1;
+        const max = parseInt(input.getAttribute('max')) || 99;
+
+        function updateButtons() {
+          const value = parseInt(input.value) || min;
+
+          decreaseBtn.disabled = value <= min;
+          increaseBtn.disabled = value >= max;
+        }
+
+        function setValue(newValue) {
+          let value = parseInt(newValue) || min;
+          value = Math.max(min, Math.min(max, value));
+          input.value = value;
+          updateButtons();
+
+          // Dispatch change event
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        // Decrease button
+        decreaseBtn.addEventListener('click', () => {
+          const currentValue = parseInt(input.value) || min;
+          setValue(currentValue - 1);
+        });
+
+        // Increase button
+        increaseBtn.addEventListener('click', () => {
+          const currentValue = parseInt(input.value) || min;
+          setValue(currentValue + 1);
+        });
+
+        // Input change
+        input.addEventListener('input', () => {
+          updateButtons();
+        });
+
+        input.addEventListener('blur', () => {
+          setValue(input.value);
+        });
+
+        // Initialize
+        updateButtons();
+      });
+    });
+  })();
+</script>

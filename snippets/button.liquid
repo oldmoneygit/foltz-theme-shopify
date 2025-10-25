@@ -1,0 +1,186 @@
+<!--
+  Snippet: Button
+  Descrição: Sistema de botões reusável com variantes
+
+  Uso:
+  {% render 'button', text: 'Click Me', style: 'primary', size: 'default' %}
+  {% render 'button', text: 'Learn More', style: 'secondary', url: '/about' %}
+  {% render 'button', text: 'Submit', style: 'primary', type: 'submit' %}
+
+  Parâmetros:
+  - text: Texto do botão (obrigatório)
+  - style: 'primary', 'secondary', 'outline', 'ghost' (padrão: 'primary')
+  - size: 'small', 'default', 'large' (padrão: 'default')
+  - url: Link (se fornecido, cria <a> ao invés de <button>)
+  - type: 'button', 'submit', 'reset' (padrão: 'button')
+  - icon: SVG icon HTML
+  - icon_position: 'left', 'right' (padrão: 'left')
+  - full_width: true/false
+  - disabled: true/false
+  - class: Classes CSS adicionais
+-->
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  /* Styles */
+  .btn--primary {
+    background: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  .btn--primary:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .btn--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .btn--secondary:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .btn--outline {
+    background: transparent;
+    color: var(--color-brand-yellow);
+    border-color: var(--color-brand-yellow);
+  }
+
+  .btn--outline:hover:not(:disabled) {
+    background: rgba(218, 241, 13, 0.1);
+  }
+
+  .btn--ghost {
+    background: transparent;
+    color: #FFFFFF;
+    border-color: transparent;
+  }
+
+  .btn--ghost:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  /* Sizes */
+  .btn--small {
+    padding: 10px 20px;
+    font-size: 0.875rem;
+  }
+
+  .btn--large {
+    padding: 18px 36px;
+    font-size: 1.125rem;
+  }
+
+  /* Modifiers */
+  .btn--full-width {
+    width: 100%;
+  }
+
+  .btn:disabled,
+  .btn--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .btn__icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .btn--small .btn__icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .btn--large .btn__icon {
+    width: 24px;
+    height: 24px;
+  }
+</style>
+
+{%- liquid
+  assign button_text = text | default: 'Button'
+  assign button_style = style | default: 'primary'
+  assign button_size = size | default: 'default'
+  assign button_type = type | default: 'button'
+  assign button_icon = icon
+  assign button_icon_position = icon_position | default: 'left'
+  assign button_url = url
+  assign button_full_width = full_width
+  assign button_disabled = disabled
+  assign button_class = class
+
+  assign css_classes = 'btn'
+  assign css_classes = css_classes | append: ' btn--' | append: button_style
+  assign css_classes = css_classes | append: ' btn--' | append: button_size
+
+  if button_full_width
+    assign css_classes = css_classes | append: ' btn--full-width'
+  endif
+
+  if button_disabled
+    assign css_classes = css_classes | append: ' btn--disabled'
+  endif
+
+  if button_class
+    assign css_classes = css_classes | append: ' ' | append: button_class
+  endif
+-%}
+
+{%- if button_url -%}
+  <a
+    href="{{ button_url }}"
+    class="{{ css_classes }}"
+    {%- if button_disabled %}aria-disabled="true"{% endif -%}
+  >
+    {%- if button_icon and button_icon_position == 'left' -%}
+      <span class="btn__icon">{{ button_icon }}</span>
+    {%- endif -%}
+    <span>{{ button_text }}</span>
+    {%- if button_icon and button_icon_position == 'right' -%}
+      <span class="btn__icon">{{ button_icon }}</span>
+    {%- endif -%}
+  </a>
+{%- else -%}
+  <button
+    type="{{ button_type }}"
+    class="{{ css_classes }}"
+    {%- if button_disabled %}disabled{% endif -%}
+  >
+    {%- if button_icon and button_icon_position == 'left' -%}
+      <span class="btn__icon">{{ button_icon }}</span>
+    {%- endif -%}
+    <span>{{ button_text }}</span>
+    {%- if button_icon and button_icon_position == 'right' -%}
+      <span class="btn__icon">{{ button_icon }}</span>
+    {%- endif -%}
+  </button>
+{%- endif -%}

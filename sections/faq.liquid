@@ -1,0 +1,252 @@
+<!--
+  Section: FAQ
+  Descrição: Seção de perguntas frequentes (accordion)
+-->
+
+<style>
+  .faq-section {
+    padding: 80px 0;
+    background: #000000;
+  }
+
+  .faq-section__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .faq-section__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .faq-section__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 16px;
+  }
+
+  .faq-section__text {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+  }
+
+  .faq-section__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-item.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(218, 241, 13, 0.3);
+  }
+
+  .faq-item__question {
+    width: 100%;
+    padding: 24px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .faq-item__question:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .faq-item__question-text {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    flex: 1;
+  }
+
+  .faq-item__icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-brand-yellow);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-item.active .faq-item__icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-item__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .faq-item.active .faq-item__answer {
+    max-height: 1000px;
+  }
+
+  .faq-item__answer-content {
+    padding: 0 24px 24px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-subdued);
+  }
+
+  .faq-item__answer-content p {
+    margin-bottom: 12px;
+  }
+
+  .faq-item__answer-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 60px 0;
+    }
+
+    .faq-section__container {
+      padding: 0 16px;
+    }
+
+    .faq-section__title {
+      font-size: 2rem;
+    }
+
+    .faq-item__question {
+      padding: 20px;
+    }
+
+    .faq-item__question-text {
+      font-size: 1rem;
+    }
+
+    .faq-item__answer-content {
+      padding: 0 20px 20px;
+      font-size: 0.875rem;
+    }
+  }
+</style>
+
+<div class="faq-section">
+  <div class="faq-section__container">
+    <div class="faq-section__header">
+      <h2 class="faq-section__title">{{ section.settings.title }}</h2>
+      {%- if section.settings.text != blank -%}
+        <p class="faq-section__text">{{ section.settings.text }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="faq-section__list">
+      {%- for block in section.blocks -%}
+        <div class="faq-item {% if forloop.first %}active{% endif %}" data-faq-item {{ block.shopify_attributes }}>
+          <button class="faq-item__question" data-faq-question aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+            <span class="faq-item__question-text">{{ block.settings.question }}</span>
+            <svg class="faq-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="faq-item__answer" data-faq-answer>
+            <div class="faq-item__answer-content">
+              {{ block.settings.answer }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const faqItems = document.querySelectorAll('[data-faq-item]');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('[data-faq-question]');
+
+      question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        // Close all items
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('active');
+          const otherQuestion = otherItem.querySelector('[data-faq-question]');
+          otherQuestion.setAttribute('aria-expanded', 'false');
+        });
+
+        // Toggle current item
+        if (!isActive) {
+          item.classList.add('active');
+          question.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Description"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We accept returns within 30 days of purchase. Items must be unworn and in original condition.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        },
+        {
+          "type": "faq_item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

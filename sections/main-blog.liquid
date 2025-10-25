@@ -1,0 +1,127 @@
+<!--
+  Section: Main Blog
+  Descrição: Listagem de artigos do blog com paginação
+-->
+
+<style>
+  .blog-main {
+    padding: 40px 0 80px;
+    background: #000000;
+    min-height: 60vh;
+  }
+
+  .blog-main__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .blog-main__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .blog-main__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 16px;
+  }
+
+  .blog-main__description {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .blog-main__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 32px;
+    margin-bottom: 48px;
+  }
+
+  .blog-main__empty {
+    text-align: center;
+    padding: 80px 24px;
+  }
+
+  .blog-main__empty-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .blog-main__empty-text {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+  }
+
+  @media (max-width: 768px) {
+    .blog-main {
+      padding: 20px 0 60px;
+    }
+
+    .blog-main__container {
+      padding: 0 16px;
+    }
+
+    .blog-main__title {
+      font-size: 2rem;
+    }
+
+    .blog-main__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+
+<div class="blog-main">
+  <div class="blog-main__container">
+    <div class="blog-main__header">
+      <h1 class="blog-main__title">{{ blog.title }}</h1>
+      {%- if blog.description != blank -%}
+        <p class="blog-main__description">{{ blog.description }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- paginate blog.articles by 12 -%}
+      {%- if blog.articles_count > 0 -%}
+        <div class="blog-main__grid">
+          {%- for article in blog.articles -%}
+            {%- render 'article-card', article: article, show_excerpt: true -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate.pages > 1 -%}
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endif -%}
+      {%- else -%}
+        <div class="blog-main__empty">
+          <h2 class="blog-main__empty-title">{{ 'blog.general.no_articles' | t }}</h2>
+          <p class="blog-main__empty-text">{{ 'blog.general.no_articles_message' | t }}</p>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Posts",
+  "settings": [
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Posts per page",
+      "min": 6,
+      "max": 24,
+      "step": 6,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

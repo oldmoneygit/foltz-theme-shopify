@@ -1,0 +1,163 @@
+<!--
+  Snippet: Article Navigation
+  Descrição: Navegação entre artigos (anterior/próximo)
+
+  Uso:
+  {% render 'article-navigation', article: article, blog: blog %}
+-->
+
+<style>
+  .article-nav {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .article-nav__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .article-nav__item {
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .article-nav__item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-brand-yellow);
+    transform: translateY(-2px);
+  }
+
+  .article-nav__item--prev {
+    text-align: left;
+  }
+
+  .article-nav__item--next {
+    text-align: right;
+  }
+
+  .article-nav__label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-brand-yellow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .article-nav__item--next .article-nav__label {
+    justify-content: flex-end;
+  }
+
+  .article-nav__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    line-height: 1.4;
+  }
+
+  .article-nav__back {
+    grid-column: 1 / -1;
+    text-align: center;
+  }
+
+  .article-nav__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .article-nav__back-link:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  @media (max-width: 768px) {
+    .article-nav__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .article-nav__item--next {
+      text-align: left;
+    }
+
+    .article-nav__item--next .article-nav__label {
+      justify-content: flex-start;
+    }
+  }
+</style>
+
+{%- liquid
+  assign nav_article = article
+  assign nav_blog = blog
+
+  # Get previous and next articles
+  assign previous_article = false
+  assign next_article = false
+  assign found_current = false
+
+  for blog_article in nav_blog.articles
+    if found_current
+      assign next_article = blog_article
+      break
+    endif
+    if blog_article.id == nav_article.id
+      assign found_current = true
+    else
+      unless found_current
+        assign previous_article = blog_article
+      endunless
+    endif
+  endfor
+-%}
+
+<nav class="article-nav">
+  <div class="article-nav__grid">
+    {%- if previous_article -%}
+      <a href="{{ previous_article.url }}" class="article-nav__item article-nav__item--prev">
+        <div class="article-nav__label">
+          {%- render 'icon', name: 'arrow-left', size: 14 -%}
+          {{ 'blog.article.previous' | t }}
+        </div>
+        <div class="article-nav__title">{{ previous_article.title }}</div>
+      </a>
+    {%- endif -%}
+
+    {%- if next_article -%}
+      <a href="{{ next_article.url }}" class="article-nav__item article-nav__item--next">
+        <div class="article-nav__label">
+          {{ 'blog.article.next' | t }}
+          {%- render 'icon', name: 'arrow-right', size: 14 -%}
+        </div>
+        <div class="article-nav__title">{{ next_article.title }}</div>
+      </a>
+    {%- endif -%}
+
+    <div class="article-nav__back">
+      <a href="{{ nav_blog.url }}" class="article-nav__back-link">
+        {%- render 'icon', name: 'arrow-left', size: 16 -%}
+        {{ 'blog.article.back_to_blog' | t }}
+      </a>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,154 @@
+<!--
+  Section: Main List Collections
+  Descrição: Lista de todas as coleções
+-->
+
+<style>
+  .collections-list {
+    padding: 40px 0 80px;
+    background: #000000;
+  }
+
+  .collections-list__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .collections-list__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .collections-list__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 16px;
+  }
+
+  .collections-list__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 32px;
+  }
+
+  .collection-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: block;
+  }
+
+  .collection-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(218, 241, 13, 0.3);
+    transform: translateY(-4px);
+  }
+
+  .collection-item__image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .collection-item__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-item:hover .collection-item__image img {
+    transform: scale(1.05);
+  }
+
+  .collection-item__content {
+    padding: 24px;
+  }
+
+  .collection-item__title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .collection-item__count {
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+  }
+
+  @media (max-width: 768px) {
+    .collections-list {
+      padding: 20px 0 60px;
+    }
+
+    .collections-list__container {
+      padding: 0 16px;
+    }
+
+    .collections-list__title {
+      font-size: 2rem;
+    }
+
+    .collections-list__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+
+<div class="collections-list">
+  <div class="collections-list__container">
+    <div class="collections-list__header">
+      <h1 class="collections-list__title">{{ 'collections.general.title' | t }}</h1>
+    </div>
+
+    <div class="collections-list__grid">
+      {%- for collection in collections -%}
+        <a href="{{ collection.url }}" class="collection-item">
+          <div class="collection-item__image">
+            {%- if collection.image -%}
+              <img
+                src="{{ collection.image | img_url: '600x' }}"
+                alt="{{ collection.image.alt | escape }}"
+                loading="lazy"
+              >
+            {%- elsif collection.products.first and collection.products.first.featured_media -%}
+              <img
+                src="{{ collection.products.first.featured_media | img_url: '600x' }}"
+                alt="{{ collection.products.first.featured_media.alt | escape }}"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+
+          <div class="collection-item__content">
+            <h2 class="collection-item__title">{{ collection.title }}</h2>
+            <p class="collection-item__count">
+              {{ collection.products_count }}
+              {%- if collection.products_count == 1 -%}
+                {{ 'collections.general.product_count_one' | t }}
+              {%- else -%}
+                {{ 'collections.general.product_count' | t }}
+              {%- endif -%}
+            </p>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collections List",
+  "settings": []
+}
+{% endschema %}

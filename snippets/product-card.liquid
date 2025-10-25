@@ -1,0 +1,72 @@
+{%- comment -%}
+  PRODUCT CARD SNIPPET
+  Replicates: src/components/ProductCard.jsx
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+<a href="{{ product.url }}" class="product-card" data-product-id="{{ product.id }}">
+  <!-- Stock Badge -->
+  {%- unless product.available -%}
+    <div class="product-card-badge soldout">{{ 'products.sold_out' | t }}</div>
+  {%- else -%}
+    {%- assign total_inventory = 0 -%}
+    {%- for variant in product.variants -%}
+      {%- if variant.inventory_quantity > 0 -%}
+        {%- assign total_inventory = total_inventory | plus: variant.inventory_quantity -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if total_inventory > 0 and total_inventory <= 5 -%}
+      <div class="product-card-badge limited">{{ 'products.limited_stock' | t }}</div>
+    {%- endif -%}
+  {%- endunless -%}
+
+  <!-- Wishlist Button -->
+  <button class="product-card-wishlist" type="button" aria-label="Add to wishlist">
+    {% render 'icon-heart', size: 18 %}
+  </button>
+
+  <!-- Product Image -->
+  <div class="product-card-image">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | img_url: '600x' }}"
+        alt="{{ product.featured_image.alt | escape }}"
+        loading="lazy"
+        width="600"
+        height="800"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'product-placeholder.png' | asset_url }}"
+        alt="{{ product.title | escape }}"
+        loading="lazy"
+      >
+    {%- endif -%}
+  </div>
+
+  <!-- Product Content -->
+  <div class="product-card-content">
+    <!-- Product Name -->
+    <h3 class="product-card-name">{{ product.title }}</h3>
+
+    <!-- Prices -->
+    <div class="product-card-prices">
+      {%- if product.compare_at_price > product.price -%}
+        <p class="product-card-price-regular">
+          {{ product.compare_at_price | money }}
+        </p>
+      {%- endif -%}
+
+      <p class="product-card-price-sale">
+        {{ product.price | money }}
+      </p>
+
+      <!-- COMPRA 1 LLEVA 2 Badge -->
+      {%- if product.available -%}
+        <div class="product-card-promo">
+          <span>COMPRA 1 LLEVA 2</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</a>

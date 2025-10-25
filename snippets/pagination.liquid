@@ -1,0 +1,170 @@
+<!--
+  Snippet: Pagination
+  Descrição: Paginação de coleções/resultados com design FOLTZ
+
+  Uso:
+  {% render 'pagination', paginate: paginate %}
+-->
+
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+  }
+
+  .pagination__item {
+    min-width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .pagination__item:hover:not(.pagination__item--disabled):not(.pagination__item--current) {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: rgba(218, 241, 13, 0.3);
+    color: var(--color-brand-yellow);
+  }
+
+  .pagination__item--current {
+    background: var(--color-brand-yellow);
+    border-color: var(--color-brand-yellow);
+    color: #000000;
+    font-weight: 700;
+  }
+
+  .pagination__item--disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .pagination__item--prev,
+  .pagination__item--next {
+    padding: 0 16px;
+  }
+
+  .pagination__item svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .pagination__info {
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+    margin-right: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .pagination__item {
+      min-width: 40px;
+      height: 40px;
+    }
+
+    .pagination__info {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 16px;
+      margin-right: 0;
+    }
+  }
+</style>
+
+{%- if paginate.pages > 1 -%}
+  <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+    <div class="pagination__info">
+      {{ 'general.pagination.showing' | t: current_page: paginate.current_page, total_pages: paginate.pages }}
+    </div>
+
+    {%- if paginate.previous -%}
+      <a
+        href="{{ paginate.previous.url }}"
+        class="pagination__item pagination__item--prev"
+        aria-label="{{ 'general.pagination.previous' | t }}"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>{{ 'general.pagination.previous' | t }}</span>
+      </a>
+    {%- else -%}
+      <span class="pagination__item pagination__item--prev pagination__item--disabled">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>{{ 'general.pagination.previous' | t }}</span>
+      </span>
+    {%- endif -%}
+
+    {%- liquid
+      assign start_page = paginate.current_page | minus: 2
+      assign end_page = paginate.current_page | plus: 2
+
+      if start_page < 1
+        assign start_page = 1
+        assign end_page = 5
+      endif
+
+      if end_page > paginate.pages
+        assign end_page = paginate.pages
+        assign start_page = paginate.pages | minus: 4
+        if start_page < 1
+          assign start_page = 1
+        endif
+      endif
+    -%}
+
+    {%- if start_page > 1 -%}
+      <a href="{{ paginate.parts.first.url }}" class="pagination__item">1</a>
+      {%- if start_page > 2 -%}
+        <span class="pagination__item pagination__item--disabled">...</span>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link and part.title >= start_page and part.title <= end_page -%}
+        <a href="{{ part.url }}" class="pagination__item">{{ part.title }}</a>
+      {%- elsif part.title >= start_page and part.title <= end_page -%}
+        <span class="pagination__item pagination__item--current" aria-current="page">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if end_page < paginate.pages -%}
+      {%- if end_page < paginate.pages | minus: 1 -%}
+        <span class="pagination__item pagination__item--disabled">...</span>
+      {%- endif -%}
+      <a href="{{ paginate.parts.last.url }}" class="pagination__item">{{ paginate.pages }}</a>
+    {%- endif -%}
+
+    {%- if paginate.next -%}
+      <a
+        href="{{ paginate.next.url }}"
+        class="pagination__item pagination__item--next"
+        aria-label="{{ 'general.pagination.next' | t }}"
+      >
+        <span>{{ 'general.pagination.next' | t }}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </a>
+    {%- else -%}
+      <span class="pagination__item pagination__item--next pagination__item--disabled">
+        <span>{{ 'general.pagination.next' | t }}</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

@@ -1,0 +1,129 @@
+<!--
+  Snippet: Active Facets
+  Descrição: Display de filtros ativos com botão para remover
+
+  Uso:
+  {% render 'active-facets', results: collection %}
+-->
+
+<style>
+  .active-facets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .active-facets__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-subdued);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .active-facets__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .active-facets__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(218, 241, 13, 0.1);
+    border: 1px solid rgba(218, 241, 13, 0.3);
+    border-radius: 20px;
+    font-size: 0.875rem;
+    color: var(--color-brand-yellow);
+  }
+
+  .active-facets__item-label {
+    font-weight: 500;
+  }
+
+  .active-facets__remove {
+    display: flex;
+    align-items: center;
+    justify-center;
+    width: 16px;
+    height: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-brand-yellow);
+    transition: opacity 0.3s ease;
+    padding: 0;
+  }
+
+  .active-facets__remove:hover {
+    opacity: 0.7;
+  }
+
+  .active-facets__clear-all {
+    padding: 8px 16px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 20px;
+    color: #EF4444;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .active-facets__clear-all:hover {
+    background: rgba(239, 68, 68, 0.2);
+  }
+</style>
+
+{%- liquid
+  assign has_active_filters = false
+  for filter in results.filters
+    if filter.active_values.size > 0
+      assign has_active_filters = true
+      break
+    endif
+  endfor
+-%}
+
+{%- if has_active_filters -%}
+  <div class="active-facets">
+    <span class="active-facets__label">{{ 'collections.facets.active_filters' | t }}:</span>
+
+    <div class="active-facets__list">
+      {%- for filter in results.filters -%}
+        {%- for value in filter.active_values -%}
+          <div class="active-facets__item">
+            <span class="active-facets__item-label">
+              {{ filter.label }}: {{ value.label }}
+            </span>
+            <a
+              href="{{ value.url_to_remove }}"
+              class="active-facets__remove"
+              aria-label="{{ 'collections.facets.remove_filter' | t: filter: filter.label, value: value.label }}"
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </a>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+
+      {%- if results.filters.first.active_values.size > 0 or results.filters.first.min_value.value or results.filters.first.max_value.value -%}
+        <a
+          href="{{ results.url }}?sort_by={{ results.sort_by }}"
+          class="active-facets__clear-all"
+        >
+          {{ 'collections.facets.clear_all' | t }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

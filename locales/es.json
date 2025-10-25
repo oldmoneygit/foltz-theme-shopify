@@ -1,0 +1,18 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Buscar camisas...",
+      "submit": "Buscar"
+    },
+    "cart": {
+      "title": "Carrito de Compras",
+      "empty": "Tu carrito está vacío",
+      "continue_shopping": "Seguir Comprando"
+    }
+  },
+  "products": {
+    "add_to_cart": "Agregar al Carrito",
+    "sold_out": "Agotado",
+    "limited_stock": "Stock Limitado"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-customers-login",
+      "settings": {
+        "show_subtitle": true,
+        "subtitle": "Enter your credentials to access your account"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

@@ -1,0 +1,255 @@
+<!--
+  Section: Main Collection
+  Descrição: Página completa de coleção com filtros, grid de produtos, sorting
+-->
+
+<style>
+  .collection-main {
+    padding: 40px 0 80px;
+    background: #000000;
+  }
+
+  .collection-main__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .collection-main__header {
+    margin-bottom: 40px;
+  }
+
+  .collection-main__title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 16px;
+  }
+
+  .collection-main__description {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+    line-height: 1.6;
+    max-width: 800px;
+  }
+
+  .collection-main__toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .collection-main__count {
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+  }
+
+  .collection-main__actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .collection-main__filter-btn {
+    display: none;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .collection-main__filter-btn:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .collection-main__sort {
+    padding: 10px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+
+  .collection-main__sort:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+  }
+
+  .collection-main__layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 40px;
+  }
+
+  .collection-main__sidebar {
+    position: sticky;
+    top: 100px;
+    align-self: start;
+  }
+
+  .collection-main__products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .collection-main__empty {
+    text-align: center;
+    padding: 80px 24px;
+  }
+
+  .collection-main__empty-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .collection-main__empty-text {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 1024px) {
+    .collection-main__layout {
+      grid-template-columns: 1fr;
+    }
+
+    .collection-main__sidebar {
+      display: none;
+    }
+
+    .collection-main__filter-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .collection-main {
+      padding: 20px 0 60px;
+    }
+
+    .collection-main__container {
+      padding: 0 16px;
+    }
+
+    .collection-main__title {
+      font-size: 2rem;
+    }
+
+    .collection-main__products {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px;
+    }
+  }
+</style>
+
+<div class="collection-main">
+  <div class="collection-main__container">
+    <div class="collection-main__header">
+      <h1 class="collection-main__title">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <div class="collection-main__description">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+
+    {%- paginate collection.products by 24 -%}
+      {%- render 'active-facets', results: collection -%}
+
+      <div class="collection-main__toolbar">
+        <div class="collection-main__count">
+          {{ 'collections.general.product_count' | t: count: collection.products_count }}
+        </div>
+
+        <div class="collection-main__actions">
+          <button class="collection-main__filter-btn" onclick="window.toggleFacets()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="4" y1="21" x2="4" y2="14"></line>
+              <line x1="4" y1="10" x2="4" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12" y2="3"></line>
+              <line x1="20" y1="21" x2="20" y2="16"></line>
+              <line x1="20" y1="12" x2="20" y2="3"></line>
+              <line x1="1" y1="14" x2="7" y2="14"></line>
+              <line x1="9" y1="8" x2="15" y2="8"></line>
+              <line x1="17" y1="16" x2="23" y2="16"></line>
+            </svg>
+            {{ 'collections.general.filters' | t }}
+          </button>
+
+          <select class="collection-main__sort" onchange="window.location.href=this.value">
+            {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+            <option value="?sort_by=manual" {% if sort_by == 'manual' %}selected{% endif %}>
+              {{ 'collections.sorting.featured' | t }}
+            </option>
+            <option value="?sort_by=best-selling" {% if sort_by == 'best-selling' %}selected{% endif %}>
+              {{ 'collections.sorting.best_selling' | t }}
+            </option>
+            <option value="?sort_by=title-ascending" {% if sort_by == 'title-ascending' %}selected{% endif %}>
+              {{ 'collections.sorting.az' | t }}
+            </option>
+            <option value="?sort_by=title-descending" {% if sort_by == 'title-descending' %}selected{% endif %}>
+              {{ 'collections.sorting.za' | t }}
+            </option>
+            <option value="?sort_by=price-ascending" {% if sort_by == 'price-ascending' %}selected{% endif %}>
+              {{ 'collections.sorting.price_ascending' | t }}
+            </option>
+            <option value="?sort_by=price-descending" {% if sort_by == 'price-descending' %}selected{% endif %}>
+              {{ 'collections.sorting.price_descending' | t }}
+            </option>
+            <option value="?sort_by=created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>
+              {{ 'collections.sorting.date_descending' | t }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="collection-main__layout">
+        <div class="collection-main__sidebar">
+          {%- render 'facets', results: collection -%}
+        </div>
+
+        <div>
+          {%- if collection.products.size > 0 -%}
+            <div class="collection-main__products">
+              {%- for product in collection.products -%}
+                {%- render 'product-card', product: product -%}
+              {%- endfor -%}
+            </div>
+
+            {%- render 'pagination', paginate: paginate -%}
+          {%- else -%}
+            <div class="collection-main__empty">
+              <h2 class="collection-main__empty-title">{{ 'collections.general.no_products' | t }}</h2>
+              <p class="collection-main__empty-text">{{ 'collections.general.no_products_message' | t }}</p>
+              <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">
+                {{ 'collections.general.view_all' | t }}
+              </a>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": []
+}
+{% endschema %}

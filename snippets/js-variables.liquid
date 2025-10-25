@@ -1,0 +1,160 @@
+<!--
+  Snippet: JS Variables
+  Descrição: Variáveis JavaScript baseadas nas configurações do tema e Shopify
+
+  Uso (no <head> do theme.liquid, antes dos scripts):
+  {% render 'js-variables' %}
+-->
+
+<script>
+  window.theme = window.theme || {};
+
+  // Shopify Routes
+  theme.routes = {
+    root: "{{ routes.root_url }}",
+    cart: "{{ routes.cart_url }}",
+    cartAdd: "{{ routes.cart_add_url }}",
+    cartChange: "{{ routes.cart_change_url }}",
+    cartUpdate: "{{ routes.cart_update_url }}",
+    cartClear: "{{ routes.cart_clear_url }}",
+    search: "{{ routes.search_url }}",
+    allProducts: "{{ routes.all_products_collection_url }}",
+    account: "{{ routes.account_url }}",
+    accountLogin: "{{ routes.account_login_url }}",
+    accountLogout: "{{ routes.account_logout_url }}",
+    accountRegister: "{{ routes.account_register_url }}",
+    accountAddresses: "{{ routes.account_addresses_url }}"
+  };
+
+  // Shop Info
+  theme.shop = {
+    name: {{ shop.name | json }},
+    email: {{ shop.email | json }},
+    domain: {{ shop.domain | json }},
+    url: {{ shop.url | json }},
+    currency: {{ shop.currency | json }},
+    moneyFormat: {{ shop.money_format | json }},
+    moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }}
+  };
+
+  // Cart Info
+  theme.cart = {
+    itemCount: {{ cart.item_count | json }},
+    totalPrice: {{ cart.total_price | json }},
+    currency: {{ cart.currency.iso_code | json }}
+  };
+
+  // Customer Info
+  theme.customer = {
+    loggedIn: {% if customer %}true{% else %}false{% endif %},
+    {%- if customer -%}
+      id: {{ customer.id | json }},
+      email: {{ customer.email | json }},
+      firstName: {{ customer.first_name | json }},
+      lastName: {{ customer.last_name | json }},
+      name: {{ customer.name | json }},
+      hasAccount: {{ customer.has_account | json }},
+      totalOrders: {{ customer.orders_count | json }},
+      tags: {{ customer.tags | json }}
+    {%- endif -%}
+  };
+
+  // Theme Settings
+  theme.settings = {
+    cartType: {{ settings.cart_type | default: 'drawer' | json }},
+    enableAnimations: {% if settings.enable_animations %}true{% else %}false{% endif %},
+    imageLoading: {{ settings.image_loading | default: 'lazy' | json }},
+    searchSuggestionsEnabled: {% if settings.search_enable_suggestions %}true{% else %}false{% endif %},
+    searchSuggestionsCount: {{ settings.search_suggestions_count | default: 5 | json }}
+  };
+
+  // Template Info
+  theme.template = {
+    name: {{ template.name | json }},
+    {%- if template.suffix -%}
+      suffix: {{ template.suffix | json }}
+    {%- endif -%}
+  };
+
+  // Page Info
+  theme.page = {
+    title: {{ page_title | json }},
+    {%- if template.name == 'product' and product -%}
+      productId: {{ product.id | json }},
+      productHandle: {{ product.handle | json }},
+      productType: {{ product.type | json }},
+      productVendor: {{ product.vendor | json }}
+    {%- elsif template.name == 'collection' and collection -%}
+      collectionId: {{ collection.id | json }},
+      collectionHandle: {{ collection.handle | json }}
+    {%- endif -%}
+  };
+
+  // Localization
+  theme.strings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }},
+    addToWishlist: {{ 'products.product.add_to_wishlist' | t | json }},
+    removeFromWishlist: {{ 'products.product.remove_from_wishlist' | t | json }},
+    cartError: {{ 'cart.general.error' | t | json }},
+    searchPlaceholder: {{ 'search.general.placeholder' | t | json }},
+    loading: {{ 'general.loading' | t | json }},
+    noResults: {{ 'search.general.no_results' | t | json }}
+  };
+
+  // Shopify.formatMoney helper (if not already defined)
+  if (typeof Shopify === 'undefined') {
+    window.Shopify = {};
+  }
+
+  Shopify.formatMoney = function(cents, format) {
+    if (typeof cents === 'string') cents = cents.replace('.', '');
+    let value = '';
+    const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+    const formatString = format || theme.shop.moneyFormat;
+
+    function formatWithDelimiters(number, precision, thousands, decimal) {
+      precision = precision || 2;
+      thousands = thousands || ',';
+      decimal = decimal || '.';
+
+      if (isNaN(number) || number == null) return 0;
+
+      number = (number / 100.0).toFixed(precision);
+
+      const parts = number.split('.');
+      const dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+      const centsAmount = parts[1] ? (decimal + parts[1]) : '';
+
+      return dollarsAmount + centsAmount;
+    }
+
+    switch (formatString.match(placeholderRegex)[1]) {
+      case 'amount':
+        value = formatWithDelimiters(cents, 2);
+        break;
+      case 'amount_no_decimals':
+        value = formatWithDelimiters(cents, 0);
+        break;
+      case 'amount_with_comma_separator':
+        value = formatWithDelimiters(cents, 2, '.', ',');
+        break;
+      case 'amount_no_decimals_with_comma_separator':
+        value = formatWithDelimiters(cents, 0, '.', ',');
+        break;
+      case 'amount_with_space_separator':
+        value = formatWithDelimiters(cents, 2, ' ', ',');
+        break;
+      case 'amount_no_decimals_with_space_separator':
+        value = formatWithDelimiters(cents, 0, ' ', ',');
+        break;
+    }
+
+    return formatString.replace(placeholderRegex, value);
+  };
+
+  // Currency converter helper
+  Shopify.Currency = Shopify.Currency || {};
+  Shopify.Currency.formatMoney = Shopify.formatMoney;
+</script>

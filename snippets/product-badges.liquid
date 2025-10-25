@@ -1,0 +1,136 @@
+<!--
+  Snippet: Product Badges
+  Descrição: Sistema de badges para produtos (Sale, New, Sold Out, etc.)
+
+  Uso:
+  {% render 'product-badges', product: product %}
+  {% render 'product-badges', product: product, variant: variant %}
+
+  Badges exibidos automaticamente:
+  - Sale: Se produto está em promoção
+  - New: Se produto tem tag 'new'
+  - Sold Out: Se variante está esgotada
+  - Pre-order: Se produto tem tag 'pre-order'
+  - Limited: Se produto tem tag 'limited'
+  - Custom: Tags personalizadas começando com 'badge:'
+-->
+
+<style>
+  .product-badges {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 2;
+  }
+
+  .product-badge {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    max-width: fit-content;
+  }
+
+  .product-badge--sale {
+    background: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  .product-badge--new {
+    background: #3b82f6;
+    color: #FFFFFF;
+  }
+
+  .product-badge--sold-out {
+    background: #ef4444;
+    color: #FFFFFF;
+  }
+
+  .product-badge--pre-order {
+    background: #8b5cf6;
+    color: #FFFFFF;
+  }
+
+  .product-badge--limited {
+    background: #f59e0b;
+    color: #FFFFFF;
+  }
+
+  .product-badge--custom {
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--color-brand-yellow);
+  }
+
+  .product-badge--percentage {
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 0.875rem;
+    font-weight: 900;
+  }
+</style>
+
+{%- liquid
+  assign badge_product = product
+  assign badge_variant = variant | default: product.selected_or_first_available_variant
+  assign show_badges = true
+  assign badges = ''
+-%}
+
+{%- if show_badges and badge_product -%}
+  <div class="product-badges">
+    {%- comment -%} Sold Out Badge {%- endcomment -%}
+    {%- if badge_variant and badge_variant.available == false -%}
+      <div class="product-badge product-badge--sold-out">
+        {{ 'products.product.sold_out' | t }}
+      </div>
+    {%- else -%}
+
+      {%- comment -%} Sale Badge with Percentage {%- endcomment -%}
+      {%- if badge_variant.compare_at_price and badge_variant.compare_at_price > badge_variant.price -%}
+        {%- assign savings = badge_variant.compare_at_price | minus: badge_variant.price -%}
+        {%- assign savings_percent = savings | times: 100.0 | divided_by: badge_variant.compare_at_price | round -%}
+        <div class="product-badge product-badge--percentage">
+          -{{ savings_percent }}%
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Pre-order Badge {%- endcomment -%}
+      {%- if badge_product.tags contains 'pre-order' or badge_product.tags contains 'preorder' -%}
+        <div class="product-badge product-badge--pre-order">
+          {{ 'products.product.pre_order' | t }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} New Badge {%- endcomment -%}
+      {%- if badge_product.tags contains 'new' -%}
+        <div class="product-badge product-badge--new">
+          {{ 'products.product.new' | t }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Limited Badge {%- endcomment -%}
+      {%- if badge_product.tags contains 'limited' or badge_product.tags contains 'limited-edition' -%}
+        <div class="product-badge product-badge--limited">
+          {{ 'products.product.limited' | t }}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Custom Badges (tags começando com 'badge:') {%- endcomment -%}
+      {%- for tag in badge_product.tags -%}
+        {%- if tag contains 'badge:' -%}
+          {%- assign badge_text = tag | remove: 'badge:' | strip -%}
+          <div class="product-badge product-badge--custom">
+            {{ badge_text }}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+    {%- endif -%}
+  </div>
+{%- endif -%}

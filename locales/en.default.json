@@ -1,0 +1,18 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search jerseys...",
+      "submit": "Search"
+    },
+    "cart": {
+      "title": "Shopping Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping"
+    }
+  },
+  "products": {
+    "add_to_cart": "Add to Cart",
+    "sold_out": "Sold Out",
+    "limited_stock": "Limited Stock"
+  }
+}

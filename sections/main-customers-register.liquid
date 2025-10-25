@@ -1,0 +1,330 @@
+<!--
+  Section: Customer Register
+  Descrição: Página de registro de novos clientes com design FOLTZ
+-->
+
+<style>
+  .customer-register {
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  }
+
+  .customer-register__container {
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .customer-register__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .customer-register__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 8px;
+  }
+
+  .customer-register__subtitle {
+    font-size: 1rem;
+    color: var(--color-text-subdued);
+  }
+
+  .customer-register__form {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(218, 241, 13, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .customer-register__field {
+    margin-bottom: 24px;
+  }
+
+  .customer-register__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .customer-register__input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.3s ease;
+  }
+
+  .customer-register__input:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+  }
+
+  .customer-register__input--error {
+    border-color: #EF4444;
+  }
+
+  .customer-register__input::placeholder {
+    color: #9CA3AF;
+  }
+
+  .customer-register__submit {
+    width: 100%;
+    padding: 14px 32px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .customer-register__submit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
+  }
+
+  .customer-register__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .customer-register__divider {
+    text-align: center;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .customer-register__divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .customer-register__divider-text {
+    position: relative;
+    display: inline-block;
+    padding: 0 16px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+  }
+
+  .customer-register__login {
+    text-align: center;
+  }
+
+  .customer-register__login-text {
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+  }
+
+  .customer-register__login-link {
+    color: var(--color-brand-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+  }
+
+  .customer-register__login-link:hover {
+    opacity: 0.8;
+  }
+
+  .customer-register__errors {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid #EF4444;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .customer-register__error {
+    color: #EF4444;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .customer-register__error + .customer-register__error {
+    margin-top: 8px;
+  }
+
+  .customer-register__field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .customer-register {
+      padding: 40px 16px;
+    }
+
+    .customer-register__form {
+      padding: 24px;
+    }
+
+    .customer-register__title {
+      font-size: 1.75rem;
+    }
+
+    .customer-register__field-row {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+</style>
+
+<div class="customer-register">
+  <div class="customer-register__container">
+    <div class="customer-register__header">
+      <h1 class="customer-register__title">{{ 'customer.register.title' | t }}</h1>
+      {%- if section.settings.show_subtitle -%}
+        <p class="customer-register__subtitle">{{ section.settings.subtitle | default: 'customer.register.subtitle' | t }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="customer-register__form">
+      {%- form 'create_customer', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <div class="customer-register__errors">
+            <h2 class="visually-hidden">{{ 'form.errors.title' | t }}</h2>
+            {%- for field in form.errors -%}
+              <p class="customer-register__error">
+                {{ form.errors.messages[field] }}
+              </p>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="customer-register__field-row">
+          <div class="customer-register__field">
+            <label for="RegisterFirstName" class="customer-register__label">
+              {{ 'customer.register.first_name' | t }}
+            </label>
+            <input
+              type="text"
+              name="customer[first_name]"
+              id="RegisterFirstName"
+              class="customer-register__input"
+              autocomplete="given-name"
+              placeholder="{{ 'customer.register.first_name_placeholder' | t }}"
+              {%- if form.first_name -%}
+                value="{{ form.first_name }}"
+              {%- endif -%}
+            >
+          </div>
+
+          <div class="customer-register__field">
+            <label for="RegisterLastName" class="customer-register__label">
+              {{ 'customer.register.last_name' | t }}
+            </label>
+            <input
+              type="text"
+              name="customer[last_name]"
+              id="RegisterLastName"
+              class="customer-register__input"
+              autocomplete="family-name"
+              placeholder="{{ 'customer.register.last_name_placeholder' | t }}"
+              {%- if form.last_name -%}
+                value="{{ form.last_name }}"
+              {%- endif -%}
+            >
+          </div>
+        </div>
+
+        <div class="customer-register__field">
+          <label for="RegisterEmail" class="customer-register__label">
+            {{ 'customer.register.email' | t }} *
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="RegisterEmail"
+            class="customer-register__input {% if form.errors contains 'email' %}customer-register__input--error{% endif %}"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder="{{ 'customer.register.email_placeholder' | t }}"
+            {%- if form.email -%}
+              value="{{ form.email }}"
+            {%- endif -%}
+            required
+          >
+        </div>
+
+        <div class="customer-register__field">
+          <label for="RegisterPassword" class="customer-register__label">
+            {{ 'customer.register.password' | t }} *
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="RegisterPassword"
+            class="customer-register__input {% if form.errors contains 'password' %}customer-register__input--error{% endif %}"
+            autocomplete="new-password"
+            placeholder="{{ 'customer.register.password_placeholder' | t }}"
+            required
+          >
+        </div>
+
+        <button type="submit" class="customer-register__submit">
+          {{ 'customer.register.submit' | t }}
+        </button>
+
+        <div class="customer-register__divider">
+          <span class="customer-register__divider-text">{{ 'customer.register.or' | t }}</span>
+        </div>
+
+        <div class="customer-register__login">
+          <p class="customer-register__login-text">
+            {{ 'customer.register.have_account' | t }}
+            <a href="{{ routes.account_login_url }}" class="customer-register__login-link">
+              {{ 'customer.register.sign_in' | t }}
+            </a>
+          </p>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer Register",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_subtitle",
+      "label": "Show subtitle",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Create an account to track your orders and get exclusive offers",
+      "info": "Leave empty to use default translation"
+    }
+  ]
+}
+{% endschema %}

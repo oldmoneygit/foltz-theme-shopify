@@ -1,0 +1,341 @@
+<!--
+  Section: Customer Login
+  Descrição: Página de login de clientes com design FOLTZ
+-->
+
+<style>
+  .customer-login {
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  }
+
+  .customer-login__container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .customer-login__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .customer-login__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 8px;
+  }
+
+  .customer-login__subtitle {
+    font-size: 1rem;
+    color: var(--color-text-subdued);
+  }
+
+  .customer-login__form {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(218, 241, 13, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .customer-login__field {
+    margin-bottom: 24px;
+  }
+
+  .customer-login__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .customer-login__input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.3s ease;
+  }
+
+  .customer-login__input:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+  }
+
+  .customer-login__input::placeholder {
+    color: #9CA3AF;
+  }
+
+  .customer-login__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .customer-login__forgot {
+    font-size: 0.875rem;
+    color: var(--color-brand-yellow);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .customer-login__forgot:hover {
+    opacity: 0.8;
+  }
+
+  .customer-login__submit {
+    width: 100%;
+    padding: 14px 32px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .customer-login__submit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
+  }
+
+  .customer-login__submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .customer-login__divider {
+    text-align: center;
+    margin: 32px 0;
+    position: relative;
+  }
+
+  .customer-login__divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .customer-login__divider-text {
+    position: relative;
+    display: inline-block;
+    padding: 0 16px;
+    background: rgba(0, 0, 0, 0.6);
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+  }
+
+  .customer-login__register {
+    text-align: center;
+  }
+
+  .customer-login__register-text {
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+  }
+
+  .customer-login__register-link {
+    color: var(--color-brand-yellow);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+  }
+
+  .customer-login__register-link:hover {
+    opacity: 0.8;
+  }
+
+  .customer-login__errors {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid #EF4444;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .customer-login__error {
+    color: #EF4444;
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  .customer-login__error + .customer-login__error {
+    margin-top: 8px;
+  }
+
+  .customer-login__guest {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+  }
+
+  .customer-login__guest-link {
+    display: inline-block;
+    color: var(--color-text-subdued);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.3s ease;
+  }
+
+  .customer-login__guest-link:hover {
+    color: var(--color-brand-yellow);
+  }
+
+  @media (max-width: 768px) {
+    .customer-login {
+      padding: 40px 16px;
+    }
+
+    .customer-login__form {
+      padding: 24px;
+    }
+
+    .customer-login__title {
+      font-size: 1.75rem;
+    }
+
+    .customer-login__actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+<div class="customer-login">
+  <div class="customer-login__container">
+    <div class="customer-login__header">
+      <h1 class="customer-login__title">{{ 'customer.login.title' | t }}</h1>
+      {%- if section.settings.show_subtitle -%}
+        <p class="customer-login__subtitle">{{ section.settings.subtitle | default: 'customer.login.subtitle' | t }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="customer-login__form">
+      {%- form 'customer_login', novalidate: 'novalidate' -%}
+        {%- if form.errors -%}
+          <div class="customer-login__errors">
+            <h2 class="visually-hidden">{{ 'form.errors.title' | t }}</h2>
+            {%- for field in form.errors -%}
+              <p class="customer-login__error">
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  {{ 'customer.login.error' | t }}
+                {%- endif -%}
+              </p>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        <div class="customer-login__field">
+          <label for="CustomerEmail" class="customer-login__label">
+            {{ 'customer.login.email' | t }}
+          </label>
+          <input
+            type="email"
+            name="customer[email]"
+            id="CustomerEmail"
+            class="customer-login__input"
+            autocomplete="email"
+            autocorrect="off"
+            autocapitalize="off"
+            placeholder="{{ 'customer.login.email_placeholder' | t }}"
+            {%- if form.email -%}
+              value="{{ form.email }}"
+            {%- endif -%}
+            required
+          >
+        </div>
+
+        <div class="customer-login__field">
+          <label for="CustomerPassword" class="customer-login__label">
+            {{ 'customer.login.password' | t }}
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="CustomerPassword"
+            class="customer-login__input"
+            autocomplete="current-password"
+            placeholder="{{ 'customer.login.password_placeholder' | t }}"
+            required
+          >
+        </div>
+
+        <div class="customer-login__actions">
+          <a href="{{ routes.account_recover_url }}" class="customer-login__forgot">
+            {{ 'customer.login.forgot_password' | t }}
+          </a>
+        </div>
+
+        <button type="submit" class="customer-login__submit">
+          {{ 'customer.login.sign_in' | t }}
+        </button>
+
+        <div class="customer-login__divider">
+          <span class="customer-login__divider-text">{{ 'customer.login.or' | t }}</span>
+        </div>
+
+        <div class="customer-login__register">
+          <p class="customer-login__register-text">
+            {{ 'customer.login.new_customer' | t }}
+            <a href="{{ routes.account_register_url }}" class="customer-login__register-link">
+              {{ 'customer.login.create_account' | t }}
+            </a>
+          </p>
+        </div>
+
+        {%- if shop.checkout_account_optional -%}
+          <div class="customer-login__guest">
+            <a href="{{ routes.account_url }}" class="customer-login__guest-link">
+              {{ 'customer.login.guest_continue' | t }}
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer Login",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_subtitle",
+      "label": "Show subtitle",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Enter your credentials to access your account",
+      "info": "Leave empty to use default translation"
+    }
+  ]
+}
+{% endschema %}

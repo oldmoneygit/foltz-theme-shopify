@@ -1,0 +1,220 @@
+<!--
+  Section: Customer Addresses
+  Descrição: Página de gerenciamento de endereços do cliente
+-->
+
+<style>
+  .customer-addresses {
+    padding: 80px 24px;
+    background: #000000;
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+  }
+
+  .customer-addresses__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .customer-addresses__header {
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .customer-addresses__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .customer-addresses__add-btn {
+    padding: 12px 24px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .customer-addresses__add-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .customer-addresses__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .customer-addresses__card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+  }
+
+  .customer-addresses__card--default {
+    border-color: var(--color-brand-yellow);
+  }
+
+  .customer-addresses__badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 4px 12px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .customer-addresses__address-text {
+    font-size: 0.875rem;
+    color: #FFFFFF;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .customer-addresses__actions {
+    display: flex;
+    gap: 12px;
+  }
+
+  .customer-addresses__btn {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .customer-addresses__btn:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .customer-addresses__btn--delete {
+    color: #EF4444;
+  }
+
+  .customer-addresses__btn--delete:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #EF4444;
+  }
+
+  @media (max-width: 768px) {
+    .customer-addresses {
+      padding: 40px 16px;
+    }
+
+    .customer-addresses__title {
+      font-size: 1.5rem;
+    }
+
+    .customer-addresses__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<div class="customer-addresses">
+  <div class="customer-addresses__container">
+    <div class="customer-addresses__header">
+      <h1 class="customer-addresses__title">{{ 'customer.addresses.title' | t }}</h1>
+      <button class="customer-addresses__add-btn" onclick="Shopify.CustomerAddress.toggleNewForm(); return false;">
+        {{ 'customer.addresses.add_new' | t }}
+      </button>
+    </div>
+
+    <div class="customer-addresses__grid">
+      {%- paginate customer.addresses by 10 -%}
+        {%- for address in customer.addresses -%}
+          <div class="customer-addresses__card {% if address == customer.default_address %}customer-addresses__card--default{% endif %}">
+            {%- if address == customer.default_address -%}
+              <span class="customer-addresses__badge">{{ 'customer.addresses.default' | t }}</span>
+            {%- endif -%}
+
+            <div class="customer-addresses__address-text">
+              {{ address.name }}<br>
+              {{ address.address1 }}<br>
+              {%- if address.address2 != blank -%}
+                {{ address.address2 }}<br>
+              {%- endif -%}
+              {{ address.city }}, {{ address.province_code }} {{ address.zip }}<br>
+              {{ address.country }}
+              {%- if address.phone != blank -%}
+                <br>{{ address.phone }}
+              {%- endif -%}
+            </div>
+
+            <div class="customer-addresses__actions">
+              <button class="customer-addresses__btn" onclick="Shopify.CustomerAddress.toggleEditForm({{ address.id }}); return false;">
+                {{ 'customer.addresses.edit' | t }}
+              </button>
+              <button class="customer-addresses__btn customer-addresses__btn--delete" onclick="Shopify.CustomerAddress.destroy({{ address.id }}, '{{ 'customer.addresses.delete_confirm' | t }}'); return false;">
+                {{ 'customer.addresses.delete' | t }}
+              </button>
+            </div>
+
+            <div id="edit-address-{{ address.id }}" style="display: none;">
+              {%- form 'customer_address', address -%}
+                <!-- Form de edição seria renderizado aqui -->
+              {%- endform -%}
+            </div>
+          </div>
+        {%- endfor -%}
+
+        {%- if paginate.pages > 1 -%}
+          {{ paginate | default_pagination }}
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+
+    <div id="add-address" style="display: none; margin-top: 40px;">
+      {%- form 'customer_address', customer.new_address -%}
+        <!-- Form de novo endereço seria renderizado aqui -->
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  window.Shopify = window.Shopify || {};
+  Shopify.CustomerAddress = {
+    toggleNewForm: function() {
+      document.getElementById('add-address').style.display =
+        document.getElementById('add-address').style.display === 'none' ? 'block' : 'none';
+    },
+    toggleEditForm: function(id) {
+      document.getElementById('edit-address-' + id).style.display =
+        document.getElementById('edit-address-' + id).style.display === 'none' ? 'block' : 'none';
+    },
+    destroy: function(id, confirm_msg) {
+      if (confirm(confirm_msg)) {
+        Shopify.postLink('/account/addresses/' + id, {parameters: {_method: 'delete'}});
+      }
+    }
+  };
+</script>
+
+{% schema %}
+{
+  "name": "Customer Addresses",
+  "settings": []
+}
+{% endschema %}

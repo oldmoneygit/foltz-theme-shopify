@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_breadcrumb": true,
+        "show_vendor": true,
+        "show_reviews": true
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

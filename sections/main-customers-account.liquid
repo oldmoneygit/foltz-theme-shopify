@@ -1,0 +1,345 @@
+<!--
+  Section: Customer Account
+  Descrição: Página principal da conta do cliente - dashboard com pedidos, endereços, etc
+-->
+
+<style>
+  .customer-account {
+    padding: 80px 24px;
+    background: #000000;
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+  }
+
+  .customer-account__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .customer-account__header {
+    margin-bottom: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .customer-account__welcome {
+    flex: 1;
+  }
+
+  .customer-account__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 8px;
+  }
+
+  .customer-account__email {
+    font-size: 1rem;
+    color: var(--color-text-subdued);
+  }
+
+  .customer-account__logout {
+    padding: 12px 24px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .customer-account__logout:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .customer-account__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .customer-account__card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 32px;
+    transition: all 0.3s ease;
+  }
+
+  .customer-account__card:hover {
+    border-color: var(--color-brand-yellow);
+    background: rgba(218, 241, 13, 0.05);
+  }
+
+  .customer-account__card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .customer-account__card-text {
+    color: var(--color-text-subdued);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .customer-account__card-link {
+    display: inline-block;
+    color: var(--color-brand-yellow);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+  }
+
+  .customer-account__card-link:hover {
+    opacity: 0.8;
+  }
+
+  .customer-account__orders-section {
+    margin-top: 48px;
+  }
+
+  .customer-account__section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+  }
+
+  .customer-account__orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .customer-account__order {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .customer-account__order:hover {
+    border-color: var(--color-brand-yellow);
+    background: rgba(218, 241, 13, 0.05);
+  }
+
+  .customer-account__order-number {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-yellow);
+  }
+
+  .customer-account__order-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .customer-account__order-date {
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+  }
+
+  .customer-account__order-status {
+    font-size: 0.875rem;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  .customer-account__order-status--paid {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+  }
+
+  .customer-account__order-status--pending {
+    background: rgba(251, 191, 36, 0.1);
+    color: #FBBF24;
+  }
+
+  .customer-account__order-total {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: right;
+  }
+
+  .customer-account__no-orders {
+    text-align: center;
+    padding: 48px 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+  }
+
+  .customer-account__no-orders-text {
+    color: var(--color-text-subdued);
+    margin-bottom: 24px;
+  }
+
+  .customer-account__shop-link {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .customer-account__shop-link:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .customer-account {
+      padding: 40px 16px;
+    }
+
+    .customer-account__title {
+      font-size: 2rem;
+    }
+
+    .customer-account__header {
+      flex-direction: column;
+    }
+
+    .customer-account__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .customer-account__order {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .customer-account__order-total {
+      text-align: left;
+    }
+  }
+</style>
+
+<div class="customer-account">
+  <div class="customer-account__container">
+    <div class="customer-account__header">
+      <div class="customer-account__welcome">
+        <h1 class="customer-account__title">
+          {{ 'customer.account.welcome' | t: name: customer.first_name | default: customer.name }}
+        </h1>
+        <p class="customer-account__email">{{ customer.email }}</p>
+      </div>
+      <a href="{{ routes.account_logout_url }}" class="customer-account__logout">
+        {{ 'customer.account.log_out' | t }}
+      </a>
+    </div>
+
+    <div class="customer-account__grid">
+      <div class="customer-account__card">
+        <h2 class="customer-account__card-title">{{ 'customer.account.orders_title' | t }}</h2>
+        <p class="customer-account__card-text">
+          {{ 'customer.account.orders_count' | t: count: customer.orders_count }}
+        </p>
+        <a href="{{ routes.account_url }}#orders" class="customer-account__card-link">
+          {{ 'customer.account.view_orders' | t }} →
+        </a>
+      </div>
+
+      <div class="customer-account__card">
+        <h2 class="customer-account__card-title">{{ 'customer.account.addresses_title' | t }}</h2>
+        <p class="customer-account__card-text">
+          {%- if customer.default_address -%}
+            {{ customer.default_address.address1 }}<br>
+            {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}
+          {%- else -%}
+            {{ 'customer.account.no_addresses' | t }}
+          {%- endif -%}
+        </p>
+        <a href="{{ routes.account_addresses_url }}" class="customer-account__card-link">
+          {{ 'customer.account.manage_addresses' | t }} →
+        </a>
+      </div>
+
+      <div class="customer-account__card">
+        <h2 class="customer-account__card-title">{{ 'customer.account.details_title' | t }}</h2>
+        <p class="customer-account__card-text">
+          {{ customer.name }}<br>
+          {{ customer.email }}
+        </p>
+        <a href="#" class="customer-account__card-link">
+          {{ 'customer.account.view_details' | t }} →
+        </a>
+      </div>
+    </div>
+
+    <div class="customer-account__orders-section" id="orders">
+      <h2 class="customer-account__section-title">{{ 'customer.account.recent_orders' | t }}</h2>
+
+      {%- if customer.orders.size > 0 -%}
+        <div class="customer-account__orders-list">
+          {%- for order in customer.orders limit: 5 -%}
+            <a href="{{ order.customer_url }}" class="customer-account__order">
+              <div class="customer-account__order-number">
+                {{ 'customer.account.order_number' | t: number: order.name }}
+              </div>
+              <div class="customer-account__order-info">
+                <div class="customer-account__order-date">
+                  {{ order.created_at | date: format: 'date' }}
+                </div>
+                <span class="customer-account__order-status customer-account__order-status--{{ order.financial_status }}">
+                  {{ order.financial_status_label }}
+                </span>
+              </div>
+              <div class="customer-account__order-total">
+                {{ order.total_price | money }}
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+
+        {%- if customer.orders.size > 5 -%}
+          <div style="margin-top: 24px; text-align: center;">
+            <a href="{{ routes.account_url }}/orders" class="customer-account__card-link">
+              {{ 'customer.account.view_all_orders' | t }} →
+            </a>
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="customer-account__no-orders">
+          <p class="customer-account__no-orders-text">
+            {{ 'customer.account.no_orders_yet' | t }}
+          </p>
+          <a href="{{ routes.all_products_collection_url }}" class="customer-account__shop-link">
+            {{ 'customer.account.start_shopping' | t }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer Account",
+  "settings": []
+}
+{% endschema %}

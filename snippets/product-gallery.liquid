@@ -1,0 +1,285 @@
+<!--
+  Snippet: Product Gallery
+  Descrição: Galeria de imagens do produto com thumbnails e zoom
+
+  Uso:
+  {% render 'product-gallery', product: product %}
+-->
+
+<style>
+  .product-gallery {
+    display: grid;
+    gap: 16px;
+  }
+
+  .product-gallery--thumbnails-left {
+    grid-template-columns: 100px 1fr;
+  }
+
+  .product-gallery__main {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .product-gallery__main-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: zoom-in;
+  }
+
+  .product-gallery__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    padding: 8px 16px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .product-gallery__thumbnails {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .product-gallery__thumbnail {
+    aspect-ratio: 3 / 4;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-gallery__thumbnail:hover {
+    border-color: rgba(218, 241, 13, 0.5);
+  }
+
+  .product-gallery__thumbnail.active {
+    border-color: var(--color-brand-yellow);
+  }
+
+  .product-gallery__thumbnail-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-gallery__zoom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    cursor: zoom-out;
+  }
+
+  .product-gallery__zoom.active {
+    display: flex;
+  }
+
+  .product-gallery__zoom-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+  }
+
+  .product-gallery__zoom-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .product-gallery__zoom-close:hover {
+    background: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  @media (max-width: 768px) {
+    .product-gallery--thumbnails-left {
+      grid-template-columns: 1fr;
+    }
+
+    .product-gallery__thumbnails {
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .product-gallery__thumbnail {
+      min-width: 80px;
+      min-height: 106px;
+    }
+  }
+</style>
+
+{%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+
+<div class="product-gallery product-gallery--thumbnails-left" data-product-gallery>
+  {%- if product.media.size > 1 -%}
+    <div class="product-gallery__thumbnails">
+      {%- for media in product.media limit: 6 -%}
+        <div
+          class="product-gallery__thumbnail {% if media.id == featured_media.id %}active{% endif %}"
+          data-thumbnail
+          data-media-id="{{ media.id }}"
+        >
+          {%- if media.media_type == 'image' -%}
+            <img
+              src="{{ media | img_url: '200x' }}"
+              alt="{{ media.alt | escape }}"
+              class="product-gallery__thumbnail-image"
+              loading="lazy"
+            >
+          {%- elsif media.media_type == 'video' -%}
+            <img
+              src="{{ media.preview_image | img_url: '200x' }}"
+              alt="{{ media.alt | escape }}"
+              class="product-gallery__thumbnail-image"
+              loading="lazy"
+            >
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="product-gallery__main" data-main-image>
+    {%- if featured_media -%}
+      {%- if featured_media.media_type == 'image' -%}
+        <img
+          src="{{ featured_media | img_url: '1200x' }}"
+          alt="{{ featured_media.alt | escape }}"
+          class="product-gallery__main-image"
+          data-zoom-image="{{ featured_media | img_url: 'master' }}"
+          loading="eager"
+        >
+      {%- elsif featured_media.media_type == 'video' -%}
+        {{ featured_media | video_tag: autoplay: false, loop: true, controls: true }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'product-gallery__main-image' }}
+    {%- endif -%}
+
+    {%- assign current_variant = product.selected_or_first_available_variant -%}
+    {%- if current_variant.compare_at_price and current_variant.compare_at_price > current_variant.price -%}
+      {%- assign savings_percent = current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round -%}
+      <div class="product-gallery__badge">
+        -{{ savings_percent }}%
+      </div>
+    {%- elsif product.tags contains 'new' -%}
+      <div class="product-gallery__badge">
+        {{ 'products.product.new' | t }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="product-gallery__zoom" data-zoom-modal>
+    <div class="product-gallery__zoom-close" data-zoom-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+    <img src="" alt="" class="product-gallery__zoom-image" data-zoom-image-element>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const gallery = document.querySelector('[data-product-gallery]');
+    if (!gallery) return;
+
+    const mainImage = gallery.querySelector('[data-main-image] img');
+    const thumbnails = gallery.querySelectorAll('[data-thumbnail]');
+    const zoomModal = gallery.querySelector('[data-zoom-modal]');
+    const zoomImage = gallery.querySelector('[data-zoom-image-element]');
+    const zoomClose = gallery.querySelector('[data-zoom-close]');
+
+    // Thumbnail click
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const mediaId = thumb.dataset.mediaId;
+        const media = {{ product.media | json }}.find(m => m.id == mediaId);
+
+        if (media && media.media_type === 'image') {
+          mainImage.src = media.src.replace('.jpg', '_1200x.jpg');
+          mainImage.dataset.zoomImage = media.src;
+
+          thumbnails.forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        }
+      });
+    });
+
+    // Zoom functionality
+    if (mainImage && zoomModal) {
+      mainImage.addEventListener('click', () => {
+        const zoomSrc = mainImage.dataset.zoomImage;
+        if (zoomSrc) {
+          zoomImage.src = zoomSrc;
+          zoomModal.classList.add('active');
+        }
+      });
+
+      zoomModal.addEventListener('click', () => {
+        zoomModal.classList.remove('active');
+      });
+
+      if (zoomClose) {
+        zoomClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          zoomModal.classList.remove('active');
+        });
+      }
+    }
+
+    // Listen for variant changes
+    document.addEventListener('variant:change', (e) => {
+      const variant = e.detail.variant;
+      if (!variant || !variant.featured_media) return;
+
+      const media = variant.featured_media;
+
+      if (media && mainImage) {
+        mainImage.src = media.src.replace('.jpg', '_1200x.jpg');
+        mainImage.dataset.zoomImage = media.src;
+
+        // Update active thumbnail
+        thumbnails.forEach(thumb => {
+          if (thumb.dataset.mediaId == media.id) {
+            thumb.classList.add('active');
+          } else {
+            thumb.classList.remove('active');
+          }
+        });
+      }
+    });
+  })();
+</script>

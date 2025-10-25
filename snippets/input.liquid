@@ -1,0 +1,216 @@
+<!--
+  Snippet: Input
+  Descrição: Sistema de campos de input reusável
+
+  Uso:
+  {% render 'input', name: 'email', label: 'Email', type: 'email', required: true %}
+  {% render 'input', name: 'message', label: 'Message', type: 'textarea', rows: 5 %}
+  {% render 'input', name: 'country', label: 'Country', type: 'select', options: countries %}
+
+  Parâmetros:
+  - name: Nome do campo (obrigatório)
+  - label: Label do campo
+  - type: 'text', 'email', 'password', 'number', 'tel', 'url', 'textarea', 'select' (padrão: 'text')
+  - value: Valor inicial
+  - placeholder: Placeholder
+  - required: true/false
+  - disabled: true/false
+  - error: Mensagem de erro
+  - help: Texto de ajuda
+  - rows: Número de linhas (para textarea)
+  - options: Array de opções (para select)
+  - class: Classes CSS adicionais
+-->
+
+<style>
+  .input-field {
+    margin-bottom: 20px;
+  }
+
+  .input-field__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .input-field__label--required::after {
+    content: '*';
+    color: var(--color-brand-yellow);
+    margin-left: 4px;
+  }
+
+  .input-field__input,
+  .input-field__textarea,
+  .input-field__select {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+  }
+
+  .input-field__input:focus,
+  .input-field__textarea:focus,
+  .input-field__select:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .input-field__input::placeholder,
+  .input-field__textarea::placeholder {
+    color: var(--color-text-subdued);
+  }
+
+  .input-field__input:disabled,
+  .input-field__textarea:disabled,
+  .input-field__select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .input-field__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .input-field__select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 6L11 1' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+
+  .input-field__select option {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  .input-field--error .input-field__input,
+  .input-field--error .input-field__textarea,
+  .input-field--error .input-field__select {
+    border-color: #ef4444;
+  }
+
+  .input-field__error {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: #ef4444;
+  }
+
+  .input-field__help {
+    margin-top: 6px;
+    font-size: 0.75rem;
+    color: var(--color-text-subdued);
+  }
+</style>
+
+{%- liquid
+  assign field_name = name
+  assign field_label = label
+  assign field_type = type | default: 'text'
+  assign field_value = value
+  assign field_placeholder = placeholder
+  assign field_required = required
+  assign field_disabled = disabled
+  assign field_error = error
+  assign field_help = help
+  assign field_rows = rows | default: 5
+  assign field_options = options
+  assign field_class = class
+
+  assign wrapper_classes = 'input-field'
+  if field_error
+    assign wrapper_classes = wrapper_classes | append: ' input-field--error'
+  endif
+  if field_class
+    assign wrapper_classes = wrapper_classes | append: ' ' | append: field_class
+  endif
+-%}
+
+<div class="{{ wrapper_classes }}">
+  {%- if field_label -%}
+    <label
+      for="{{ field_name }}"
+      class="input-field__label {% if field_required %}input-field__label--required{% endif %}"
+    >
+      {{ field_label }}
+    </label>
+  {%- endif -%}
+
+  {%- case field_type -%}
+    {%- when 'textarea' -%}
+      <textarea
+        id="{{ field_name }}"
+        name="{{ field_name }}"
+        class="input-field__textarea"
+        rows="{{ field_rows }}"
+        {%- if field_placeholder %}placeholder="{{ field_placeholder }}"{% endif -%}
+        {%- if field_required %}required{% endif -%}
+        {%- if field_disabled %}disabled{% endif -%}
+      >{{ field_value }}</textarea>
+
+    {%- when 'select' -%}
+      <select
+        id="{{ field_name }}"
+        name="{{ field_name }}"
+        class="input-field__select"
+        {%- if field_required %}required{% endif -%}
+        {%- if field_disabled %}disabled{% endif -%}
+      >
+        {%- if field_placeholder -%}
+          <option value="" disabled {% unless field_value %}selected{% endunless %}>
+            {{ field_placeholder }}
+          </option>
+        {%- endif -%}
+        {%- if field_options -%}
+          {%- for option in field_options -%}
+            <option
+              value="{{ option.value | default: option }}"
+              {% if field_value == option.value or field_value == option %}selected{% endif %}
+            >
+              {{ option.label | default: option }}
+            </option>
+          {%- endfor -%}
+        {%- endif -%}
+      </select>
+
+    {%- else -%}
+      <input
+        type="{{ field_type }}"
+        id="{{ field_name }}"
+        name="{{ field_name }}"
+        class="input-field__input"
+        {%- if field_value %}value="{{ field_value }}"{% endif -%}
+        {%- if field_placeholder %}placeholder="{{ field_placeholder }}"{% endif -%}
+        {%- if field_required %}required{% endif -%}
+        {%- if field_disabled %}disabled{% endif -%}
+      >
+  {%- endcase -%}
+
+  {%- if field_error -%}
+    <div class="input-field__error">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <span>{{ field_error }}</span>
+    </div>
+  {%- endif -%}
+
+  {%- if field_help -%}
+    <div class="input-field__help">{{ field_help }}</div>
+  {%- endif -%}
+</div>

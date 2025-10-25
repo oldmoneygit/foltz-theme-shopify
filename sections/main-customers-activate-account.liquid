@@ -1,0 +1,179 @@
+<!--
+  Section: Customer Activate Account
+  Descrição: Página de ativação de conta (primeiro acesso)
+-->
+
+<style>
+  .customer-activate {
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  }
+
+  .customer-activate__container {
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .customer-activate__header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .customer-activate__title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 8px;
+  }
+
+  .customer-activate__subtitle {
+    font-size: 1rem;
+    color: var(--color-text-subdued);
+  }
+
+  .customer-activate__form {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(218, 241, 13, 0.1);
+    border-radius: 12px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .customer-activate__field {
+    margin-bottom: 24px;
+  }
+
+  .customer-activate__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .customer-activate__input {
+    width: 100%;
+    padding: 12px 16px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #000000;
+    transition: all 0.3s ease;
+  }
+
+  .customer-activate__input:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+  }
+
+  .customer-activate__submit {
+    width: 100%;
+    padding: 14px 32px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .customer-activate__submit:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+  }
+
+  .customer-activate__decline {
+    margin-top: 24px;
+    text-align: center;
+  }
+
+  .customer-activate__decline-link {
+    color: var(--color-text-subdued);
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+
+  .customer-activate__errors {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid #EF4444;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+    color: #EF4444;
+    font-size: 0.875rem;
+  }
+</style>
+
+<div class="customer-activate">
+  <div class="customer-activate__container">
+    <div class="customer-activate__header">
+      <h1 class="customer-activate__title">{{ 'customer.activate_account.title' | t }}</h1>
+      <p class="customer-activate__subtitle">{{ 'customer.activate_account.subtitle' | t }}</p>
+    </div>
+
+    <div class="customer-activate__form">
+      {%- form 'activate_customer_password' -%}
+        {%- if form.errors -%}
+          <div class="customer-activate__errors">
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="customer-activate__field">
+          <label for="ActivatePassword" class="customer-activate__label">
+            {{ 'customer.activate_account.password' | t }}
+          </label>
+          <input
+            type="password"
+            name="customer[password]"
+            id="ActivatePassword"
+            class="customer-activate__input"
+            autocomplete="new-password"
+            placeholder="{{ 'customer.activate_account.password_placeholder' | t }}"
+            required
+          >
+        </div>
+
+        <div class="customer-activate__field">
+          <label for="ActivatePasswordConfirm" class="customer-activate__label">
+            {{ 'customer.activate_account.password_confirm' | t }}
+          </label>
+          <input
+            type="password"
+            name="customer[password_confirmation]"
+            id="ActivatePasswordConfirm"
+            class="customer-activate__input"
+            autocomplete="new-password"
+            placeholder="{{ 'customer.activate_account.password_confirm_placeholder' | t }}"
+            required
+          >
+        </div>
+
+        <button type="submit" class="customer-activate__submit">
+          {{ 'customer.activate_account.submit' | t }}
+        </button>
+
+        <div class="customer-activate__decline">
+          <a href="{{ routes.account_url }}" class="customer-activate__decline-link">
+            {{ 'customer.activate_account.cancel' | t }}
+          </a>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Customer Activate Account",
+  "settings": []
+}
+{% endschema %}

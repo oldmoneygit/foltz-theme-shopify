@@ -1,0 +1,259 @@
+{
+  "metadata": {
+    "project": "FOLTZ Fanwear",
+    "extracted_from": "Next.js project at C:\\Users\\PC\\Desktop\\Foltz",
+    "date": "2025-10-25",
+    "extraction_sources": [
+      "src/app/globals.css",
+      "tailwind.config.js"
+    ]
+  },
+
+  "colors": {
+    "brand": {
+      "yellow": "#DAF10D",
+      "navy": "#02075E",
+      "black": "#000000",
+      "white": "#FFFFFF",
+      "dark": "#0a0a0a",
+      "darker": "#050505"
+    },
+    "opacity_variants": {
+      "white_90": "rgba(255, 255, 255, 0.9)",
+      "white_80": "rgba(255, 255, 255, 0.8)",
+      "white_70": "rgba(255, 255, 255, 0.7)",
+      "white_60": "rgba(255, 255, 255, 0.6)",
+      "white_40": "rgba(255, 255, 255, 0.4)",
+      "white_30": "rgba(255, 255, 255, 0.3)",
+      "white_20": "rgba(255, 255, 255, 0.2)",
+      "white_10": "rgba(255, 255, 255, 0.1)",
+      "white_5": "rgba(255, 255, 255, 0.05)",
+      "yellow_20": "rgba(218, 241, 13, 0.2)",
+      "yellow_10": "rgba(218, 241, 13, 0.1)",
+      "yellow_5": "rgba(218, 241, 13, 0.05)",
+      "yellow_3": "rgba(218, 241, 13, 0.03)",
+      "black_50": "rgba(0, 0, 0, 0.5)"
+    },
+    "gradients": {
+      "dark_premium": "linear-gradient(135deg, #0a0a0a 0%, #000000 50%, #0a0a0a 100%)",
+      "dark_card": "radial-gradient(circle at top right, rgba(218, 241, 13, 0.03), transparent 50%)",
+      "dark_section": "linear-gradient(180deg, #000000 0%, #0a0a0a 100%)",
+      "yellow_hover": "linear-gradient(to bottom, #DAF10D, #c5d60b)",
+      "shimmer": "linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%)"
+    }
+  },
+
+  "typography": {
+    "font_family": {
+      "primary": "Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "fallback": "system-ui, sans-serif"
+    },
+    "font_weights": {
+      "normal": "400",
+      "medium": "500",
+      "semibold": "600",
+      "bold": "700",
+      "extrabold": "800",
+      "black": "900"
+    },
+    "font_sizes": {
+      "xs": "0.75rem",
+      "sm": "0.875rem",
+      "base": "1rem",
+      "lg": "1.125rem",
+      "xl": "1.25rem",
+      "2xl": "1.5rem",
+      "3xl": "1.875rem",
+      "4xl": "2.25rem",
+      "5xl": "3rem",
+      "6xl": "3.75rem"
+    },
+    "line_heights": {
+      "tight": "1.25",
+      "normal": "1.5",
+      "relaxed": "1.75"
+    },
+    "letter_spacing": {
+      "tight": "-0.025em",
+      "normal": "0",
+      "wide": "0.025em",
+      "wider": "0.05em",
+      "widest": "0.1em"
+    }
+  },
+
+  "spacing": {
+    "0": "0",
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "3": "0.75rem",
+    "4": "1rem",
+    "5": "1.25rem",
+    "6": "1.5rem",
+    "8": "2rem",
+    "10": "2.5rem",
+    "12": "3rem",
+    "16": "4rem",
+    "20": "5rem",
+    "24": "6rem",
+    "32": "8rem"
+  },
+
+  "border_radius": {
+    "none": "0",
+    "sm": "0.125rem",
+    "md": "0.375rem",
+    "lg": "0.75rem",
+    "xl": "1rem",
+    "2xl": "1.5rem",
+    "full": "9999px"
+  },
+
+  "shadows": {
+    "sm": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    "md": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+    "lg": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+    "xl": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+    "yellow_glow": "0 0 20px rgba(218, 241, 13, 0.2)",
+    "yellow_strong": "0 4px 14px 0 rgba(218, 241, 13, 0.39)"
+  },
+
+  "transitions": {
+    "fast": "150ms cubic-bezier(0.4, 0, 0.2, 1)",
+    "base": "300ms cubic-bezier(0.4, 0, 0.2, 1)",
+    "slow": "500ms cubic-bezier(0.4, 0, 0.2, 1)"
+  },
+
+  "animations": {
+    "fadeIn": {
+      "duration": "0.5s",
+      "timing": "ease-out",
+      "keyframes": {
+        "from": {
+          "opacity": "0",
+          "transform": "translateY(10px)"
+        },
+        "to": {
+          "opacity": "1",
+          "transform": "translateY(0)"
+        }
+      }
+    },
+    "gradient_shift": {
+      "duration": "8s",
+      "timing": "ease",
+      "iteration": "infinite",
+      "keyframes": {
+        "0%": { "background_position": "0% 50%" },
+        "50%": { "background_position": "100% 50%" },
+        "100%": { "background_position": "0% 50%" }
+      }
+    },
+    "shimmer": {
+      "duration": "2s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "keyframes": {
+        "0%": { "transform": "translateX(-100%)" },
+        "100%": { "transform": "translateX(100%)" }
+      }
+    },
+    "spin": {
+      "duration": "1s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "keyframes": {
+        "from": { "transform": "rotate(0deg)" },
+        "to": { "transform": "rotate(360deg)" }
+      }
+    }
+  },
+
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+
+  "z_index": {
+    "dropdown": "1000",
+    "sticky": "1020",
+    "fixed": "1030",
+    "modal_backdrop": "1040",
+    "modal": "1050",
+    "popover": "1060",
+    "tooltip": "1070"
+  },
+
+  "scrollbar": {
+    "width": "8px",
+    "track_bg": "#1a1a1a",
+    "thumb_bg": "linear-gradient(to bottom, #DAF10D, #c5d60b)",
+    "thumb_hover_bg": "#DAF10D",
+    "border_radius": "4px"
+  },
+
+  "swiper_customization": {
+    "pagination_bullet_bg": "rgba(255, 255, 255, 0.3)",
+    "pagination_bullet_active_bg": "#DAF10D",
+    "pagination_bullet_size": "8px",
+    "pagination_bullet_active_width": "32px",
+    "pagination_bullet_margin": "0 6px",
+    "navigation_color": "#DAF10D",
+    "navigation_size": "44px"
+  },
+
+  "glassmorphism": {
+    "backdrop_blur": "blur(12px)",
+    "backdrop_blur_sm": "blur(8px)",
+    "backdrop_blur_md": "blur(16px)",
+    "background": "rgba(255, 255, 255, 0.05)",
+    "border": "1px solid rgba(255, 255, 255, 0.1)"
+  },
+
+  "component_specific": {
+    "header": {
+      "height": "80px",
+      "height_mobile": "64px",
+      "background": "#000000",
+      "border_bottom": "1px solid rgba(255, 255, 255, 0.1)"
+    },
+    "footer": {
+      "background": "#000000",
+      "border_top": "1px solid rgba(255, 255, 255, 0.1)"
+    },
+    "product_card": {
+      "background": "rgba(255, 255, 255, 0.05)",
+      "border": "1px solid rgba(255, 255, 255, 0.1)",
+      "hover_border": "1px solid rgba(218, 241, 13, 0.3)",
+      "border_radius": "0.75rem"
+    },
+    "button_primary": {
+      "background": "#DAF10D",
+      "color": "#000000",
+      "hover_background": "#c5d60b",
+      "font_weight": "700",
+      "padding": "0.75rem 2rem",
+      "border_radius": "0.5rem"
+    },
+    "button_secondary": {
+      "background": "rgba(255, 255, 255, 0.05)",
+      "color": "#FFFFFF",
+      "border": "1px solid rgba(255, 255, 255, 0.2)",
+      "hover_background": "rgba(255, 255, 255, 0.1)",
+      "font_weight": "600",
+      "padding": "0.75rem 2rem",
+      "border_radius": "0.5rem"
+    }
+  },
+
+  "notes": {
+    "color_usage": "Yellow (#DAF10D) is the primary brand color used for CTAs, highlights, and active states. Navy (#02075E) is used sparingly as an accent only.",
+    "dark_mode": "The entire theme uses dark backgrounds (black/dark variants) with white text and glassmorphism effects.",
+    "font_loading": "The Next.js project uses 'Sink' as a custom font variable, but falls back to Inter. For Shopify, use Inter from Google Fonts.",
+    "animations": "Use CSS animations sparingly. Most animations are opacity/transform based for performance.",
+    "responsive_design": "Mobile-first approach. Use breakpoints progressively (sm, md, lg, xl, 2xl)."
+  }
+}

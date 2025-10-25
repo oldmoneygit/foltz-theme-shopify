@@ -1,0 +1,93 @@
+{%- comment -%}
+  HERO SECTION
+  Replicates: src/components/Hero.jsx
+{%- endcomment -%}
+
+<section class="hero">
+  <!-- Background Image -->
+  <div class="hero-background">
+    {%- if section.settings.background_image -%}
+      <img
+        src="{{ section.settings.background_image | img_url: '2000x' }}"
+        alt="{{ section.settings.title | escape }}"
+        loading="eager"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'hero-placeholder.jpg' | asset_url }}"
+        alt="Hero"
+        loading="eager"
+      >
+    {%- endif -%}
+  </div>
+
+  <!-- Gradient Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+    <!-- Badge -->
+    {%- if section.settings.badge_text != blank -%}
+      <span class="hero-badge">{{ section.settings.badge_text }}</span>
+    {%- endif -%}
+
+    <!-- Title -->
+    {%- if section.settings.title != blank -%}
+      <h1 class="hero-title">{{ section.settings.title }}</h1>
+    {%- endif -%}
+
+    <!-- CTA Button -->
+    {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+      <div class="hero-cta">
+        <a href="{{ section.settings.button_link }}" class="btn btn-primary btn-rounded">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <!-- Scroll Indicator (Desktop Only) -->
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Camisas Exclusivas"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "CAMISAS DE FUTEBOL EXCLUSIVAS"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Explorar Colección"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "#bestsellers"
+    }
+  ]
+}
+{% endschema %}

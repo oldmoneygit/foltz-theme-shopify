@@ -1,0 +1,268 @@
+<!--
+  Section: Main Article
+  Descrição: Página individual de artigo do blog
+-->
+
+<style>
+  .article-main {
+    padding: 40px 0 80px;
+    background: #000000;
+  }
+
+  .article-main__container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .article-main__header {
+    margin-bottom: 32px;
+  }
+
+  .article-main__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-brand-yellow);
+    margin-bottom: 24px;
+    line-height: 1.2;
+  }
+
+  .article-main__featured-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .article-main__featured-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .article-main__content {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--color-text-subdued);
+  }
+
+  .article-main__content h2,
+  .article-main__content h3,
+  .article-main__content h4 {
+    color: #FFFFFF;
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-weight: 700;
+  }
+
+  .article-main__content h2 { font-size: 2rem; }
+  .article-main__content h3 { font-size: 1.5rem; }
+  .article-main__content h4 { font-size: 1.25rem; }
+
+  .article-main__content p {
+    margin-bottom: 24px;
+  }
+
+  .article-main__content a {
+    color: var(--color-brand-yellow);
+    text-decoration: underline;
+  }
+
+  .article-main__content ul,
+  .article-main__content ol {
+    margin-left: 24px;
+    margin-bottom: 24px;
+  }
+
+  .article-main__content li {
+    margin-bottom: 12px;
+  }
+
+  .article-main__content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin: 32px 0;
+  }
+
+  .article-main__content blockquote {
+    padding: 24px;
+    margin: 32px 0;
+    background: rgba(218, 241, 13, 0.05);
+    border-left: 4px solid var(--color-brand-yellow);
+    border-radius: 8px;
+  }
+
+  .article-main__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .article-main__tag {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .article-main__tag:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .article-main__share {
+    margin-top: 32px;
+    padding: 24px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    text-align: center;
+  }
+
+  .article-main__share-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .article-main__share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .article-main__share-btn {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .article-main__share-btn:hover {
+    background: var(--color-brand-yellow);
+    border-color: var(--color-brand-yellow);
+    color: #000000;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .article-main {
+      padding: 20px 0 60px;
+    }
+
+    .article-main__container {
+      padding: 0 16px;
+    }
+
+    .article-main__title {
+      font-size: 1.75rem;
+    }
+
+    .article-main__content {
+      font-size: 1rem;
+    }
+
+    .article-main__content h2 { font-size: 1.5rem; }
+    .article-main__content h3 { font-size: 1.25rem; }
+  }
+</style>
+
+<article class="article-main">
+  <div class="article-main__container">
+    <header class="article-main__header">
+      {%- render 'article-meta', article: article, show_author: true, show_date: true -%}
+
+      <h1 class="article-main__title">{{ article.title }}</h1>
+    </header>
+
+    {%- if article.image -%}
+      <div class="article-main__featured-image">
+        <img
+          src="{{ article.image | img_url: '1200x' }}"
+          alt="{{ article.image.alt | escape }}"
+          loading="eager"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="article-main__content">
+      {{ article.content }}
+    </div>
+
+    {%- if article.tags.size > 0 -%}
+      <div class="article-main__tags">
+        {%- for tag in article.tags -%}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article-main__tag">
+            #{{ tag }}
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="article-main__share">
+      <h3 class="article-main__share-title">{{ 'blog.article.share' | t }}</h3>
+      <div class="article-main__share-buttons">
+        <a
+          href="https://www.facebook.com/sharer/sharer.php?u={{ article.url | prepend: shop.url | url_encode }}"
+          target="_blank"
+          class="article-main__share-btn"
+          aria-label="Share on Facebook"
+        >
+          {%- render 'icon', name: 'facebook', size: 20 -%}
+        </a>
+        <a
+          href="https://twitter.com/intent/tweet?url={{ article.url | prepend: shop.url | url_encode }}&text={{ article.title | url_encode }}"
+          target="_blank"
+          class="article-main__share-btn"
+          aria-label="Share on Twitter"
+        >
+          {%- render 'icon', name: 'twitter', size: 20 -%}
+        </a>
+      </div>
+    </div>
+
+    {%- render 'article-navigation', article: article, blog: blog -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show publish date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": "Show share buttons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

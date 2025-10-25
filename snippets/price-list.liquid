@@ -1,0 +1,197 @@
+<!--
+  Snippet: Price List
+  Descrição: Exibição de preços com compare at price e sale badge
+
+  Uso:
+  {% render 'price-list', product: product, variant: variant %}
+-->
+
+<style>
+  .price-list {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .price-list__price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #FFFFFF;
+  }
+
+  .price-list__price--sale {
+    color: var(--color-brand-yellow);
+  }
+
+  .price-list__compare {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-subdued);
+    text-decoration: line-through;
+  }
+
+  .price-list__badge {
+    padding: 6px 12px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .price-list__unit {
+    font-size: 0.875rem;
+    color: var(--color-text-subdued);
+    width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    .price-list__price {
+      font-size: 1.5rem;
+    }
+
+    .price-list__compare {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+{%- assign current_variant = variant | default: product.selected_or_first_available_variant -%}
+{%- assign compare_at_price = current_variant.compare_at_price -%}
+{%- assign price = current_variant.price -%}
+{%- assign on_sale = false -%}
+{%- if compare_at_price and compare_at_price > price -%}
+  {%- assign on_sale = true -%}
+{%- endif -%}
+
+<div class="price-list" data-price-wrapper>
+  <div class="price-list__price {% if on_sale %}price-list__price--sale{% endif %}" data-price>
+    {{ price | money }}
+  </div>
+
+  {%- if on_sale -%}
+    <div class="price-list__compare" data-compare-price>
+      {{ compare_at_price | money }}
+    </div>
+
+    {%- assign savings_amount = compare_at_price | minus: price -%}
+    {%- assign savings_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
+
+    <div class="price-list__badge">
+      -{{ savings_percent }}%
+    </div>
+  {%- endif -%}
+
+  {%- if current_variant.unit_price_measurement -%}
+    <div class="price-list__unit">
+      {{ current_variant.unit_price | money }}
+      {%- if current_variant.unit_price_measurement.reference_value != 1 -%}
+        / {{ current_variant.unit_price_measurement.reference_value }}
+      {%- endif -%}
+      {{ current_variant.unit_price_measurement.reference_unit }}
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function() {
+    const priceWrapper = document.querySelector('[data-price-wrapper]');
+    if (!priceWrapper) return;
+
+    const priceElement = priceWrapper.querySelector('[data-price]');
+    const compareElement = priceWrapper.querySelector('[data-compare-price]');
+
+    // Listen for variant changes
+    document.addEventListener('variant:change', (e) => {
+      const variant = e.detail.variant;
+      if (!variant) return;
+
+      // Update price
+      priceElement.textContent = Shopify.formatMoney(variant.price, '{{ shop.money_format }}');
+
+      // Update compare at price
+      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+        priceElement.classList.add('price-list__price--sale');
+
+        if (!compareElement) {
+          const compare = document.createElement('div');
+          compare.className = 'price-list__compare';
+          compare.dataset.comparePrice = '';
+          priceWrapper.insertBefore(compare, priceElement.nextSibling);
+        }
+
+        compareElement.textContent = Shopify.formatMoney(variant.compare_at_price, '{{ shop.money_format }}');
+        compareElement.style.display = 'block';
+
+        // Update/add badge
+        const savingsPercent = Math.round(((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100);
+        let badgeElement = priceWrapper.querySelector('.price-list__badge');
+
+        if (!badgeElement) {
+          badgeElement = document.createElement('div');
+          badgeElement.className = 'price-list__badge';
+          priceWrapper.insertBefore(badgeElement, compareElement.nextSibling);
+        }
+
+        badgeElement.textContent = `-${savingsPercent}%`;
+        badgeElement.style.display = 'block';
+      } else {
+        priceElement.classList.remove('price-list__price--sale');
+
+        if (compareElement) {
+          compareElement.style.display = 'none';
+        }
+
+        const badgeElement = priceWrapper.querySelector('.price-list__badge');
+        if (badgeElement) {
+          badgeElement.style.display = 'none';
+        }
+      }
+    });
+
+    // Shopify formatMoney helper
+    if (!window.Shopify) window.Shopify = {};
+    Shopify.formatMoney = function(cents, format) {
+      if (typeof cents === 'string') cents = cents.replace('.', '');
+      let value = '';
+      const placeholderRegex = /\{\{\s*(\w+)\s*\}\}/;
+      const formatString = format || '{{amount}}';
+
+      function formatWithDelimiters(number, precision, thousands, decimal) {
+        precision = precision || 2;
+        thousands = thousands || ',';
+        decimal = decimal || '.';
+
+        if (isNaN(number) || number == null) return 0;
+
+        number = (number / 100.0).toFixed(precision);
+
+        const parts = number.split('.');
+        const dollarsAmount = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thousands);
+        const centsAmount = parts[1] ? (decimal + parts[1]) : '';
+
+        return dollarsAmount + centsAmount;
+      }
+
+      switch (formatString.match(placeholderRegex)[1]) {
+        case 'amount':
+          value = formatWithDelimiters(cents, 2);
+          break;
+        case 'amount_no_decimals':
+          value = formatWithDelimiters(cents, 0);
+          break;
+        case 'amount_with_comma_separator':
+          value = formatWithDelimiters(cents, 2, '.', ',');
+          break;
+        case 'amount_no_decimals_with_comma_separator':
+          value = formatWithDelimiters(cents, 0, '.', ',');
+          break;
+      }
+
+      return formatString.replace(placeholderRegex, value);
+    };
+  })();
+</script>

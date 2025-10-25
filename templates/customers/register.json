@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-customers-register",
+      "settings": {
+        "show_subtitle": true,
+        "subtitle": "Create an account to track your orders and get exclusive offers"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

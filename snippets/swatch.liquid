@@ -1,0 +1,278 @@
+<!--
+  Snippet: Swatch
+  Descrição: Sistema de swatches para cores e variantes de produtos
+
+  Uso:
+  {% render 'swatch', option_value: 'Blue', type: 'color' %}
+  {% render 'swatch', option_value: 'L', type: 'size' %}
+
+  Parâmetros:
+  - option_value: Valor da opção (ex: "Blue", "Red", "L", "XL")
+  - type: 'color', 'size', 'default' (padrão: detecta automaticamente)
+  - selected: true/false - Se está selecionado
+  - available: true/false - Se está disponível (padrão: true)
+  - size: 'small', 'default', 'large' (padrão: 'default')
+  - class: Classes CSS adicionais
+
+  Cores suportadas (auto-detecção):
+  - Preto/Black → #000000
+  - Branco/White → #FFFFFF
+  - Vermelho/Red → #DC2626
+  - Azul/Blue → #2563EB
+  - Verde/Green → #16A34A
+  - Amarelo/Yellow → #EAB308
+  - Rosa/Pink → #EC4899
+  - Roxo/Purple → #9333EA
+  - Cinza/Gray → #6B7280
+  - Laranja/Orange → #EA580C
+  - Marrom/Brown → #92400E
+-->
+
+<style>
+  .swatch {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .swatch--color {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .swatch--color.swatch--small {
+    width: 32px;
+    height: 32px;
+  }
+
+  .swatch--color.swatch--large {
+    width: 48px;
+    height: 48px;
+  }
+
+  .swatch--color:hover:not(.swatch--unavailable) {
+    border-color: var(--color-brand-yellow);
+    transform: scale(1.1);
+  }
+
+  .swatch--color.swatch--selected {
+    border-color: var(--color-brand-yellow);
+    border-width: 3px;
+  }
+
+  .swatch--color.swatch--selected::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 6L9 17L4 12' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+
+  .swatch__color-inner {
+    width: 100%;
+    height: 100%;
+  }
+
+  .swatch--size {
+    min-width: 44px;
+    height: 44px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #FFFFFF;
+  }
+
+  .swatch--size.swatch--small {
+    min-width: 36px;
+    height: 36px;
+    padding: 0 10px;
+    font-size: 0.75rem;
+  }
+
+  .swatch--size.swatch--large {
+    min-width: 52px;
+    height: 52px;
+    padding: 0 16px;
+    font-size: 1rem;
+  }
+
+  .swatch--size:hover:not(.swatch--unavailable) {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .swatch--size.swatch--selected {
+    background: var(--color-brand-yellow);
+    border-color: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  .swatch--unavailable {
+    opacity: 0.3;
+    cursor: not-allowed;
+    position: relative;
+  }
+
+  .swatch--unavailable::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 110%;
+    height: 2px;
+    background: #ef4444;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  .swatch__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    color: #FFFFFF;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+  }
+
+  .swatch:hover .swatch__tooltip {
+    opacity: 1;
+  }
+
+  .swatch__tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.9);
+  }
+</style>
+
+{%- liquid
+  assign swatch_value = option_value
+  assign swatch_type = type
+  assign swatch_selected = selected
+  assign swatch_available = available | default: true
+  assign swatch_size = size | default: 'default'
+  assign swatch_class = class | default: ''
+
+  # Auto-detect type if not specified
+  if swatch_type == blank
+    assign value_lower = swatch_value | downcase
+    assign color_keywords = 'black,white,red,blue,green,yellow,pink,purple,gray,grey,orange,brown,preto,branco,vermelho,azul,verde,amarelo,rosa,roxo,cinza,laranja,marrom' | split: ','
+    assign is_color = false
+    for keyword in color_keywords
+      if value_lower contains keyword
+        assign is_color = true
+        break
+      endif
+    endfor
+    if is_color
+      assign swatch_type = 'color'
+    else
+      assign swatch_type = 'size'
+    endif
+  endif
+
+  # Color mapping
+  assign color_map = ''
+  case swatch_value | downcase
+    when 'black', 'preto'
+      assign color_map = '#000000'
+    when 'white', 'branco'
+      assign color_map = '#FFFFFF'
+    when 'red', 'vermelho'
+      assign color_map = '#DC2626'
+    when 'blue', 'azul'
+      assign color_map = '#2563EB'
+    when 'green', 'verde'
+      assign color_map = '#16A34A'
+    when 'yellow', 'amarelo'
+      assign color_map = '#EAB308'
+    when 'pink', 'rosa'
+      assign color_map = '#EC4899'
+    when 'purple', 'roxo'
+      assign color_map = '#9333EA'
+    when 'gray', 'grey', 'cinza'
+      assign color_map = '#6B7280'
+    when 'orange', 'laranja'
+      assign color_map = '#EA580C'
+    when 'brown', 'marrom'
+      assign color_map = '#92400E'
+    when 'navy', 'navy blue'
+      assign color_map = '#1E3A8A'
+    when 'sky', 'sky blue', 'light blue', 'azul claro'
+      assign color_map = '#0EA5E9'
+    when 'lime'
+      assign color_map = '#84CC16'
+    when 'gold', 'dourado'
+      assign color_map = '#F59E0B'
+    when 'silver', 'prata'
+      assign color_map = '#D1D5DB'
+    else
+      # Try to detect hex color in the value
+      if swatch_value contains '#'
+        assign color_map = swatch_value
+      else
+        assign color_map = '#6B7280'
+      endif
+  endcase
+
+  # Build CSS classes
+  assign swatch_classes = 'swatch'
+  assign swatch_classes = swatch_classes | append: ' swatch--' | append: swatch_type
+  assign swatch_classes = swatch_classes | append: ' swatch--' | append: swatch_size
+
+  if swatch_selected
+    assign swatch_classes = swatch_classes | append: ' swatch--selected'
+  endif
+
+  unless swatch_available
+    assign swatch_classes = swatch_classes | append: ' swatch--unavailable'
+  endunless
+
+  if swatch_class != blank
+    assign swatch_classes = swatch_classes | append: ' ' | append: swatch_class
+  endif
+-%}
+
+<div class="{{ swatch_classes }}" data-swatch data-value="{{ swatch_value }}" title="{{ swatch_value }}">
+  {%- if swatch_type == 'color' -%}
+    <div class="swatch__color-inner" style="background-color: {{ color_map }};"></div>
+  {%- else -%}
+    {{ swatch_value }}
+  {%- endif -%}
+
+  <span class="swatch__tooltip">
+    {{ swatch_value }}
+    {%- unless swatch_available -%}
+      - {{ 'products.product.sold_out' | t }}
+    {%- endunless -%}
+  </span>
+</div>

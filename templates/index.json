@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "badge": "New Collection",
+        "title": "FOLTZ Fanwear",
+        "subtitle": "Premium soccer jerseys for the ultimate fan experience",
+        "cta_text": "Shop Now",
+        "cta_url": "/collections/all",
+        "show_scroll_indicator": true
+      }
+    },
+    "featured-collections": {
+      "type": "featured-collections",
+      "settings": {}
+    },
+    "best-sellers": {
+      "type": "best-sellers",
+      "settings": {}
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "featured-collections",
+    "best-sellers",
+    "featured-products"
+  ]
+}

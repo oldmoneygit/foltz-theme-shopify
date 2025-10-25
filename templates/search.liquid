@@ -1,0 +1,31 @@
+{%- comment -%}
+  SEARCH RESULTS TEMPLATE
+
+  Displays search results for products
+
+  Features:
+  - Search query display
+  - Results count
+  - Product grid
+  - No results state
+
+  Phase 10: To be implemented
+{%- endcomment -%}
+
+<div class="search-template">
+  <h1>{{ 'general.search.title' | t }}: "{{ search.terms }}"</h1>
+
+  {%- if search.performed -%}
+    <p>{{ search.results_count }} {{ 'general.search.results' | t }}</p>
+
+    {%- if search.results_count > 0 -%}
+      <div class="product-grid">
+        {%- for item in search.results -%}
+          {% render 'product-card', product: item %}
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <p>{{ 'general.search.no_results' | t }}</p>
+    {%- endif -%}
+  {%- endif -%}
+</div>

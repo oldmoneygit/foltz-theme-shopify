@@ -1,0 +1,186 @@
+<!--
+  Section: 404 Not Found
+  Descrição: Página de erro 404 com design FOLTZ e sugestões de produtos
+-->
+
+<style>
+  .error-404 {
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+    text-align: center;
+  }
+
+  .error-404__container {
+    max-width: 800px;
+    width: 100%;
+  }
+
+  .error-404__code {
+    font-size: 10rem;
+    font-weight: 900;
+    color: var(--color-brand-yellow);
+    line-height: 1;
+    margin-bottom: 24px;
+    text-shadow: 0 0 40px rgba(218, 241, 13, 0.3);
+  }
+
+  .error-404__title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .error-404__message {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .error-404__actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .error-404__btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .error-404__btn--primary {
+    background: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  .error-404__btn--primary:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
+  }
+
+  .error-404__btn--secondary {
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .error-404__btn--secondary:hover {
+    background: rgba(218, 241, 13, 0.1);
+    border-color: var(--color-brand-yellow);
+    color: var(--color-brand-yellow);
+  }
+
+  .error-404__suggestions {
+    margin-top: 80px;
+  }
+
+  .error-404__suggestions-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 32px;
+  }
+
+  .error-404__products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .error-404 {
+      padding: 60px 16px;
+    }
+
+    .error-404__code {
+      font-size: 6rem;
+    }
+
+    .error-404__title {
+      font-size: 1.75rem;
+    }
+
+    .error-404__message {
+      font-size: 1rem;
+    }
+
+    .error-404__actions {
+      flex-direction: column;
+    }
+
+    .error-404__btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="error-404">
+  <div class="error-404__container">
+    <div class="error-404__code">404</div>
+    <h1 class="error-404__title">
+      {{ section.settings.title | default: 'general.404.title' | t }}
+    </h1>
+    <p class="error-404__message">
+      {{ section.settings.message | default: 'general.404.message' | t }}
+    </p>
+
+    <div class="error-404__actions">
+      <a href="{{ routes.root_url }}" class="error-404__btn error-404__btn--primary">
+        {{ 'general.404.link_home' | t }}
+      </a>
+      <a href="{{ routes.all_products_collection_url }}" class="error-404__btn error-404__btn--secondary">
+        {{ 'general.404.link_shop' | t }}
+      </a>
+    </div>
+
+    {%- if section.settings.show_suggestions and collections['all'].products.size > 0 -%}
+      <div class="error-404__suggestions">
+        <h2 class="error-404__suggestions-title">
+          {{ 'general.404.suggestions_title' | t }}
+        </h2>
+        <div class="error-404__products">
+          {%- for product in collections['all'].products limit: 3 -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Page not found"
+    },
+    {
+      "type": "textarea",
+      "id": "message",
+      "label": "Message",
+      "default": "The page you're looking for doesn't exist. It might have been moved or deleted."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_suggestions",
+      "label": "Show product suggestions",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

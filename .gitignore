@@ -1,0 +1,45 @@
+# Shopify Theme .gitignore
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.sublime-*
+*.swp
+*.swo
+*~
+
+# Node Modules (if using Shopify CLI)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment Files
+.env
+.env.local
+.env.*.local
+
+# Shopify CLI
+.shopify/
+config.yml
+
+# Build Files
+dist/
+build/
+
+# Logs
+*.log
+logs/
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+
+# Lock Files (optional - some prefer to commit these)
+package-lock.json
+yarn.lock
