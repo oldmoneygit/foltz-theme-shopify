@@ -69,7 +69,7 @@ function normalizeProductTitle(productName) {
   const parts = {
     model: '',
     year: '',
-    type: '',
+    types: [],
     extras: []
   };
 
@@ -77,20 +77,24 @@ function normalizeProductTitle(productName) {
   const types = ['Goalkeeper', 'Pre-Match', 'Training', 'Home', 'Away', 'Third'];
   const extras = ['Long Sleeve', 'Suit', 'Jacket', 'Sweatshirt'];
 
-  // Detecta ano (4 dígitos ou formato XX/XX ou XX_XX)
-  const yearMatch = title.match(/\b(19\d{2}|20\d{2})\b/) || title.match(/\b(\d{2}[_\/]\d{2})\b/);
+  // Detecta ano (4 dígitos ou formato XX/XX, XX_XX, XX-XX)
+  const yearMatch = title.match(/\b(19\d{2}|20\d{2})\b/) || title.match(/\b(\d{2})[_\-\/](\d{2})\b/);
   if (yearMatch) {
-    parts.year = yearMatch[1];
+    // Se for temporada (XX/XX), padroniza com barra
+    if (yearMatch[2]) {
+      parts.year = `${yearMatch[1]}/${yearMatch[2]}`;
+    } else {
+      parts.year = yearMatch[1];
+    }
     title = title.replace(yearMatch[0], '').trim();
   }
 
-  // Detecta tipo
+  // Detecta TODOS os tipos
   for (const type of types) {
     const regex = new RegExp(`\\b${type}\\b`, 'i');
     if (regex.test(title)) {
-      parts.type = type;
+      parts.types.push(type);
       title = title.replace(regex, '').trim();
-      break;
     }
   }
 
@@ -106,11 +110,11 @@ function normalizeProductTitle(productName) {
   // O que sobrou é o modelo
   parts.model = title.trim();
 
-  // Reconstrói o título na ordem: [MODELO] [ANO] [TIPO] [EXTRAS]
+  // Reconstrói o título na ordem: [MODELO] [ANO] [TIPOS] [EXTRAS]
   const rebuiltTitle = [
     parts.model,
     parts.year,
-    parts.type,
+    ...parts.types,
     ...parts.extras
   ].filter(Boolean).join(' ');
 
