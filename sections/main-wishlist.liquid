@@ -219,6 +219,8 @@
     const countEl = document.querySelector('[data-wishlist-count]');
     const clearBtn = document.querySelector('[data-wishlist-clear]');
 
+    console.log('Rendering wishlist:', wishlist);
+
     // Update count
     if (countEl) {
       countEl.textContent = wishlist.length;
@@ -241,44 +243,54 @@
       gridEl.innerHTML = '<p style="color: #FFF; text-align: center; width: 100%;">Cargando productos...</p>';
 
       try {
-        const productCards = await Promise.all(
-          wishlist.map(async (productId) => {
-            try {
-              const response = await fetch(`/products.json?limit=250`);
-              const data = await response.json();
-              const product = data.products.find(p => p.id === productId);
+        // Fetch all products once
+        const response = await fetch('/products.json?limit=250');
+        const data = await response.json();
+        console.log('Products fetched:', data.products.length);
 
-              if (!product) return '';
+        const productCards = wishlist.map((productId) => {
+          // Convert to number for comparison
+          const numericId = parseInt(productId);
+          const product = data.products.find(p => p.id === numericId);
 
-              // Render product card
-              return `
-                <a href="/products/${product.handle}" class="product-card" data-product-id="${product.id}">
-                  <button class="product-card-wishlist active" type="button" aria-label="Remove from wishlist">
-                    <svg viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
-                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                    </svg>
-                  </button>
-                  <div class="product-card-image">
-                    <img src="${product.images[0]?.src || ''}" alt="${product.title}" loading="lazy">
-                  </div>
-                  <div class="product-card-content">
-                    <h3 class="product-card-name">${product.title}</h3>
-                    <div class="product-card-prices">
-                      ${product.compare_at_price_max > product.price_max ? `<p class="product-card-price-regular">$${(product.compare_at_price_max / 100).toFixed(2)}</p>` : ''}
-                      <p class="product-card-price-sale">$${(product.price_max / 100).toFixed(2)}</p>
-                      <div class="product-card-promo"><span>COMPRA 1 LLEVA 2</span></div>
-                    </div>
-                  </div>
-                </a>
-              `;
-            } catch (err) {
-              console.error('Error fetching product:', err);
-              return '';
-            }
-          })
-        );
+          console.log('Looking for product ID:', numericId, 'Found:', !!product);
 
-        gridEl.innerHTML = productCards.filter(card => card).join('');
+          if (!product) {
+            console.warn('Product not found for ID:', productId);
+            return '';
+          }
+
+          // Render product card
+          return `
+            <a href="/products/${product.handle}" class="product-card" data-product-id="${product.id}">
+              <button class="product-card-wishlist wishlist-active" type="button" aria-label="Remove from wishlist">
+                <svg viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              <div class="product-card-image">
+                <img src="${product.images[0]?.src || ''}" alt="${product.title}" loading="lazy">
+              </div>
+              <div class="product-card-content">
+                <h3 class="product-card-name">${product.title}</h3>
+                <div class="product-card-prices">
+                  ${product.compare_at_price_max > product.price_max ? `<p class="product-card-price-regular">$${(product.compare_at_price_max / 100).toFixed(2)}</p>` : ''}
+                  <p class="product-card-price-sale">$${(product.price_max / 100).toFixed(2)}</p>
+                  <div class="product-card-promo"><span>COMPRA 1 LLEVA 2</span></div>
+                </div>
+              </div>
+            </a>
+          `;
+        });
+
+        const filteredCards = productCards.filter(card => card);
+        console.log('Product cards created:', filteredCards.length);
+
+        if (filteredCards.length === 0) {
+          gridEl.innerHTML = '<p style="color: #FFF; text-align: center; width: 100%;">No se encontraron productos</p>';
+        } else {
+          gridEl.innerHTML = filteredCards.join('');
+        }
       } catch (err) {
         console.error('Error rendering wishlist:', err);
         gridEl.innerHTML = '<p style="color: #EF4444; text-align: center; width: 100%;">Error al cargar productos</p>';

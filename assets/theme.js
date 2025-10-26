@@ -339,12 +339,14 @@
       return wishlist ? JSON.parse(wishlist) : [];
     };
 
-    // Add to wishlist
+    // Add to wishlist (now saves product ID as string)
     window.addToWishlist = (productId) => {
       console.log('Adding to wishlist:', productId);
+      const productIdStr = String(productId);
       const wishlist = getWishlist();
-      if (!wishlist.includes(productId)) {
-        wishlist.push(productId);
+
+      if (!wishlist.includes(productIdStr)) {
+        wishlist.push(productIdStr);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
         updateWishlistUI();
         console.log('Wishlist updated:', wishlist);
@@ -353,6 +355,8 @@
         if (typeof window.showWishlistToast === 'function') {
           window.showWishlistToast('¡Agregado a Favoritos!', 'add');
         }
+      } else {
+        console.log('Product already in wishlist');
       }
     };
 
