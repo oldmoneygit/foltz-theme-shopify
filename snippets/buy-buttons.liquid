@@ -189,6 +189,27 @@
       display: inline;
     }
   }
+
+  /* Mobile: reduzir tamanho dos botões */
+  @media screen and (max-width: 749px) {
+    .buy-button {
+      padding: 10px 12px !important;
+      font-size: 0.85rem !important;
+      min-height: 42px !important;
+    }
+
+    .wishlist-button {
+      padding: 10px !important;
+      min-height: 42px !important;
+      min-width: 42px !important;
+    }
+
+    .buy-button svg,
+    .wishlist-button svg {
+      width: 16px !important;
+      height: 16px !important;
+    }
+  }
 </style>
 
 <script>
