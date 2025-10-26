@@ -1,20 +1,57 @@
 <style>
+  .product-page {
+    background: #000000;
+    min-height: 100vh;
+  }
+
+  .product-page__container {
+    max-width: var(--container-max-width, 1400px);
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-page__container {
+      padding: 24px;
+    }
+  }
+
+  .product-page__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.875rem;
+    margin-bottom: 16px;
+    transition: color 0.2s ease;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-page__back {
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+  }
+
+  .product-page__back:hover {
+    color: #DAF10D;
+  }
+
+  .product-page__back svg {
+    width: 16px;
+    height: 16px;
+  }
+
   .product {
     display: grid;
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 16px;
-    padding-bottom: 32px;
-    max-width: var(--container-max-width, 1400px);
-    margin: 0 auto;
-    background: #000000;
   }
 
   @media screen and (min-width: 768px) {
     .product {
       gap: 32px;
-      padding: 32px 24px;
-      padding-bottom: 48px;
     }
   }
 
@@ -22,15 +59,24 @@
     .product {
       grid-template-columns: 1fr 1fr;
       gap: 48px;
-      padding: 48px 24px;
-      padding-bottom: 64px;
     }
   }
 </style>
 
 {%- capture product_form_id -%}product-form-{{ section.id }}{%- endcapture -%}
 
-<div class="product">
+<div class="product-page">
+  <div class="product-page__container">
+    {%- comment %} Back Button {%- endcomment -%}
+    <a href="{{ routes.root_url }}" class="product-page__back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      Volver a la tienda
+    </a>
+
+    {%- comment %} Product Grid {%- endcomment -%}
+    <div class="product">
   {%- if product.media.size > 0 -%}
     <div class="product__gallery">
       {%- render 'product-gallery', product: product, section: section -%}
@@ -39,6 +85,8 @@
 
   <div class="product__info">
     {%- render 'product-info', product: product, section: section, product_form_id: product_form_id -%}
+  </div>
+</div>
   </div>
 </div>
 
