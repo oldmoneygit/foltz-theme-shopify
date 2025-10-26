@@ -1,0 +1,402 @@
+{% comment %}
+  League Collections Section
+  Displays all league collections in a grid with beautiful cards
+{% endcomment %}
+
+{%- liquid
+  # Define league collections mapping
+  assign league_collections = 'premier-league,la-liga,serie-a,bundesliga,ligue-1,eredivisie,primeira-liga,liga-mx,mls,sul-americana,brasileirao,national-teams' | split: ','
+
+  # League names in correct order
+  assign league_names = 'Premier League,La Liga,Serie A,Bundesliga,Ligue 1,Eredivisie,Primeira Liga,Liga MX,MLS,Sul-Americana,Brasileirão,National Teams' | split: ','
+
+  # League gradients
+  assign gradients = 'from-purple-600 via-pink-600 to-purple-900,from-orange-500 via-red-600 to-orange-700,from-blue-400 via-cyan-500 to-blue-600,from-red-600 via-black to-red-800,from-blue-600 via-blue-700 to-blue-900,from-orange-600 via-blue-600 to-orange-700,from-red-600 via-green-600 to-red-700,from-green-500 via-green-600 to-red-600,from-red-600 via-blue-600 to-red-700,from-cyan-400 via-purple-500 to-purple-700,from-green-500 via-yellow-500 to-blue-600,from-blue-500 via-cyan-500 to-blue-700' | split: ','
+-%}
+
+<section class="league-collections" data-section-id="{{ section.id }}" data-section-type="league-collections">
+  {%- if section.settings.enable_background_effects -%}
+  <div class="league-collections__bg-effects"></div>
+  {%- endif -%}
+
+  <div class="league-collections__container container">
+    {%- if section.settings.show_header -%}
+    <!-- Section Header -->
+    <div class="league-collections__header">
+      <div class="league-collections__subtitle">
+        <span>{{ section.settings.subtitle }}</span>
+      </div>
+      <h2 class="league-collections__title">
+        <span class="league-collections__title-white">{{ section.settings.title_white }}</span>
+        <span class="league-collections__title-yellow">{{ section.settings.title_yellow }}</span>
+      </h2>
+      <p class="league-collections__description">
+        {{ section.settings.description }}
+      </p>
+    </div>
+    {%- endif -%}
+
+    <!-- League Cards Grid -->
+    <div class="league-collections__grid">
+      {%- for i in (0..11) -%}
+        {%- assign handle = league_collections[i] -%}
+        {%- assign collection = collections[handle] -%}
+
+        {%- if collection != blank and collection.products_count > 0 -%}
+          {%- assign league_name = league_names[i] -%}
+          {%- assign gradient = gradients[i] -%}
+
+          <div class="league-collections__card-wrapper">
+            <a href="{{ collection.url }}" class="league-collections__card">
+              <!-- Background Image or Gradient -->
+              {%- if collection.image -%}
+                <div class="league-collections__card-bg league-collections__card-bg--image"
+                     style="background-image: url('{{ collection.image | image_url: width: 800 }}')"></div>
+              {%- else -%}
+                <div class="league-collections__card-bg league-collections__card-bg--gradient league-collections__card-bg--{{ handle }}"></div>
+              {%- endif -%}
+
+              <!-- Dark Overlay -->
+              <div class="league-collections__card-overlay"></div>
+
+              <!-- Gradient Glow -->
+              <div class="league-collections__card-glow league-collections__card-glow--{{ handle }}"></div>
+
+              <!-- Border -->
+              <div class="league-collections__card-border"></div>
+
+              <!-- Shine Effect -->
+              <div class="league-collections__card-shine"></div>
+
+              <!-- Content -->
+              <div class="league-collections__card-content">
+                <h3 class="league-collections__card-title">{{ league_name }}</h3>
+                <p class="league-collections__card-count">{{ collection.products_count }} productos</p>
+              </div>
+            </a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.league-collections {
+  position: relative;
+  padding: 4rem 0;
+  background: #000;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .league-collections {
+    padding: 6rem 0;
+  }
+}
+
+.league-collections__bg-effects {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(255, 201, 60, 0.1), transparent, transparent);
+  pointer-events: none;
+}
+
+.league-collections__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 768px) {
+  .league-collections__container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Header */
+.league-collections__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 768px) {
+  .league-collections__header {
+    margin-bottom: 4rem;
+  }
+}
+
+.league-collections__subtitle {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.league-collections__subtitle span {
+  color: #FFC93C;
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+}
+
+@media (min-width: 768px) {
+  .league-collections__subtitle span {
+    font-size: 0.875rem;
+  }
+}
+
+.league-collections__title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .league-collections__title {
+    font-size: 3rem;
+  }
+}
+
+.league-collections__title-white {
+  color: #fff;
+}
+
+.league-collections__title-yellow {
+  color: #FFC93C;
+}
+
+.league-collections__description {
+  font-size: 1rem;
+  max-width: 42rem;
+  margin: 0 auto;
+  color: #9CA3AF;
+}
+
+@media (min-width: 768px) {
+  .league-collections__description {
+    font-size: 1.125rem;
+  }
+}
+
+/* Grid */
+.league-collections__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .league-collections__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .league-collections__grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+/* Card */
+.league-collections__card {
+  position: relative;
+  display: block;
+  height: 300px;
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .league-collections__card {
+    height: 350px;
+  }
+}
+
+.league-collections__card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+.league-collections__card-bg {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.7s ease;
+}
+
+.league-collections__card:hover .league-collections__card-bg {
+  transform: scale(1.1);
+}
+
+.league-collections__card-bg--image {
+  background-size: cover;
+  background-position: center;
+}
+
+/* Gradients for each league */
+.league-collections__card-bg--premier-league { background: linear-gradient(135deg, #7E22CE, #EC4899, #581C87); }
+.league-collections__card-bg--la-liga { background: linear-gradient(135deg, #F97316, #DC2626, #C2410C); }
+.league-collections__card-bg--serie-a { background: linear-gradient(135deg, #60A5FA, #06B6D4, #2563EB); }
+.league-collections__card-bg--bundesliga { background: linear-gradient(135deg, #DC2626, #000, #991B1B); }
+.league-collections__card-bg--ligue-1 { background: linear-gradient(135deg, #2563EB, #1D4ED8, #1E3A8A); }
+.league-collections__card-bg--eredivisie { background: linear-gradient(135deg, #EA580C, #2563EB, #C2410C); }
+.league-collections__card-bg--primeira-liga { background: linear-gradient(135deg, #DC2626, #16A34A, #B91C1C); }
+.league-collections__card-bg--liga-mx { background: linear-gradient(135deg, #22C55E, #16A34A, #DC2626); }
+.league-collections__card-bg--mls { background: linear-gradient(135deg, #DC2626, #2563EB, #B91C1C); }
+.league-collections__card-bg--sul-americana { background: linear-gradient(135deg, #22D3EE, #A855F7, #7E22CE); }
+.league-collections__card-bg--brasileirao { background: linear-gradient(135deg, #22C55E, #EAB308, #2563EB); }
+.league-collections__card-bg--national-teams { background: linear-gradient(135deg, #3B82F6, #06B6D4, #1D4ED8); }
+
+.league-collections__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.5s ease;
+}
+
+.league-collections__card:hover .league-collections__card-overlay {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.league-collections__card-glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  mix-blend-mode: overlay;
+}
+
+.league-collections__card:hover .league-collections__card-glow {
+  opacity: 0.2;
+}
+
+/* Glow gradients */
+.league-collections__card-glow--premier-league { background: linear-gradient(135deg, #7E22CE, #EC4899, #581C87); }
+.league-collections__card-glow--la-liga { background: linear-gradient(135deg, #F97316, #DC2626, #C2410C); }
+.league-collections__card-glow--serie-a { background: linear-gradient(135deg, #60A5FA, #06B6D4, #2563EB); }
+.league-collections__card-glow--bundesliga { background: linear-gradient(135deg, #DC2626, #000, #991B1B); }
+.league-collections__card-glow--ligue-1 { background: linear-gradient(135deg, #2563EB, #1D4ED8, #1E3A8A); }
+.league-collections__card-glow--eredivisie { background: linear-gradient(135deg, #EA580C, #2563EB, #C2410C); }
+.league-collections__card-glow--primeira-liga { background: linear-gradient(135deg, #DC2626, #16A34A, #B91C1C); }
+.league-collections__card-glow--liga-mx { background: linear-gradient(135deg, #22C55E, #16A34A, #DC2626); }
+.league-collections__card-glow--mls { background: linear-gradient(135deg, #DC2626, #2563EB, #B91C1C); }
+.league-collections__card-glow--sul-americana { background: linear-gradient(135deg, #22D3EE, #A855F7, #7E22CE); }
+.league-collections__card-glow--brasileirao { background: linear-gradient(135deg, #22C55E, #EAB308, #2563EB); }
+.league-collections__card-glow--national-teams { background: linear-gradient(135deg, #3B82F6, #06B6D4, #1D4ED8); }
+
+.league-collections__card-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+.league-collections__card:hover .league-collections__card-border {
+  border-color: rgba(255, 201, 60, 0.7);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.league-collections__card-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.league-collections__card:hover .league-collections__card-shine {
+  opacity: 1;
+  animation: shine 1.5s infinite 2s;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Content */
+.league-collections__card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+.league-collections__card-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.league-collections__card-count {
+  font-size: 0.875rem;
+  color: #FFC93C;
+  font-weight: 600;
+}
+</style>
+
+{% schema %}
+{
+  "name": "League Collections",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header",
+      "label": "Show section header",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "🌍 NUESTRAS LIGAS"
+    },
+    {
+      "type": "text",
+      "id": "title_white",
+      "label": "Title (White part)",
+      "default": "COLECCIONES "
+    },
+    {
+      "type": "text",
+      "id": "title_yellow",
+      "label": "Title (Yellow part)",
+      "default": "OFICIALES"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Las mejores ligas de fútbol del mundo"
+    },
+    {
+      "type": "header",
+      "content": "Visual Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_background_effects",
+      "label": "Enable background effects",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "League Collections"
+    }
+  ]
+}
+{% endschema %}

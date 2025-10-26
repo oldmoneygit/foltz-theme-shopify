@@ -24,10 +24,15 @@
       "settings": {
       }
     },
-    "featured-collections": {
-      "type": "featured-collections",
+    "league-collections": {
+      "type": "league-collections",
       "settings": {
-        "title": "Shop by League"
+        "show_header": true,
+        "subtitle": "🌍 NUESTRAS LIGAS",
+        "title_white": "COLECCIONES ",
+        "title_yellow": "OFICIALES",
+        "description": "Las mejores ligas de fútbol del mundo",
+        "enable_background_effects": true
       }
     },
     "best-sellers": {
@@ -48,7 +53,7 @@
   "order": [
     "hero",
     "how-it-works",
-    "featured-collections",
+    "league-collections",
     "best-sellers",
     "featured-products"
   ]
