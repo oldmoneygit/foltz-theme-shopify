@@ -83,6 +83,7 @@
       "settings": {
         "show_section": true,
         "collection": "la-liga",
+        "featured_image": "shopify://shop_images/replicate-prediction-8vdn549pw1rma0ct47ertkjta0.jpg",
         "emoji": "🇪🇸",
         "title": "LA LIGA",
         "subtitle": "Los clásicos del fútbol español",
@@ -96,6 +97,7 @@
       "settings": {
         "show_section": true,
         "collection": "serie-a",
+        "featured_image": "shopify://shop_images/replicate-prediction-4fw9zq1sjhrm80ct47gsaebty4.jpg",
         "emoji": "🇮🇹",
         "title": "SERIE A",
         "subtitle": "Elegancia italiana en cada camiseta",
