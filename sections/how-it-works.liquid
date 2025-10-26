@@ -1,0 +1,481 @@
+<!--
+  Section: How It Works
+  Descrição: Explica como funciona a promoção COMPRA 1 LLEVA 3
+-->
+
+<style>
+  .how-it-works {
+    padding: 64px 24px;
+    background: #000000;
+  }
+
+  .how-it-works__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .how-it-works__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .how-it-works__badge {
+    display: inline-block;
+    background: var(--color-accent, #DAF10D);
+    color: #000000;
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+  }
+
+  .how-it-works__title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .how-it-works__title-highlight {
+    color: var(--color-accent, #DAF10D);
+  }
+
+  .how-it-works__subtitle {
+    color: #D1D5DB;
+    font-size: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .how-it-works__subtitle-highlight {
+    color: var(--color-accent, #DAF10D);
+    font-weight: 700;
+  }
+
+  /* Steps Grid */
+  .how-it-works__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+
+  .how-it-works__step {
+    position: relative;
+    background: linear-gradient(135deg, #18181B 0%, #09090B 100%);
+    border: 1px solid #27272A;
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+  }
+
+  .how-it-works__step:hover {
+    border-color: rgba(218, 241, 13, 0.5);
+    transform: translateY(-4px);
+  }
+
+  .how-it-works__step-number {
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    width: 40px;
+    height: 40px;
+    background: var(--color-accent, #DAF10D);
+    color: #000000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 1.125rem;
+    z-index: 10;
+  }
+
+  .how-it-works__step-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .how-it-works__step-icon svg {
+    width: 28px;
+    height: 28px;
+    stroke: #FFFFFF;
+    fill: none;
+  }
+
+  .how-it-works__step-icon--blue {
+    background: #3B82F6;
+  }
+
+  .how-it-works__step-icon--yellow {
+    background: #EAB308;
+  }
+
+  .how-it-works__step-icon--pink {
+    background: #EC4899;
+  }
+
+  .how-it-works__step-icon--green {
+    background: #10B981;
+  }
+
+  .how-it-works__step-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 8px;
+  }
+
+  .how-it-works__step-description {
+    color: #9CA3AF;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  /* Bottom Info Box */
+  .how-it-works__info-box {
+    background: linear-gradient(to right, rgba(161, 98, 7, 0.3), rgba(113, 63, 18, 0.3));
+    border: 2px solid rgba(161, 98, 7, 0.5);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .how-it-works__info-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .how-it-works__info-title-highlight {
+    color: var(--color-accent, #DAF10D);
+  }
+
+  .how-it-works__info-text {
+    color: #D1D5DB;
+    margin-bottom: 24px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .how-it-works__info-text strong {
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .how-it-works__badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .how-it-works__badge-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(5, 46, 22, 0.5);
+    border: 1px solid rgba(21, 128, 61, 0.5);
+    padding: 8px 16px;
+    border-radius: 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #4ADE80;
+  }
+
+  .how-it-works__badge-item svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    fill: none;
+  }
+
+  /* Responsive */
+  @media (min-width: 768px) {
+    .how-it-works {
+      padding: 96px 24px;
+    }
+
+    .how-it-works__title {
+      font-size: 3rem;
+    }
+
+    .how-it-works__subtitle {
+      font-size: 1.125rem;
+    }
+
+    .how-it-works__info-title {
+      font-size: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .how-it-works__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<section class="how-it-works">
+  <div class="how-it-works__container">
+    <!-- Header -->
+    <div class="how-it-works__header">
+      <!-- Badge -->
+      <div class="how-it-works__badge">
+        {{ section.settings.badge_text | default: 'Promoción Activa' }}
+      </div>
+
+      <!-- Title -->
+      <h2 class="how-it-works__title">
+        {{ section.settings.title_prefix | default: '¿Cómo Funciona el' }}
+        <span class="how-it-works__title-highlight">{{ section.settings.promo_name | default: 'COMPRA 1 LLEVA 3' }}</span>?
+      </h2>
+
+      <!-- Subtitle -->
+      <p class="how-it-works__subtitle">
+        {{ section.settings.subtitle | default: 'Es simple: comprá 3 productos y 1 sale completamente GRATIS.' }}
+        <span class="how-it-works__subtitle-highlight">{{ section.settings.subtitle_highlight | default: '¡Sin pegadinhas, sin trucos!' }}</span>
+      </p>
+    </div>
+
+    <!-- Steps Grid -->
+    <div class="how-it-works__grid">
+      <!-- Step 1 -->
+      <div class="how-it-works__step">
+        <div class="how-it-works__step-number">1</div>
+        <div class="how-it-works__step-icon how-it-works__step-icon--blue">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+        </div>
+        <h3 class="how-it-works__step-title">{{ section.settings.step1_title | default: 'Agregá 3 Productos' }}</h3>
+        <p class="how-it-works__step-description">{{ section.settings.step1_description | default: 'Elegí tus 3 camisetas favoritas y agregalas al carrito' }}</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="how-it-works__step">
+        <div class="how-it-works__step-number">2</div>
+        <div class="how-it-works__step-icon how-it-works__step-icon--yellow">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12"></polyline>
+            <rect x="2" y="7" width="20" height="5"></rect>
+            <line x1="12" y1="22" x2="12" y2="7"></line>
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+          </svg>
+        </div>
+        <h3 class="how-it-works__step-title">{{ section.settings.step2_title | default: '1 Sale GRATIS' }}</h3>
+        <p class="how-it-works__step-description">{{ section.settings.step2_description | default: 'El producto de menor valor sale completamente gratis' }}</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="how-it-works__step">
+        <div class="how-it-works__step-number">3</div>
+        <div class="how-it-works__step-icon how-it-works__step-icon--pink">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        </div>
+        <h3 class="how-it-works__step-title">{{ section.settings.step3_title | default: 'Sin Trampas' }}</h3>
+        <p class="how-it-works__step-description">{{ section.settings.step3_description | default: 'No hay trucos, no hay condiciones ocultas. Así de simple' }}</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="how-it-works__step">
+        <div class="how-it-works__step-number">4</div>
+        <div class="how-it-works__step-icon how-it-works__step-icon--green">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+        <h3 class="how-it-works__step-title">{{ section.settings.step4_title | default: 'Descuento Automático' }}</h3>
+        <p class="how-it-works__step-description">{{ section.settings.step4_description | default: 'El descuento se aplica automáticamente en el checkout' }}</p>
+      </div>
+    </div>
+
+    <!-- Bottom Info Box -->
+    <div class="how-it-works__info-box">
+      <h3 class="how-it-works__info-title">
+        Válido para <span class="how-it-works__info-title-highlight">{{ section.settings.valid_text | default: 'TODOS LOS PRODUCTOS' }}</span>
+      </h3>
+      <p class="how-it-works__info-text">
+        {{ section.settings.info_text | default: 'No importa qué jerseys elijas, la promoción se aplica automáticamente.' }}
+        <strong>{{ section.settings.info_text_highlight | default: '¡Así de fácil!' }}</strong>
+      </p>
+
+      <!-- Badges -->
+      <div class="how-it-works__badges">
+        <div class="how-it-works__badge-item">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Sin Códigos
+        </div>
+        <div class="how-it-works__badge-item">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Sin Trampas
+        </div>
+        <div class="how-it-works__badge-item">
+          <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          100% Automático
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How It Works",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "Promoción Activa"
+    },
+    {
+      "type": "text",
+      "id": "title_prefix",
+      "label": "Title Prefix",
+      "default": "¿Cómo Funciona el"
+    },
+    {
+      "type": "text",
+      "id": "promo_name",
+      "label": "Promo Name",
+      "default": "COMPRA 1 LLEVA 3"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Es simple: comprá 3 productos y 1 sale completamente GRATIS."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_highlight",
+      "label": "Subtitle Highlight",
+      "default": "¡Sin pegadinhas, sin trucos!"
+    },
+    {
+      "type": "header",
+      "content": "Step 1"
+    },
+    {
+      "type": "text",
+      "id": "step1_title",
+      "label": "Step 1 Title",
+      "default": "Agregá 3 Productos"
+    },
+    {
+      "type": "textarea",
+      "id": "step1_description",
+      "label": "Step 1 Description",
+      "default": "Elegí tus 3 camisetas favoritas y agregalas al carrito"
+    },
+    {
+      "type": "header",
+      "content": "Step 2"
+    },
+    {
+      "type": "text",
+      "id": "step2_title",
+      "label": "Step 2 Title",
+      "default": "1 Sale GRATIS"
+    },
+    {
+      "type": "textarea",
+      "id": "step2_description",
+      "label": "Step 2 Description",
+      "default": "El producto de menor valor sale completamente gratis"
+    },
+    {
+      "type": "header",
+      "content": "Step 3"
+    },
+    {
+      "type": "text",
+      "id": "step3_title",
+      "label": "Step 3 Title",
+      "default": "Sin Trampas"
+    },
+    {
+      "type": "textarea",
+      "id": "step3_description",
+      "label": "Step 3 Description",
+      "default": "No hay trucos, no hay condiciones ocultas. Así de simple"
+    },
+    {
+      "type": "header",
+      "content": "Step 4"
+    },
+    {
+      "type": "text",
+      "id": "step4_title",
+      "label": "Step 4 Title",
+      "default": "Descuento Automático"
+    },
+    {
+      "type": "textarea",
+      "id": "step4_description",
+      "label": "Step 4 Description",
+      "default": "El descuento se aplica automáticamente en el checkout"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Info"
+    },
+    {
+      "type": "text",
+      "id": "valid_text",
+      "label": "Valid For Text",
+      "default": "TODOS LOS PRODUCTOS"
+    },
+    {
+      "type": "textarea",
+      "id": "info_text",
+      "label": "Info Text",
+      "default": "No importa qué jerseys elijas, la promoción se aplica automáticamente."
+    },
+    {
+      "type": "text",
+      "id": "info_text_highlight",
+      "label": "Info Text Highlight",
+      "default": "¡Así de fácil!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "How It Works"
+    }
+  ]
+}
+{% endschema %}
