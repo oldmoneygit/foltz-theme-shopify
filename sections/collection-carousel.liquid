@@ -32,20 +32,22 @@
 
     {%- comment %} Content Area - Right Side {%- endcomment -%}
     <div class="collection-carousel__content">
-      {%- comment %} Section Header {%- endcomment -%}
-      <div class="collection-carousel__header">
-        {%- if section.settings.emoji != blank -%}
-          <div class="collection-carousel__emoji">{{ section.settings.emoji }}</div>
-        {%- endif -%}
+      {%- comment %} Section Header - Only show when there's NO featured image {%- endcomment -%}
+      {%- unless featured_image -%}
+        <div class="collection-carousel__header">
+          {%- if section.settings.emoji != blank -%}
+            <div class="collection-carousel__emoji">{{ section.settings.emoji }}</div>
+          {%- endif -%}
 
-        <h2 class="collection-carousel__title">
-          {{ section.settings.title | default: collection.title }}
-        </h2>
+          <h2 class="collection-carousel__title">
+            {{ section.settings.title | default: collection.title }}
+          </h2>
 
-        {%- if section.settings.subtitle != blank -%}
-          <p class="collection-carousel__subtitle">{{ section.settings.subtitle }}</p>
-        {%- endif -%}
-      </div>
+          {%- if section.settings.subtitle != blank -%}
+            <p class="collection-carousel__subtitle">{{ section.settings.subtitle }}</p>
+          {%- endif -%}
+        </div>
+      {%- endunless -%}
 
       {%- comment %} Carousel {%- endcomment -%}
       <div class="collection-carousel__wrapper">
