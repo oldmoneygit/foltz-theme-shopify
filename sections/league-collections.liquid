@@ -212,16 +212,11 @@
 .league-collections__card {
   position: relative;
   display: block;
-  height: 400px;
+  aspect-ratio: 3 / 4;
+  width: 100%;
   border-radius: 1rem;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-@media (min-width: 768px) {
-  .league-collections__card {
-    height: 450px;
-  }
 }
 
 .league-collections__card:hover {
@@ -239,8 +234,10 @@
 }
 
 .league-collections__card-bg--image {
-  background-size: cover;
+  background-size: contain;
   background-position: center;
+  background-repeat: no-repeat;
+  background-color: #000;
 }
 
 /* Gradients for each league */
