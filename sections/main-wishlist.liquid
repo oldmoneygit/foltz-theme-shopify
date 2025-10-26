@@ -213,10 +213,10 @@
 
   // Format price in Argentine format ($ 87.777,99)
   function formatPrice(price) {
-    // Convert cents to pesos (divide by 100)
-    const priceInPesos = price / 100;
+    // API already returns correct value, no need to divide
+    const priceValue = parseFloat(price);
     // Format with Argentine locale (es-AR)
-    return priceInPesos.toLocaleString('es-AR', {
+    return priceValue.toLocaleString('es-AR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
