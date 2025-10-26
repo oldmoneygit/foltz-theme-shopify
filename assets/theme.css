@@ -954,6 +954,8 @@ ul, ol {
   flex-direction: column;
   flex-grow: 1;
   gap: var(--spacing-2);
+  align-items: center;
+  text-align: center;
 }
 
 .product-card-name {
@@ -966,6 +968,7 @@ ul, ol {
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color var(--transition-base);
+  width: 100%;
 }
 
 .product-card:hover .product-card-name {
@@ -974,6 +977,10 @@ ul, ol {
 
 .product-card-prices {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
 .product-card-price-regular {
