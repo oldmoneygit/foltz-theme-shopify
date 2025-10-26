@@ -26,7 +26,7 @@
         "title_prefix": "NUESTROS",
         "title_highlight": "BEST SELLERS",
         "description": "Calidad premium 1:1. Réplicas idénticas fabricadas en las mismas fábricas que las grandes marcas.",
-        "collection": "frontpage",
+        "collection": "best-sellers",
         "products_to_show": 8,
         "show_view_all_button": true,
         "button_text": "VER TODA LA COLECCIÓN"
@@ -51,6 +51,21 @@
         "valid_text": "TODOS LOS PRODUCTOS",
         "info_text": "No importa qué jerseys elijas, la promoción se aplica automáticamente.",
         "info_text_highlight": "¡Así de fácil!"
+      }
+    },
+    "collection_carousel_UF3VbC": {
+      "type": "collection-carousel",
+      "name": "Collection Carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "argentina-legends",
+        "featured_image": "shopify://shop_images/replicate-prediction-ag1ydm19gxrma0ct47vtkppz5g.jpg",
+        "emoji": "⚽",
+        "title": "Featured Collection",
+        "subtitle": "Discover our latest products",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
       }
     },
     "league-collections": {
@@ -171,21 +186,6 @@
         "emoji": "🌎",
         "title": "NATIONAL TEAMS",
         "subtitle": "Representa tu país con orgullo",
-        "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
-      }
-    },
-    "collection_carousel_UF3VbC": {
-      "type": "collection-carousel",
-      "name": "Collection Carousel",
-      "settings": {
-        "show_section": true,
-        "collection": "argentina-legends",
-        "featured_image": "shopify://shop_images/replicate-prediction-ag1ydm19gxrma0ct47vtkppz5g.jpg",
-        "emoji": "⚽",
-        "title": "Featured Collection",
-        "subtitle": "Discover our latest products",
         "products_to_show": 8,
         "show_view_all": true,
         "enable_background_effects": true
