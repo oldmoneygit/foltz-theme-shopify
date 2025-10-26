@@ -1,0 +1,320 @@
+<!--
+  Section: Wishlist
+  Descrição: Página de wishlist com produtos salvos em localStorage
+-->
+
+<style>
+  .wishlist {
+    min-height: calc(100vh - var(--header-height, 80px) - var(--footer-height, 300px));
+    padding: 60px 24px;
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+  }
+
+  .wishlist__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .wishlist__header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .wishlist__title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .wishlist__title svg {
+    width: 48px;
+    height: 48px;
+    fill: #EF4444;
+    stroke: #EF4444;
+  }
+
+  .wishlist__subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-subdued);
+  }
+
+  .wishlist__count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #EF4444;
+    color: #FFFFFF;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 0.875rem;
+    font-weight: 700;
+    margin-left: 12px;
+  }
+
+  .wishlist__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 24px;
+  }
+
+  .wishlist__empty {
+    text-align: center;
+    padding: 80px 24px;
+  }
+
+  .wishlist__empty-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 24px;
+    opacity: 0.3;
+  }
+
+  .wishlist__empty-icon svg {
+    width: 100%;
+    height: 100%;
+    stroke: #EF4444;
+    fill: none;
+  }
+
+  .wishlist__empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 12px;
+  }
+
+  .wishlist__empty-text {
+    font-size: 1rem;
+    color: var(--color-text-subdued);
+    margin-bottom: 32px;
+  }
+
+  .wishlist__empty-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: #DAF10D;
+    color: #000000;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .wishlist__empty-btn:hover {
+    background: #FAFF00;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
+  }
+
+  .wishlist__clear-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+    font-weight: 600;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 32px;
+  }
+
+  .wishlist__clear-btn:hover {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: #EF4444;
+  }
+
+  @media (max-width: 768px) {
+    .wishlist {
+      padding: 40px 16px;
+    }
+
+    .wishlist__title {
+      font-size: 2rem;
+    }
+
+    .wishlist__title svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    .wishlist__grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 16px;
+    }
+  }
+</style>
+
+<div class="wishlist">
+  <div class="wishlist__container">
+    <div class="wishlist__header">
+      <h1 class="wishlist__title">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+        Mis Favoritos
+        <span class="wishlist__count" data-wishlist-count>0</span>
+      </h1>
+      <p class="wishlist__subtitle">Tus productos guardados</p>
+    </div>
+
+    <!-- Empty State -->
+    <div class="wishlist__empty" data-wishlist-empty>
+      <div class="wishlist__empty-icon">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+        </svg>
+      </div>
+      <h2 class="wishlist__empty-title">Tu lista de favoritos está vacía</h2>
+      <p class="wishlist__empty-text">Agrega productos a tu lista de favoritos para verlos aquí</p>
+      <a href="{{ routes.all_products_collection_url }}" class="wishlist__empty-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 20px; height: 20px;">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        Ver Productos
+      </a>
+    </div>
+
+    <!-- Clear Button -->
+    <button class="wishlist__clear-btn" data-wishlist-clear style="display: none;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+        <polyline points="3 6 5 6 21 6"></polyline>
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+      </svg>
+      Limpiar Lista
+    </button>
+
+    <!-- Products Grid -->
+    <div class="wishlist__grid" data-wishlist-grid></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const WISHLIST_KEY = 'foltz_wishlist';
+
+  // Get wishlist from localStorage
+  function getWishlist() {
+    const wishlist = localStorage.getItem(WISHLIST_KEY);
+    return wishlist ? JSON.parse(wishlist) : [];
+  }
+
+  // Render wishlist products
+  async function renderWishlist() {
+    const wishlist = getWishlist();
+    const gridEl = document.querySelector('[data-wishlist-grid]');
+    const emptyEl = document.querySelector('[data-wishlist-empty]');
+    const countEl = document.querySelector('[data-wishlist-count]');
+    const clearBtn = document.querySelector('[data-wishlist-clear]');
+
+    // Update count
+    if (countEl) {
+      countEl.textContent = wishlist.length;
+    }
+
+    // Show/hide empty state
+    if (wishlist.length === 0) {
+      if (emptyEl) emptyEl.style.display = 'block';
+      if (gridEl) gridEl.style.display = 'none';
+      if (clearBtn) clearBtn.style.display = 'none';
+      return;
+    }
+
+    if (emptyEl) emptyEl.style.display = 'none';
+    if (gridEl) gridEl.style.display = 'grid';
+    if (clearBtn) clearBtn.style.display = 'inline-flex';
+
+    // Fetch product data for each ID
+    if (gridEl) {
+      gridEl.innerHTML = '<p style="color: #FFF; text-align: center; width: 100%;">Cargando productos...</p>';
+
+      try {
+        const productCards = await Promise.all(
+          wishlist.map(async (productId) => {
+            try {
+              const response = await fetch(`/products.json?limit=250`);
+              const data = await response.json();
+              const product = data.products.find(p => p.id === productId);
+
+              if (!product) return '';
+
+              // Render product card
+              return `
+                <a href="/products/${product.handle}" class="product-card" data-product-id="${product.id}">
+                  <button class="product-card-wishlist active" type="button" aria-label="Remove from wishlist">
+                    <svg viewBox="0 0 24 24" fill="#EF4444" stroke="#EF4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;">
+                      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                  </button>
+                  <div class="product-card-image">
+                    <img src="${product.images[0]?.src || ''}" alt="${product.title}" loading="lazy">
+                  </div>
+                  <div class="product-card-content">
+                    <h3 class="product-card-name">${product.title}</h3>
+                    <div class="product-card-prices">
+                      ${product.compare_at_price_max > product.price_max ? `<p class="product-card-price-regular">$${(product.compare_at_price_max / 100).toFixed(2)}</p>` : ''}
+                      <p class="product-card-price-sale">$${(product.price_max / 100).toFixed(2)}</p>
+                      <div class="product-card-promo"><span>COMPRA 1 LLEVA 2</span></div>
+                    </div>
+                  </div>
+                </a>
+              `;
+            } catch (err) {
+              console.error('Error fetching product:', err);
+              return '';
+            }
+          })
+        );
+
+        gridEl.innerHTML = productCards.filter(card => card).join('');
+      } catch (err) {
+        console.error('Error rendering wishlist:', err);
+        gridEl.innerHTML = '<p style="color: #EF4444; text-align: center; width: 100%;">Error al cargar productos</p>';
+      }
+    }
+  }
+
+  // Clear wishlist
+  function clearWishlist() {
+    if (confirm('¿Estás seguro de que quieres limpiar tu lista de favoritos?')) {
+      localStorage.setItem(WISHLIST_KEY, JSON.stringify([]));
+      renderWishlist();
+    }
+  }
+
+  // Initialize
+  renderWishlist();
+
+  // Clear button
+  const clearBtn = document.querySelector('[data-wishlist-clear]');
+  if (clearBtn) {
+    clearBtn.addEventListener('click', clearWishlist);
+  }
+
+  // Listen for storage changes (from other tabs)
+  window.addEventListener('storage', (e) => {
+    if (e.key === WISHLIST_KEY) {
+      renderWishlist();
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Wishlist Page",
+  "settings": []
+}
+{% endschema %}
