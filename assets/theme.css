@@ -909,18 +909,25 @@ ul, ol {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-black-50);
+  background: transparent;
   backdrop-filter: blur(16px);
   border-radius: var(--radius-full);
   transition: all var(--transition-base);
 }
 
 .product-card-wishlist:hover {
-  background: var(--color-brand-yellow);
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .product-card-wishlist:hover svg {
-  stroke: var(--color-brand-black);
+  stroke: #EF4444;
+}
+
+/* Wishlist active state */
+.product-card-wishlist.wishlist-active svg,
+.product-card-wishlist.active svg {
+  fill: #EF4444;
+  stroke: #EF4444;
 }
 
 .product-card-image {

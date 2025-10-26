@@ -297,13 +297,20 @@
       document.querySelectorAll('[data-product-id]').forEach(element => {
         const productId = parseInt(element.dataset.productId);
         const heartIcon = element.querySelector('.product-card-wishlist svg, .wishlist-button svg, .header-icon svg');
+        const wishlistBtn = element.querySelector('.wishlist-button');
 
         if (heartIcon && isInWishlist(productId)) {
-          heartIcon.style.fill = '#DAF10D';
-          heartIcon.style.stroke = '#DAF10D';
+          heartIcon.style.fill = '#EF4444';
+          heartIcon.style.stroke = '#EF4444';
+          if (wishlistBtn) {
+            wishlistBtn.classList.add('wishlist-active');
+          }
         } else if (heartIcon && !isInWishlist(productId)) {
           heartIcon.style.fill = 'none';
           heartIcon.style.stroke = 'currentColor';
+          if (wishlistBtn) {
+            wishlistBtn.classList.remove('wishlist-active');
+          }
         }
       });
 
@@ -336,15 +343,17 @@
 
           if (isInWishlist(productId)) {
             removeFromWishlist(productId);
+            wishlistBtn.classList.remove('wishlist-active');
             if (heartIcon) {
               heartIcon.style.fill = 'none';
               heartIcon.style.stroke = 'currentColor';
             }
           } else {
             addToWishlist(productId);
+            wishlistBtn.classList.add('wishlist-active');
             if (heartIcon) {
-              heartIcon.style.fill = '#DAF10D';
-              heartIcon.style.stroke = '#DAF10D';
+              heartIcon.style.fill = '#EF4444';
+              heartIcon.style.stroke = '#EF4444';
             }
           }
         }

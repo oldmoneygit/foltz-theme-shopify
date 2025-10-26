@@ -152,13 +152,22 @@
     background: rgba(255, 255, 255, 0.2);
   }
 
+  /* Wishlist active state - red theme */
+  .wishlist-button.wishlist-active,
   .wishlist-button.active {
-    background: #DAF10D;
-    color: #000000;
+    background: transparent;
+    color: #FFFFFF;
   }
 
+  .wishlist-button.wishlist-active:hover,
+  .wishlist-button.active:hover {
+    background: rgba(239, 68, 68, 0.1);
+  }
+
+  .wishlist-button.wishlist-active .wishlist-icon,
   .wishlist-button.active .wishlist-icon {
-    fill: currentColor;
+    fill: #EF4444;
+    stroke: #EF4444;
   }
 
   .wishlist-icon {
