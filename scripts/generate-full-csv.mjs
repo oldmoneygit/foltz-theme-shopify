@@ -155,6 +155,19 @@ function formatPrice(price) {
   return price.toFixed(2);
 }
 
+// Função para escapar valores do CSV (adiciona aspas se necessário)
+function escapeCSV(value) {
+  if (!value) return '';
+
+  // Se contém vírgula, aspas duplas ou quebra de linha, precisa escapar
+  if (value.includes(',') || value.includes('"') || value.includes('\n')) {
+    // Duplica aspas duplas internas e envolve com aspas
+    return `"${value.replace(/"/g, '""')}"`;
+  }
+
+  return value;
+}
+
 // Função principal
 async function generateCSV() {
   const leaguesPath = path.join(__dirname, '../../Leagues');
@@ -228,11 +241,11 @@ async function generateCSV() {
         if (index === 0) {
           rows.push([
             handle,
-            title,
-            body,
+            escapeCSV(title),
+            escapeCSV(body),
             config.vendor,
             config.type,
-            tags,
+            escapeCSV(tags), // Tags contém vírgulas, precisa escapar!
             'TRUE',
             'Size',
             size,
