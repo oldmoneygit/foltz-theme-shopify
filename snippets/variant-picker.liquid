@@ -155,144 +155,96 @@
 </style>
 
 {%- unless product.has_only_default_variant -%}
-  <div class="variant-picker" data-product-id="{{ product.id }}">
-    {%- for option in product.options_with_values limit: 3 -%}
-      {%- assign option_index = forloop.index0 -%}
-
-      <div class="variant-picker__option">
+  <variant-selector data-url="{{ product.url }}" data-section-id="{{ section.id }}">
+    {%- for option in product.options_with_values -%}
+      <fieldset class="variant-picker__option">
         <div class="variant-picker__label-wrapper">
-          <span class="variant-picker__label">{{ option.name }}:</span>
-          <span class="variant-picker__selected" data-selected-option="{{ option_index }}">
-            {{ option.selected_value }}
-          </span>
+          <legend class="variant-picker__label">{{ option.name }}:</legend>
+          <span class="variant-picker__selected">{{ option.selected_value }}</span>
         </div>
 
         <div class="variant-picker__buttons">
-          {%- for value in option.values limit: 20 -%}
-            <button
-              type="button"
-              class="variant-picker__button {% if value == option.selected_value %}active{% endif %}"
-              data-option-value="{{ value }}"
-              data-option-index="{{ option_index }}"
+          {%- for value in option.values -%}
+            <input
+              type="radio"
+              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+              name="{{ option.name }}"
+              value="{{ value | escape }}"
+              form="{{ product_form_id }}"
+              {% if option.selected_value == value %}checked{% endif %}
+              style="position: absolute; opacity: 0; pointer-events: none;"
+            >
+            <label
+              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+              class="variant-picker__button"
             >
               {{ value }}
-            </button>
+            </label>
           {%- endfor -%}
         </div>
-      </div>
+      </fieldset>
     {%- endfor -%}
 
-    <input type="hidden" name="id" data-variant-id value="{{ product.selected_or_first_available_variant.id }}">
-  </div>
+    <script type="application/json">
+      {
+        "variants": [
+          {%- for variant in product.variants -%}
+            {
+              "id": {{ variant.id }},
+              "available": {{ variant.available | json }},
+              "option1": {{ variant.option1 | json }},
+              "option2": {{ variant.option2 | json }},
+              "option3": {{ variant.option3 | json }},
+              "price": {{ variant.price }},
+              "compare_at_price": {{ variant.compare_at_price | json }}
+            }{% unless forloop.last %},{% endunless %}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+  </variant-selector>
 
   <script>
-    (function() {
-      const variantPicker = document.querySelector('[data-product-id="{{ product.id }}"]');
-      if (!variantPicker) return;
+    if (!customElements.get('variant-selector')) {
+      customElements.define('variant-selector', class VariantSelector extends HTMLElement {
+        constructor() {
+          super();
+          this.variants = JSON.parse(this.querySelector('script[type="application/json"]').textContent).variants;
+          this.addEventListener('change', this.onVariantChange.bind(this));
+        }
 
-      const variants = {{ product.variants | json }};
-      const variantInput = variantPicker.querySelector('[data-variant-id]');
+        onVariantChange() {
+          this.updateOptions();
+          this.updateMasterId();
+          this.updateSelectedText();
 
-      // Current selected options
-      let selectedOptions = {
-        {%- for option in product.options_with_values -%}
-          {{ forloop.index0 }}: '{{ option.selected_value | escape }}'{% unless forloop.last %},{% endunless %}
-        {%- endfor -%}
-      };
+          if (!this.currentVariant) return;
 
-      // Find variant by options
-      function findVariantByOptions(options) {
-        return variants.find(variant => {
-          return Object.keys(options).every(key => {
-            const optionIndex = parseInt(key) + 1;
-            return variant[`option${optionIndex}`] === options[key];
-          });
-        });
-      }
-
-      // Update variant
-      function updateVariant() {
-        const variant = findVariantByOptions(selectedOptions);
-
-        if (variant) {
-          variantInput.value = variant.id;
-
-          // Dispatch event for price/availability updates
-          variantInput.dispatchEvent(new CustomEvent('variant:change', {
+          this.dispatchEvent(new CustomEvent('variant:changed', {
             bubbles: true,
-            detail: { variant }
+            detail: { variant: this.currentVariant }
           }));
         }
 
-        updateAvailability();
-      }
-
-      // Update availability (disable sold out options)
-      function updateAvailability() {
-        const buttons = variantPicker.querySelectorAll('.variant-picker__button');
-        const swatches = variantPicker.querySelectorAll('.variant-picker__color-swatch');
-
-        [...buttons, ...swatches].forEach(element => {
-          const optionIndex = parseInt(element.dataset.optionIndex);
-          const optionValue = element.dataset.optionValue;
-
-          // Check if this option combination is available
-          const testOptions = {...selectedOptions, [optionIndex]: optionValue};
-          const testVariant = findVariantByOptions(testOptions);
-
-          if (testVariant && testVariant.available) {
-            element.disabled = false;
-            element.classList.remove('unavailable');
-          } else {
-            element.disabled = true;
-            element.classList.add('unavailable');
-          }
-        });
-      }
-
-      // Handle option selection
-      function handleOptionSelect(optionIndex, optionValue) {
-        selectedOptions[optionIndex] = optionValue;
-
-        // Update active states
-        variantPicker.querySelectorAll(`[data-option-index="${optionIndex}"]`).forEach(el => {
-          if (el.dataset.optionValue === optionValue) {
-            el.classList.add('active');
-          } else {
-            el.classList.remove('active');
-          }
-        });
-
-        // Update selected value display
-        const selectedDisplay = variantPicker.querySelector(`[data-selected-option="${optionIndex}"]`);
-        if (selectedDisplay) {
-          selectedDisplay.textContent = optionValue;
+        updateOptions() {
+          this.options = Array.from(this.querySelectorAll('input[type="radio"]:checked'), (input) => input.value);
         }
 
-        updateVariant();
-      }
+        updateMasterId() {
+          this.currentVariant = this.variants.find((variant) => {
+            const variantOptions = [variant.option1, variant.option2, variant.option3].filter(Boolean);
+            return variantOptions.every((option, index) => option === this.options[index]);
+          });
+        }
 
-      // Event listeners for buttons and swatches
-      variantPicker.addEventListener('click', (e) => {
-        const button = e.target.closest('.variant-picker__button, .variant-picker__color-swatch');
-        if (button && !button.disabled) {
-          const optionIndex = parseInt(button.dataset.optionIndex);
-          const optionValue = button.dataset.optionValue;
-          handleOptionSelect(optionIndex, optionValue);
+        updateSelectedText() {
+          this.querySelectorAll('.variant-picker__option').forEach((fieldset, index) => {
+            const selectedValue = this.options[index];
+            const selectedText = fieldset.querySelector('.variant-picker__selected');
+            if (selectedText) selectedText.textContent = selectedValue;
+          });
         }
       });
-
-      // Event listeners for selects
-      variantPicker.querySelectorAll('.variant-picker__select').forEach(select => {
-        select.addEventListener('change', (e) => {
-          const optionIndex = parseInt(select.dataset.optionIndex);
-          const optionValue = select.value;
-          handleOptionSelect(optionIndex, optionValue);
-        });
-      });
-
-      // Initial availability update
-      updateAvailability();
-    })();
+    }
   </script>
 {%- endunless -%}
