@@ -107,6 +107,19 @@
     transform: scale(1.05);
   }
 
+  /* Mobile: garantir que galeria nunca ultrapasse o viewport */
+  @media screen and (max-width: 749px) {
+    .product-gallery,
+    .product-gallery__main,
+    .product-gallery__main-image {
+      max-width: 100vw;
+    }
+
+    .product-gallery__main-image img {
+      max-width: 100%;
+    }
+  }
+
   /* Navigation Arrows */
   .product-gallery__arrow {
     position: absolute;
