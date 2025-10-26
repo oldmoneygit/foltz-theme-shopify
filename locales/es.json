@@ -10,6 +10,27 @@
       "continue_shopping": "Seguir Comprando"
     }
   },
+  "cart": {
+    "general": {
+      "title": "Carrito",
+      "item_count": "{{ count }} artículos en tu carrito",
+      "item_count_one": "1 artículo en tu carrito",
+      "empty_title": "Tu carrito está vacío",
+      "empty_message": "Todavía no has agregado ningún producto. ¡Explorá nuestra colección!",
+      "continue_shopping": "Explorar Productos",
+      "summary": "Resumen del Pedido",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "taxes_notice": "Impuestos y envío calculados al finalizar la compra",
+      "checkout": "Finalizar Compra",
+      "discount": "Descuento",
+      "increase": "Aumentar cantidad",
+      "decrease": "Disminuir cantidad",
+      "remove": "Eliminar",
+      "remove_confirm": "¿Estás seguro de que querés eliminar este artículo?",
+      "error": "Error al actualizar el carrito. Por favor, intentá de nuevo."
+    }
+  },
   "products": {
     "add_to_cart": "Agregar al Carrito",
     "sold_out": "Agotado",
