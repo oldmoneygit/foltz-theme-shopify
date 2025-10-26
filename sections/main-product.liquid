@@ -1,177 +1,33 @@
-<!--
-  Section: Main Product
-  Descrição: Página completa de produto com galeria, variantes, preço, compra
--->
-
 <style>
-  .product-main {
-    padding: 40px 0 80px;
+  .product {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+    padding: var(--spacing-8) var(--container-gutter);
+    max-width: var(--container-max-width, 1400px);
+    margin: 0 auto;
     background: #000000;
   }
 
-  .product-main__container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  .product-main__breadcrumb {
-    margin-bottom: 24px;
-  }
-
-  .product-main__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 60px;
-    align-items: start;
-  }
-
-  .product-main__media {
-    position: sticky;
-    top: 100px;
-  }
-
-  .product-main__details {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .product-main__vendor {
-    font-size: 0.875rem;
-    color: var(--color-text-subdued);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .product-main__title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #FFFFFF;
-    line-height: 1.2;
-  }
-
-  .product-main__reviews {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .product-main__stars {
-    display: flex;
-    gap: 4px;
-    color: var(--color-brand-yellow);
-  }
-
-  .product-main__reviews-count {
-    font-size: 0.875rem;
-    color: var(--color-text-subdued);
-  }
-
-  .product-main__divider {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 16px 0;
-  }
-
-  .product-main__form {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  @media (max-width: 1024px) {
-    .product-main__grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .product-main__media {
-      position: relative;
-      top: 0;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .product-main {
-      padding: 20px 0 60px;
-    }
-
-    .product-main__container {
-      padding: 0 16px;
-    }
-
-    .product-main__title {
-      font-size: 1.75rem;
+  @media screen and (min-width: 1000px) {
+    .product {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-12);
     }
   }
 </style>
 
-<div class="product-main">
-  <div class="product-main__container">
-    {%- if section.settings.show_breadcrumb -%}
-      <div class="product-main__breadcrumb">
-        <a href="{{ routes.root_url }}" style="color: var(--color-text-subdued); text-decoration: none;">{{ 'general.breadcrumb.home' | t }}</a>
-        <span style="color: var(--color-text-subdued); margin: 0 8px;">/</span>
-        {%- if product.collections.size > 0 -%}
-          <a href="{{ product.collections.first.url }}" style="color: var(--color-text-subdued); text-decoration: none;">{{ product.collections.first.title }}</a>
-          <span style="color: var(--color-text-subdued); margin: 0 8px;">/</span>
-        {%- endif -%}
-        <span style="color: #FFFFFF;">{{ product.title }}</span>
-      </div>
-    {%- endif -%}
+{%- assign product_form_id -%}product-form-{{ section.id }}{%- endassign -%}
 
-    <div class="product-main__grid">
-      <div class="product-main__media">
-        {%- render 'product-gallery', product: product -%}
-      </div>
-
-      <div class="product-main__details">
-        {%- if product.vendor != blank and section.settings.show_vendor -%}
-          <div class="product-main__vendor">{{ product.vendor }}</div>
-        {%- endif -%}
-
-        <h1 class="product-main__title">{{ product.title }}</h1>
-
-        {%- if section.settings.show_reviews -%}
-          <div class="product-main__reviews">
-            <div class="product-main__stars">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-            </div>
-            <span class="product-main__reviews-count">({{ product.metafields.reviews.rating_count | default: 0 }} {{ 'products.product.reviews' | t }})</span>
-          </div>
-        {%- endif -%}
-
-        {%- render 'price-list', product: product -%}
-
-        <div class="product-main__divider"></div>
-
-        <div class="product-main__form">
-          {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
-            {%- render 'variant-picker', product: product -%}
-            {%- render 'buy-buttons', product: product, show_quantity: true -%}
-          {%- endform -%}
-        </div>
-
-        <div class="product-main__divider"></div>
-
-        {%- render 'product-info', product: product -%}
-      </div>
+<div class="product">
+  {%- if product.media.size > 0 -%}
+    <div class="product__gallery">
+      {%- render 'product-gallery', product: product, section: section -%}
     </div>
+  {%- endif -%}
+
+  <div class="product__info">
+    {%- render 'product-info', product: product, section: section, product_form_id: product_form_id -%}
   </div>
 </div>
 
@@ -181,21 +37,57 @@
   "settings": [
     {
       "type": "checkbox",
-      "id": "show_breadcrumb",
-      "label": "Show breadcrumb",
+      "id": "enable_image_zoom",
+      "label": "Enable image zoom",
       "default": true
     },
     {
       "type": "checkbox",
-      "id": "show_vendor",
-      "label": "Show vendor",
+      "id": "enable_video_looping",
+      "label": "Enable video looping",
       "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
     },
     {
-      "type": "checkbox",
-      "id": "show_reviews",
-      "label": "Show reviews",
-      "default": true
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant Picker",
+      "limit": 1
+    },
+    {
+      "type": "quantity",
+      "name": "Quantity Selector",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy Buttons",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1
     }
   ]
 }

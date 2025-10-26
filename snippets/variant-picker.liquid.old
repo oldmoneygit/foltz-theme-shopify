@@ -1,0 +1,298 @@
+<!--
+  Snippet: Variant Picker
+  Descrição: Seletor de variantes de produto (tamanhos, cores, etc.) com design FOLTZ
+
+  Uso:
+  {% render 'variant-picker', product: product, block: block %}
+-->
+
+<style>
+  .variant-picker {
+    margin-bottom: 24px;
+  }
+
+  .variant-picker__option {
+    margin-bottom: 24px;
+  }
+
+  .variant-picker__label-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+
+  .variant-picker__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-text-subdued);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .variant-picker__selected {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-brand-yellow);
+  }
+
+  .variant-picker__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .variant-picker__button {
+    min-width: 60px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .variant-picker__button:hover:not(:disabled) {
+    border-color: rgba(218, 241, 13, 0.5);
+    background: rgba(218, 241, 13, 0.05);
+  }
+
+  .variant-picker__button.active {
+    border-color: var(--color-brand-yellow);
+    background: var(--color-brand-yellow);
+    color: #000000;
+  }
+
+  .variant-picker__button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    text-decoration: line-through;
+  }
+
+  .variant-picker__dropdown {
+    position: relative;
+  }
+
+  .variant-picker__select {
+    width: 100%;
+    padding: 12px 40px 12px 16px;
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    border-radius: 8px;
+    color: #000000;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    appearance: none;
+    transition: all 0.3s ease;
+  }
+
+  .variant-picker__select:focus {
+    outline: none;
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+  }
+
+  .variant-picker__dropdown::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #000000;
+    pointer-events: none;
+  }
+
+  .variant-picker__color-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .variant-picker__color-swatch {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .variant-picker__color-swatch:hover {
+    border-color: rgba(218, 241, 13, 0.5);
+    transform: scale(1.1);
+  }
+
+  .variant-picker__color-swatch.active {
+    border-color: var(--color-brand-yellow);
+    box-shadow: 0 0 0 2px rgba(218, 241, 13, 0.3);
+  }
+
+  .variant-picker__color-swatch.unavailable {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .variant-picker__color-swatch.unavailable::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    width: 2px;
+    height: 60px;
+    background: #EF4444;
+  }
+</style>
+
+{%- unless product.has_only_default_variant -%}
+  <div class="variant-picker" data-product-id="{{ product.id }}">
+    {%- for option in product.options_with_values limit: 3 -%}
+      {%- assign option_index = forloop.index0 -%}
+
+      <div class="variant-picker__option">
+        <div class="variant-picker__label-wrapper">
+          <span class="variant-picker__label">{{ option.name }}:</span>
+          <span class="variant-picker__selected" data-selected-option="{{ option_index }}">
+            {{ option.selected_value }}
+          </span>
+        </div>
+
+        <div class="variant-picker__buttons">
+          {%- for value in option.values limit: 20 -%}
+            <button
+              type="button"
+              class="variant-picker__button {% if value == option.selected_value %}active{% endif %}"
+              data-option-value="{{ value }}"
+              data-option-index="{{ option_index }}"
+            >
+              {{ value }}
+            </button>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endfor -%}
+
+    <input type="hidden" name="id" data-variant-id value="{{ product.selected_or_first_available_variant.id }}">
+  </div>
+
+  <script>
+    (function() {
+      const variantPicker = document.querySelector('[data-product-id="{{ product.id }}"]');
+      if (!variantPicker) return;
+
+      const variants = {{ product.variants | json }};
+      const variantInput = variantPicker.querySelector('[data-variant-id]');
+
+      // Current selected options
+      let selectedOptions = {
+        {%- for option in product.options_with_values -%}
+          {{ forloop.index0 }}: '{{ option.selected_value | escape }}'{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      };
+
+      // Find variant by options
+      function findVariantByOptions(options) {
+        return variants.find(variant => {
+          return Object.keys(options).every(key => {
+            const optionIndex = parseInt(key) + 1;
+            return variant[`option${optionIndex}`] === options[key];
+          });
+        });
+      }
+
+      // Update variant
+      function updateVariant() {
+        const variant = findVariantByOptions(selectedOptions);
+
+        if (variant) {
+          variantInput.value = variant.id;
+
+          // Dispatch event for price/availability updates
+          variantInput.dispatchEvent(new CustomEvent('variant:change', {
+            bubbles: true,
+            detail: { variant }
+          }));
+        }
+
+        updateAvailability();
+      }
+
+      // Update availability (disable sold out options)
+      function updateAvailability() {
+        const buttons = variantPicker.querySelectorAll('.variant-picker__button');
+        const swatches = variantPicker.querySelectorAll('.variant-picker__color-swatch');
+
+        [...buttons, ...swatches].forEach(element => {
+          const optionIndex = parseInt(element.dataset.optionIndex);
+          const optionValue = element.dataset.optionValue;
+
+          // Check if this option combination is available
+          const testOptions = {...selectedOptions, [optionIndex]: optionValue};
+          const testVariant = findVariantByOptions(testOptions);
+
+          if (testVariant && testVariant.available) {
+            element.disabled = false;
+            element.classList.remove('unavailable');
+          } else {
+            element.disabled = true;
+            element.classList.add('unavailable');
+          }
+        });
+      }
+
+      // Handle option selection
+      function handleOptionSelect(optionIndex, optionValue) {
+        selectedOptions[optionIndex] = optionValue;
+
+        // Update active states
+        variantPicker.querySelectorAll(`[data-option-index="${optionIndex}"]`).forEach(el => {
+          if (el.dataset.optionValue === optionValue) {
+            el.classList.add('active');
+          } else {
+            el.classList.remove('active');
+          }
+        });
+
+        // Update selected value display
+        const selectedDisplay = variantPicker.querySelector(`[data-selected-option="${optionIndex}"]`);
+        if (selectedDisplay) {
+          selectedDisplay.textContent = optionValue;
+        }
+
+        updateVariant();
+      }
+
+      // Event listeners for buttons and swatches
+      variantPicker.addEventListener('click', (e) => {
+        const button = e.target.closest('.variant-picker__button, .variant-picker__color-swatch');
+        if (button && !button.disabled) {
+          const optionIndex = parseInt(button.dataset.optionIndex);
+          const optionValue = button.dataset.optionValue;
+          handleOptionSelect(optionIndex, optionValue);
+        }
+      });
+
+      // Event listeners for selects
+      variantPicker.querySelectorAll('.variant-picker__select').forEach(select => {
+        select.addEventListener('change', (e) => {
+          const optionIndex = parseInt(select.dataset.optionIndex);
+          const optionValue = select.value;
+          handleOptionSelect(optionIndex, optionValue);
+        });
+      });
+
+      // Initial availability update
+      updateAvailability();
+    })();
+  </script>
+{%- endunless -%}

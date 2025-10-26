@@ -1,19 +1,6 @@
-<!--
-  Snippet: Product Gallery
-  Descrição: Galeria de imagens do produto com thumbnails e zoom
-
-  Uso:
-  {% render 'product-gallery', product: product %}
--->
-
 <style>
   .product-gallery {
-    display: grid;
-    gap: 16px;
-  }
-
-  .product-gallery--thumbnails-left {
-    grid-template-columns: 100px 1fr;
+    position: relative;
   }
 
   .product-gallery__main {
@@ -22,13 +9,13 @@
     background: rgba(255, 255, 255, 0.05);
     border-radius: 12px;
     overflow: hidden;
+    margin-bottom: 16px;
   }
 
   .product-gallery__main-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    cursor: zoom-in;
   }
 
   .product-gallery__badge {
@@ -47,11 +34,13 @@
 
   .product-gallery__thumbnails {
     display: flex;
-    flex-direction: column;
     gap: 12px;
+    overflow-x: auto;
   }
 
   .product-gallery__thumbnail {
+    flex-shrink: 0;
+    width: 80px;
     aspect-ratio: 3 / 4;
     background: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -74,100 +63,16 @@
     height: 100%;
     object-fit: cover;
   }
-
-  .product-gallery__zoom {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.95);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
-    cursor: zoom-out;
-  }
-
-  .product-gallery__zoom.active {
-    display: flex;
-  }
-
-  .product-gallery__zoom-image {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-  }
-
-  .product-gallery__zoom-close {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    width: 48px;
-    height: 48px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .product-gallery__zoom-close:hover {
-    background: var(--color-brand-yellow);
-    color: #000000;
-  }
-
-  @media (max-width: 768px) {
-    .product-gallery--thumbnails-left {
-      grid-template-columns: 1fr;
-    }
-
-    .product-gallery__thumbnails {
-      flex-direction: row;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .product-gallery__thumbnail {
-      min-width: 80px;
-      min-height: 106px;
-    }
-  }
 </style>
 
-{%- assign featured_media = product.featured_image -%}
-
-<div class="product-gallery product-gallery--thumbnails-left" data-product-gallery>
-  {%- if product.images.size > 1 -%}
-    <div class="product-gallery__thumbnails">
-      {%- for image in product.images limit: 6 -%}
-        <div
-          class="product-gallery__thumbnail {% if forloop.first %}active{% endif %}"
-          data-thumbnail
-          data-media-id="{{ forloop.index }}"
-        >
-          <img
-            src="{{ image | img_url: '200x' }}"
-            alt="{{ product.title }}"
-            class="product-gallery__thumbnail-image"
-            loading="lazy"
-          >
-        </div>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
-
-  <div class="product-gallery__main" data-main-image>
+<div class="product-gallery">
+  <div class="product-gallery__main" id="main-image-{{ section.id }}">
     {%- if product.featured_image -%}
       <img
         src="{{ product.featured_image | img_url: '1200x' }}"
         alt="{{ product.title }}"
         class="product-gallery__main-image"
-        data-zoom-image="{{ product.featured_image | img_url: 'master' }}"
+        id="main-product-image-{{ section.id }}"
         loading="eager"
       >
     {%- else -%}
@@ -182,86 +87,38 @@
     {%- endif -%}
   </div>
 
-  <div class="product-gallery__zoom" data-zoom-modal>
-    <div class="product-gallery__zoom-close" data-zoom-close>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="18" y1="6" x2="6" y2="18"></line>
-        <line x1="6" y1="6" x2="18" y2="18"></line>
-      </svg>
+  {%- if product.images.size > 1 -%}
+    <div class="product-gallery__thumbnails">
+      {%- for image in product.images limit: 6 -%}
+        <div
+          class="product-gallery__thumbnail {% if forloop.first %}active{% endif %}"
+          onclick="changeImage{{ section.id }}('{{ image | img_url: '1200x' }}', this)"
+        >
+          <img
+            src="{{ image | img_url: '200x' }}"
+            alt="{{ product.title }}"
+            class="product-gallery__thumbnail-image"
+            loading="lazy"
+          >
+        </div>
+      {%- endfor -%}
     </div>
-    <img src="" alt="" class="product-gallery__zoom-image" data-zoom-image-element>
-  </div>
+  {%- endif -%}
 </div>
 
 <script>
-  (function() {
-    const gallery = document.querySelector('[data-product-gallery]');
-    if (!gallery) return;
+  function changeImage{{ section.id }}(imageSrc, thumbnail) {
+    const mainImage = document.getElementById('main-product-image-{{ section.id }}');
+    const thumbnails = document.querySelectorAll('.product-gallery__thumbnail');
 
-    const mainImage = gallery.querySelector('[data-main-image] img');
-    const thumbnails = gallery.querySelectorAll('[data-thumbnail]');
-    const zoomModal = gallery.querySelector('[data-zoom-modal]');
-    const zoomImage = gallery.querySelector('[data-zoom-image-element]');
-    const zoomClose = gallery.querySelector('[data-zoom-close]');
-
-    // Thumbnail click
-    thumbnails.forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        const mediaId = thumb.dataset.mediaId;
-        const media = {{ product.media | json }}.find(m => m.id == mediaId);
-
-        if (media && media.media_type === 'image') {
-          mainImage.src = media.src.replace('.jpg', '_1200x.jpg');
-          mainImage.dataset.zoomImage = media.src;
-
-          thumbnails.forEach(t => t.classList.remove('active'));
-          thumb.classList.add('active');
-        }
-      });
-    });
-
-    // Zoom functionality
-    if (mainImage && zoomModal) {
-      mainImage.addEventListener('click', () => {
-        const zoomSrc = mainImage.dataset.zoomImage;
-        if (zoomSrc) {
-          zoomImage.src = zoomSrc;
-          zoomModal.classList.add('active');
-        }
-      });
-
-      zoomModal.addEventListener('click', () => {
-        zoomModal.classList.remove('active');
-      });
-
-      if (zoomClose) {
-        zoomClose.addEventListener('click', (e) => {
-          e.stopPropagation();
-          zoomModal.classList.remove('active');
-        });
-      }
+    if (mainImage) {
+      mainImage.src = imageSrc;
     }
 
-    // Listen for variant changes
-    document.addEventListener('variant:change', (e) => {
-      const variant = e.detail.variant;
-      if (!variant || !variant.featured_media) return;
-
-      const media = variant.featured_media;
-
-      if (media && mainImage) {
-        mainImage.src = media.src.replace('.jpg', '_1200x.jpg');
-        mainImage.dataset.zoomImage = media.src;
-
-        // Update active thumbnail
-        thumbnails.forEach(thumb => {
-          if (thumb.dataset.mediaId == media.id) {
-            thumb.classList.add('active');
-          } else {
-            thumb.classList.remove('active');
-          }
-        });
-      }
+    thumbnails.forEach(thumb => {
+      thumb.classList.remove('active');
     });
-  })();
+
+    thumbnail.classList.add('active');
+  }
 </script>
