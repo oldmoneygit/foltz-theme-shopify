@@ -41,6 +41,9 @@
 
   {% section 'footer' %}
 
+  {%- comment %} Toast Notification {%- endcomment -%}
+  {%- render 'add-to-cart-toast' -%}
+
   <!-- JavaScript -->
   {{ 'theme.js' | asset_url | script_tag }}
 </body>

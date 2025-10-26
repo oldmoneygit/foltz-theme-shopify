@@ -187,16 +187,63 @@
     }
   });
 
-  // Add to cart success feedback
-  form.addEventListener('submit', function(e) {
-    if (!addToCartButton.disabled) {
-      addToCartButton.classList.add('added');
+  // Add to cart with AJAX
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    if (addToCartButton.disabled) return;
+
+    const formData = new FormData(form);
+    const variantId = variantIdInput.value;
+
+    // Show loading state
+    addToCartButton.classList.add('added');
+    buttonText.textContent = 'Agregando...';
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: parseInt(form.querySelector('[name="quantity"]')?.value || 1)
+        })
+      });
+
+      if (!response.ok) throw new Error('Failed to add to cart');
+
+      const item = await response.json();
+
+      // Get product details for toast
+      const productData = {
+        name: '{{ product.title | escape }}',
+        image: item.image || '{{ product.featured_image | image_url: width: 200 }}',
+        price: item.price,
+        size: item.variant_title || item.options_with_values?.[0]?.value || 'Único',
+        quantity: item.quantity
+      };
+
+      // Dispatch event to show toast
+      document.dispatchEvent(new CustomEvent('product:added-to-cart', {
+        detail: productData
+      }));
+
+      // Update button state
       buttonText.textContent = '¡Agregado!';
 
       setTimeout(() => {
         addToCartButton.classList.remove('added');
         buttonText.textContent = 'Agregar al Carrito';
       }, 2000);
+
+      // Dispatch cart update event for mini cart
+      document.dispatchEvent(new CustomEvent('cart:updated'));
+
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Error al agregar el producto al carrito. Inténtalo de nuevo.');
+      addToCartButton.classList.remove('added');
+      buttonText.textContent = 'Agregar al Carrito';
     }
   });
 

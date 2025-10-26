@@ -15,11 +15,27 @@
     "search": {
       "placeholder": "Search jerseys...",
       "submit": "Search"
-    },
-    "cart": {
+    }
+  },
+  "cart": {
+    "general": {
       "title": "Shopping Cart",
-      "empty": "Your cart is empty",
-      "continue_shopping": "Continue Shopping"
+      "item_count": "{{ count }} items in your cart",
+      "item_count_one": "1 item in your cart",
+      "empty_title": "Your cart is empty",
+      "empty_message": "You haven't added any products yet. Explore our collection!",
+      "continue_shopping": "Explore Products",
+      "summary": "Order Summary",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "taxes_notice": "Taxes and shipping calculated at checkout",
+      "checkout": "Checkout",
+      "discount": "Discount",
+      "increase": "Increase quantity",
+      "decrease": "Decrease quantity",
+      "remove": "Remove",
+      "remove_confirm": "Are you sure you want to remove this item?",
+      "error": "Error updating cart. Please try again."
     }
   },
   "products": {
