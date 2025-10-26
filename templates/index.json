@@ -111,7 +111,7 @@
       "settings": {
         "show_section": true,
         "collection": "bundesliga",
-        "featured_image": "shopify://shop_images/replicate-prediction-01hcj7152srme0ct47hvw7b4dm.jpg",
+        "featured_image": "shopify://shop_images/replicate-prediction-b5vcjkvhk5rmc0ct47jb8dm694.jpg",
         "emoji": "🇩🇪",
         "title": "BUNDESLIGA",
         "subtitle": "La potencia del fútbol alemán",
@@ -125,6 +125,7 @@
       "settings": {
         "show_section": true,
         "collection": "ligue-1",
+        "featured_image": "shopify://shop_images/replicate-prediction-8f7sf04rr5rma0ct47mb5vhcec.jpg",
         "emoji": "🇫🇷",
         "title": "LIGUE 1",
         "subtitle": "El estilo francés en tu camiseta",
@@ -138,6 +139,7 @@
       "settings": {
         "show_section": true,
         "collection": "long-sleeve",
+        "featured_image": "shopify://shop_images/replicate-prediction-ptdd2y1j71rmc0ct47ps68ewq8.jpg",
         "emoji": "👕",
         "title": "LONG SLEEVE",
         "subtitle": "Camisetas de manga larga para todos los estilos",
@@ -151,6 +153,7 @@
       "settings": {
         "show_section": true,
         "collection": "retro",
+        "featured_image": "shopify://shop_images/replicate-prediction-tnycej5pmsrma0ct47rvzhb5rm.jpg",
         "emoji": "⏰",
         "title": "RETRO",
         "subtitle": "Revive la nostalgia del fútbol clásico",
@@ -164,9 +167,25 @@
       "settings": {
         "show_section": true,
         "collection": "national-teams",
+        "featured_image": "shopify://shop_images/replicate-prediction-65sshw4v5drmc0ct48q8yee7wc.jpg",
         "emoji": "🌎",
         "title": "NATIONAL TEAMS",
         "subtitle": "Representa tu país con orgullo",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "collection_carousel_UF3VbC": {
+      "type": "collection-carousel",
+      "name": "Collection Carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "argentina-legends",
+        "featured_image": "shopify://shop_images/replicate-prediction-ag1ydm19gxrma0ct47vtkppz5g.jpg",
+        "emoji": "⚽",
+        "title": "Featured Collection",
+        "subtitle": "Discover our latest products",
         "products_to_show": 8,
         "show_view_all": true,
         "enable_background_effects": true
@@ -241,6 +260,7 @@
     "hero",
     "best-sellers",
     "how-it-works",
+    "collection_carousel_UF3VbC",
     "league-collections",
     "premier-league-carousel",
     "la-liga-carousel",
