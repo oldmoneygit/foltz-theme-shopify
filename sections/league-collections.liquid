@@ -212,11 +212,16 @@
 .league-collections__card {
   position: relative;
   display: block;
-  aspect-ratio: 3 / 4;
-  width: 100%;
+  height: 300px;
   border-radius: 1rem;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .league-collections__card {
+    height: 350px;
+  }
 }
 
 .league-collections__card:hover {
@@ -234,10 +239,8 @@
 }
 
 .league-collections__card-bg--image {
-  background-size: contain;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  background-color: #000;
 }
 
 /* Gradients for each league */
@@ -295,12 +298,12 @@
   position: absolute;
   inset: 0;
   border-radius: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: none;
   transition: border-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 .league-collections__card:hover .league-collections__card-border {
-  border-color: rgba(212, 255, 0, 0.7);
+  border: none;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
