@@ -27,13 +27,21 @@
           "link_list_PRfMU3": {
             "type": "link_list",
             "settings": {
-              "title": "Links",
+              "title": "EMPRESA",
               "menu": "footer"
+            }
+          },
+          "link_list_FNCXMy": {
+            "type": "link_list",
+            "settings": {
+              "title": "AYUDA",
+              "menu": "ayuda"
             }
           }
         },
         "block_order": [
-          "link_list_PRfMU3"
+          "link_list_PRfMU3",
+          "link_list_FNCXMy"
         ],
         "settings": {
           "logo": "shopify://shop_images/logo-white.avif",
