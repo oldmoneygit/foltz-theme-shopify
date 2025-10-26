@@ -60,6 +60,63 @@ function generateHandle(productName, categoryTag) {
   return `${categoryTag}-${handle}`;
 }
 
+// Reorganiza título do produto para formato: [MODELO] [ANO] [TIPO] [EXTRAS]
+function normalizeProductTitle(productName) {
+  // Remove (Size ...)
+  let title = productName.replace(/\s*\(Size [^\)]+\)/gi, '').trim();
+
+  // Extrai componentes do título
+  const parts = {
+    model: '',
+    year: '',
+    type: '',
+    extras: []
+  };
+
+  // Lista de tipos conhecidos (ordenado por especificidade)
+  const types = ['Goalkeeper', 'Pre-Match', 'Training', 'Home', 'Away', 'Third'];
+  const extras = ['Long Sleeve', 'Suit', 'Jacket', 'Sweatshirt'];
+
+  // Detecta ano (4 dígitos ou formato XX/XX ou XX_XX)
+  const yearMatch = title.match(/\b(19\d{2}|20\d{2})\b/) || title.match(/\b(\d{2}[_\/]\d{2})\b/);
+  if (yearMatch) {
+    parts.year = yearMatch[1];
+    title = title.replace(yearMatch[0], '').trim();
+  }
+
+  // Detecta tipo
+  for (const type of types) {
+    const regex = new RegExp(`\\b${type}\\b`, 'i');
+    if (regex.test(title)) {
+      parts.type = type;
+      title = title.replace(regex, '').trim();
+      break;
+    }
+  }
+
+  // Detecta extras
+  for (const extra of extras) {
+    const regex = new RegExp(`\\b${extra}\\b`, 'i');
+    if (regex.test(title)) {
+      parts.extras.push(extra);
+      title = title.replace(regex, '').trim();
+    }
+  }
+
+  // O que sobrou é o modelo
+  parts.model = title.trim();
+
+  // Reconstrói o título na ordem: [MODELO] [ANO] [TIPO] [EXTRAS]
+  const rebuiltTitle = [
+    parts.model,
+    parts.year,
+    parts.type,
+    ...parts.extras
+  ].filter(Boolean).join(' ');
+
+  return rebuiltTitle || productName;
+}
+
 // Função para detectar tamanhos no nome do produto
 function detectSizes(productName) {
   // Padrões: (Size S-XXL), (Size S-XXXL), etc
@@ -207,7 +264,7 @@ async function generateCSV() {
 
       // Gera informações do produto
       const handle = generateHandle(productName, config.tag);
-      const title = productName.replace(/\s*\(Size [^\)]+\)/gi, '').trim(); // Remove (Size ...) do título
+      const title = normalizeProductTitle(productName); // Normaliza: [MODELO] [ANO] [TIPO] [EXTRAS]
       const sizes = detectSizes(productName);
       const typeTag = detectType(productName);
       const longSleeveTag = detectLongSleeve(productName);
