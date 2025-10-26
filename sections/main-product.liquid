@@ -1,18 +1,34 @@
+{%- capture product_form_id -%}product-form-{{ section.id }}{%- endcapture -%}
+
 <style>
+  /* Mobile-First Responsive Design - Match Next.js Exactly */
+
   .product-page {
-    background: #000000;
     min-height: 100vh;
+    background: #000000;
+    color: #FFFFFF;
   }
 
+  /* Container System - Matches Next.js container mx-auto px-4 */
   .product-page__container {
-    max-width: var(--container-max-width, 1400px);
-    margin: 0 auto;
-    padding: 16px;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+  }
+
+  /* Back Button Section */
+  .product-page__back-wrapper {
+    padding-top: 24px;
+    padding-bottom: 16px;
   }
 
   @media screen and (min-width: 768px) {
-    .product-page__container {
-      padding: 24px;
+    .product-page__back-wrapper {
+      padding-top: 32px;
+      padding-bottom: 24px;
     }
   }
 
@@ -23,14 +39,12 @@
     color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     font-size: 0.875rem;
-    margin-bottom: 16px;
     transition: color 0.2s ease;
   }
 
   @media screen and (min-width: 768px) {
     .product-page__back {
       font-size: 1rem;
-      margin-bottom: 24px;
     }
   }
 
@@ -41,6 +55,17 @@
   .product-page__back svg {
     width: 16px;
     height: 16px;
+  }
+
+  /* Product Grid - Matches Next.js grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12 */
+  .product-page__content {
+    padding-bottom: 32px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-page__content {
+      padding-bottom: 48px;
+    }
   }
 
   .product {
@@ -61,32 +86,46 @@
       gap: 48px;
     }
   }
+
+  .product__gallery {
+    width: 100%;
+  }
+
+  .product__info {
+    width: 100%;
+  }
 </style>
 
-{%- capture product_form_id -%}product-form-{{ section.id }}{%- endcapture -%}
-
 <div class="product-page">
+  {%- comment %} Back Button Section {%- endcomment -%}
   <div class="product-page__container">
-    {%- comment %} Back Button {%- endcomment -%}
-    <a href="{{ routes.root_url }}" class="product-page__back">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="15 18 9 12 15 6"></polyline>
-      </svg>
-      Volver a la tienda
-    </a>
-
-    {%- comment %} Product Grid {%- endcomment -%}
-    <div class="product">
-  {%- if product.media.size > 0 -%}
-    <div class="product__gallery">
-      {%- render 'product-gallery', product: product, section: section -%}
+    <div class="product-page__back-wrapper">
+      <a href="{{ routes.root_url }}" class="product-page__back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        Volver a la tienda
+      </a>
     </div>
-  {%- endif -%}
-
-  <div class="product__info">
-    {%- render 'product-info', product: product, section: section, product_form_id: product_form_id -%}
   </div>
-</div>
+
+  {%- comment %} Product Section {%- endcomment -%}
+  <div class="product-page__container">
+    <div class="product-page__content">
+      <div class="product">
+        {%- comment %} Left Column - Gallery {%- endcomment -%}
+        {%- if product.media.size > 0 -%}
+          <div class="product__gallery">
+            {%- render 'product-gallery', product: product, section: section -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment %} Right Column - Product Info {%- endcomment -%}
+        <div class="product__info">
+          {%- render 'product-info', product: product, section: section, product_form_id: product_form_id -%}
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
