@@ -260,6 +260,11 @@
             return '';
           }
 
+          // Get price from first variant
+          const variant = product.variants?.[0];
+          const price = variant ? parseFloat(variant.price) : 0;
+          const compareAtPrice = variant && variant.compare_at_price ? parseFloat(variant.compare_at_price) : null;
+
           // Render product card
           return `
             <a href="/products/${product.handle}" class="product-card" data-product-id="${product.id}">
@@ -274,8 +279,8 @@
               <div class="product-card-content">
                 <h3 class="product-card-name">${product.title}</h3>
                 <div class="product-card-prices">
-                  ${product.compare_at_price_max > product.price_max ? `<p class="product-card-price-regular">$${(product.compare_at_price_max / 100).toFixed(2)}</p>` : ''}
-                  <p class="product-card-price-sale">$${(product.price_max / 100).toFixed(2)}</p>
+                  ${compareAtPrice && compareAtPrice > price ? `<p class="product-card-price-regular">$${compareAtPrice.toFixed(2)}</p>` : ''}
+                  <p class="product-card-price-sale">$${price.toFixed(2)}</p>
                   <div class="product-card-promo"><span>COMPRA 1 LLEVA 2</span></div>
                 </div>
               </div>
