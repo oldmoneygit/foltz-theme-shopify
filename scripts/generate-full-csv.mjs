@@ -207,7 +207,7 @@ async function generateCSV() {
 
       // Gera informações do produto
       const handle = generateHandle(productName, config.tag);
-      const title = productName.replace(/\s*\(Size [S-X]+\)/gi, '').trim();
+      const title = productName.replace(/\s*\(Size [^\)]+\)/gi, '').trim(); // Remove (Size ...) do título
       const sizes = detectSizes(productName);
       const typeTag = detectType(productName);
       const longSleeveTag = detectLongSleeve(productName);
