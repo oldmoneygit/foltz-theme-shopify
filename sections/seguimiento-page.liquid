@@ -1,0 +1,48 @@
+<section style="background:#000;min-height:100vh;padding:2rem 1rem;color:#fff">
+<div style="max-width:1280px;margin:0 auto"><h1 style="font-size:3rem;font-weight:900;margin-bottom:2rem">Seguimiento de <span style="color:#D4FF00">Pedido</span></h1>
+<p style="color:rgba(255,255,255,0.8);font-size:1.25rem;margin-bottom:3rem;text-align:center">Rastrea tu pedido en tiempo real</p>
+<div style="max-width:48rem;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:3rem">
+<form id="tracking-form" onsubmit="handleTrackingSubmit(event)" style="margin-bottom:2rem">
+<label style="display:block;color:#fff;font-weight:700;margin-bottom:1rem;font-size:1.125rem">Número de Seguimiento</label>
+<div style="position:relative;margin-bottom:1rem">
+<input type="text" id="tracking-number" required placeholder="Ej: FZ123456" style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff;font-size:1.125rem">
+</div>
+<p style="color:rgba(255,255,255,0.4);font-size:0.875rem;margin-bottom:1.5rem">Puedes encontrar tu número de seguimiento en el email de confirmación</p>
+<button type="submit" style="width:100%;background:#D4FF00;color:#000;padding:1rem;border-radius:0.5rem;font-weight:900;font-size:1.125rem;text-transform:uppercase;border:none;cursor:pointer">Rastrear Pedido</button>
+</form>
+<div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:2rem">
+<p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-bottom:1rem">Para probar, usa estos números de ejemplo:</p>
+<div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+<button onclick="document.getElementById('tracking-number').value='FZ123456'" style="padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.25rem;color:#D4FF00;font-size:0.875rem;cursor:pointer">FZ123456 (Entregado)</button>
+<button onclick="document.getElementById('tracking-number').value='FZ789012'" style="padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.25rem;color:#D4FF00;font-size:0.875rem;cursor:pointer">FZ789012 (En Camino)</button>
+</div></div></div>
+<div id="tracking-result" style="display:none;max-width:64rem;margin:3rem auto">
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:2rem;margin-bottom:1.5rem">
+<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
+<div><h2 style="font-size:1.875rem;font-weight:700;margin-bottom:0.5rem">Pedido <span id="order-number"></span></h2>
+<p style="color:rgba(255,255,255,0.6)">Fecha: <span id="order-date"></span></p></div>
+<div id="order-status-badge" style="background:rgba(212,255,0,0.1);border:1px solid rgba(212,255,0,0.3);color:#D4FF00;padding:0.5rem 1rem;border-radius:0.5rem;font-weight:700"></div></div>
+<div style="background:rgba(0,0,0,0.5);padding:1rem;border-radius:0.5rem;margin-bottom:1rem"><h3 style="margin-bottom:1rem">Productos:</h3>
+<div id="order-items"></div></div>
+<div id="estimated-delivery" style="background:rgba(212,255,0,0.1);border:1px solid rgba(212,255,0,0.3);padding:1rem;border-radius:0.5rem"></div></div>
+<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:2rem">
+<h3 style="font-size:1.5rem;font-weight:700;margin-bottom:2rem">Estado del Envío</h3>
+<div id="timeline"></div></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:3rem">
+<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">⏰</div><h3 style="margin-bottom:0.5rem">Tiempo de Envío</h3>
+<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">3-5 días hábiles a toda Argentina</p></div>
+<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">🚚</div><h3 style="margin-bottom:0.5rem">Envío Gratis</h3>
+<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">En todos los pedidos sin mínimo</p></div>
+<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
+<div style="font-size:2.5rem;margin-bottom:1rem">📦</div><h3 style="margin-bottom:0.5rem">Embalaje Seguro</h3>
+<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">Protección total durante el transporte</p></div></div></div>
+</section>
+<script>
+const orders={'FZ123456':{number:'FZ123456',status:'delivered',statusText:'Entregado',date:'15/10/2024',est:'12-15/10/2024',items:[{name:'Real Madrid 24/25 Home',size:'L',qty:1}],timeline:[{text:'Pedido Confirmado',date:'10/10/2024 09:30',done:true},{text:'Preparando Envío',date:'10/10/2024 14:20',done:true},{text:'En Camino',date:'11/10/2024 08:15',done:true},{text:'En Reparto',date:'15/10/2024 07:00',done:true},{text:'Entregado',date:'15/10/2024 11:45',done:true}]},'FZ789012':{number:'FZ789012',status:'shipped',statusText:'En Camino',date:'23/10/2024',est:'26-28/10/2024',items:[{name:'Barcelona 24/25 Away',size:'M',qty:1},{name:'PSG 24/25 Home',size:'XL',qty:1}],timeline:[{text:'Pedido Confirmado',date:'23/10/2024 10:15',done:true},{text:'Preparando Envío',date:'23/10/2024 16:30',done:true},{text:'En Camino',date:'24/10/2024 09:00',done:true},{text:'En Reparto',date:'Pendiente',done:false},{text:'Entregado',date:'Pendiente',done:false}]}};
+function handleTrackingSubmit(e){e.preventDefault();const num=document.getElementById('tracking-number').value.toUpperCase();const order=orders[num];if(!order){alert('Pedido no encontrado');return;}
+document.getElementById('order-number').textContent='#'+order.number;document.getElementById('order-date').textContent=order.date;document.getElementById('order-status-badge').textContent=order.statusText;let itemsHtml='';order.items.forEach(item=>{itemsHtml+=`<div style="font-size:0.875rem;margin-bottom:0.5rem">${item.qty}x ${item.name} - Talla ${item.size}</div>`;});document.getElementById('order-items').innerHTML=itemsHtml;if(order.status!=='delivered'){document.getElementById('estimated-delivery').innerHTML=`<p style="color:#D4FF00;font-weight:700">📦 Entrega estimada: ${order.est}</p>`;document.getElementById('estimated-delivery').style.display='block';}else{document.getElementById('estimated-delivery').style.display='none';}
+let timelineHtml='';order.timeline.forEach(t=>{const color=t.done?'#D4FF00':'rgba(255,255,255,0.1)';const textColor=t.done?'#fff':'rgba(255,255,255,0.4)';timelineHtml+=`<div style="display:flex;gap:1rem;margin-bottom:1.5rem"><div style="width:1.5rem;height:1.5rem;background:${color};border-radius:50%;flex-shrink:0"></div><div style="flex:1"><h4 style="color:${textColor};font-weight:700;margin-bottom:0.25rem">${t.text}</h4><p style="color:${textColor};font-size:0.875rem">${t.date}</p></div></div>`;});document.getElementById('timeline').innerHTML=timelineHtml;document.getElementById('tracking-result').style.display='block';}
+</script>
+{% schema %}{"name":"Seguimiento","settings":[],"presets":[{"name":"Seguimiento"}]}{% endschema %}
