@@ -21,16 +21,38 @@
     margin-bottom: 32px;
   }
 
+  .best-sellers__subtitle {
+    color: #DAF10D;
+    font-size: 0.75rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+    display: block;
+  }
+
   .best-sellers__title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-brand-yellow);
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+  }
+
+  .best-sellers__title--highlight {
+    color: #DAF10D;
+  }
+
+  .best-sellers__description {
+    color: #D1D5DB;
+    font-size: 1rem;
+    max-width: 42rem;
+    margin: 0 auto;
   }
 
   .best-sellers__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
   }
 
   @media (min-width: 750px) {
@@ -46,11 +68,20 @@
       margin-bottom: 48px;
     }
 
+    .best-sellers__subtitle {
+      font-size: 0.875rem;
+    }
+
     .best-sellers__title {
-      font-size: 2.5rem;
+      font-size: 3rem;
+    }
+
+    .best-sellers__description {
+      font-size: 1.125rem;
     }
 
     .best-sellers__grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px;
     }
   }
@@ -59,7 +90,11 @@
 <div class="best-sellers">
   <div class="best-sellers__container">
     <div class="best-sellers__header">
-      <h2 class="best-sellers__title">{{ section.settings.title }}</h2>
+      <span class="best-sellers__subtitle">{{ section.settings.subtitle }}</span>
+      <h2 class="best-sellers__title">
+        {{ section.settings.title_prefix }} <span class="best-sellers__title--highlight">{{ section.settings.title_highlight }}</span>
+      </h2>
+      <p class="best-sellers__description">{{ section.settings.description }}</p>
     </div>
 
     <div class="best-sellers__grid">
@@ -79,9 +114,27 @@
   "settings": [
     {
       "type": "text",
-      "id": "title",
-      "label": "Title",
-      "default": "Best Sellers"
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Lo Más Vendido"
+    },
+    {
+      "type": "text",
+      "id": "title_prefix",
+      "label": "Title Prefix",
+      "default": "NUESTROS"
+    },
+    {
+      "type": "text",
+      "id": "title_highlight",
+      "label": "Title Highlight (Yellow)",
+      "default": "BEST SELLERS"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Los jerseys favoritos de nuestros clientes. Autenticidad garantizada y envío rápido."
     },
     {
       "type": "collection",
