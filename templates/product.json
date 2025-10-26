@@ -24,6 +24,10 @@
           "type": "price",
           "settings": {}
         },
+        "variant_picker_DqgQWY": {
+          "type": "variant_picker",
+          "settings": {}
+        },
         "quantity_rkjGxf": {
           "type": "quantity",
           "settings": {}
@@ -41,6 +45,7 @@
         "vendor_XhXQYw",
         "title_cUmgfU",
         "price_HVMbLk",
+        "variant_picker_DqgQWY",
         "quantity_rkjGxf",
         "buy_buttons_nJt6NF",
         "description_cRx7Hg"
