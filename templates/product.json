@@ -1,40 +1,54 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main-product": {
+    "main": {
       "type": "main-product",
       "blocks": {
-        "title": {
+        "vendor_XhXQYw": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title_cUmgfU": {
           "type": "title",
           "settings": {}
         },
-        "price": {
+        "price_hUteXU": {
           "type": "price",
           "settings": {}
         },
-        "variant_picker": {
+        "variant_picker_E6GYhp": {
           "type": "variant_picker",
           "settings": {}
         },
-        "quantity": {
+        "quantity_rkjGxf": {
           "type": "quantity",
           "settings": {}
         },
-        "buy_buttons": {
+        "buy_buttons_nJt6NF": {
           "type": "buy_buttons",
           "settings": {}
         },
-        "description": {
+        "description_cRx7Hg": {
           "type": "description",
           "settings": {}
         }
       },
       "block_order": [
-        "title",
-        "price",
-        "variant_picker",
-        "quantity",
-        "buy_buttons",
-        "description"
+        "vendor_XhXQYw",
+        "title_cUmgfU",
+        "price_hUteXU",
+        "variant_picker_E6GYhp",
+        "quantity_rkjGxf",
+        "buy_buttons_nJt6NF",
+        "description_cRx7Hg"
       ],
       "settings": {
         "enable_image_zoom": true,
@@ -43,6 +57,6 @@
     }
   },
   "order": [
-    "main-product"
+    "main"
   ]
 }
