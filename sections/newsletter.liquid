@@ -1,0 +1,367 @@
+{% comment %}
+  Newsletter Section
+  Email subscription with glassmorphism design
+{% endcomment %}
+
+{%- liquid
+  assign show_section = section.settings.show_section | default: true
+-%}
+
+{%- if show_section -%}
+<section class="newsletter" data-section-id="{{ section.id }}">
+  <div class="newsletter__container">
+    <div class="newsletter__content">
+      {%- comment %} Icon {%- endcomment -%}
+      <div class="newsletter__icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+          <polyline points="22,6 12,13 2,6"></polyline>
+        </svg>
+      </div>
+
+      {%- comment %} Header {%- endcomment -%}
+      <h2 class="newsletter__title">
+        {{ section.settings.title | default: "MANTENTE ACTUALIZADO" }}
+      </h2>
+
+      {%- if section.settings.subtitle != blank -%}
+        <p class="newsletter__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+
+      {%- comment %} Newsletter Form {%- endcomment -%}
+      <div class="newsletter__form-wrapper">
+        {% form 'customer', class: 'newsletter__form', id: 'newsletter-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+
+          <div class="newsletter__input-group">
+            <input
+              type="email"
+              name="contact[email]"
+              id="newsletter-email"
+              class="newsletter__input"
+              placeholder="{{ section.settings.placeholder | default: 'Tu correo electrónico' }}"
+              required
+              autocomplete="email"
+            >
+            <button type="submit" class="newsletter__button">
+              {{ section.settings.button_text | default: "Suscribirse" }}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </button>
+          </div>
+
+          <div class="newsletter__message" id="newsletter-message"></div>
+        {% endform %}
+      </div>
+
+      {%- comment %} Privacy Text {%- endcomment -%}
+      {%- if section.settings.privacy_text != blank -%}
+        <p class="newsletter__privacy">{{ section.settings.privacy_text }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+/* Newsletter Section */
+.newsletter {
+  padding: 3rem 0;
+  background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .newsletter {
+    padding: 5rem 0;
+  }
+}
+
+.newsletter__container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .newsletter__container {
+    padding: 0 1.5rem;
+  }
+}
+
+.newsletter__content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .newsletter__content {
+    padding: 3.5rem 3rem;
+  }
+}
+
+/* Icon */
+.newsletter__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1.5rem;
+  color: #D4FF00;
+  background: rgba(212, 255, 0, 0.1);
+  border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+  .newsletter__icon {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+/* Title */
+.newsletter__title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .newsletter__title {
+    font-size: 3rem;
+  }
+}
+
+.newsletter__subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .newsletter__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Form */
+.newsletter__form-wrapper {
+  max-width: 600px;
+  margin: 0 auto 1rem;
+}
+
+.newsletter__form {
+  width: 100%;
+}
+
+.newsletter__input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .newsletter__input-group {
+    flex-direction: row;
+  }
+}
+
+.newsletter__input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.newsletter__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.newsletter__input:focus {
+  outline: none;
+  border-color: #D4FF00;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(212, 255, 0, 0.1);
+}
+
+.newsletter__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: #D4FF00;
+  border: 2px solid #D4FF00;
+  color: #000;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .newsletter__button {
+    font-size: 1rem;
+  }
+}
+
+.newsletter__button:hover {
+  background: transparent;
+  color: #D4FF00;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+}
+
+.newsletter__button:active {
+  transform: translateY(0);
+}
+
+/* Privacy */
+.newsletter__privacy {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  margin-top: 1rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .newsletter__privacy {
+    font-size: 0.875rem;
+  }
+}
+
+/* Message */
+.newsletter__message {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  display: none;
+}
+
+.newsletter__message.success {
+  display: block;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.newsletter__message.error {
+  display: block;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('newsletter-form');
+  const messageEl = document.getElementById('newsletter-message');
+
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          messageEl.textContent = '¡Gracias por suscribirte! Revisa tu correo.';
+          messageEl.className = 'newsletter__message success';
+          form.reset();
+        } else {
+          throw new Error('Error al suscribirse');
+        }
+      })
+      .catch(error => {
+        messageEl.textContent = 'Hubo un error. Por favor, intenta nuevamente.';
+        messageEl.className = 'newsletter__message error';
+      });
+    });
+  }
+});
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "section",
+  "class": "section-newsletter",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "MANTENTE ACTUALIZADO"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Suscríbete a nuestro newsletter y recibe ofertas exclusivas, lanzamientos y noticias del mundo del fútbol."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email placeholder",
+      "default": "Tu correo electrónico"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Suscribirse"
+    },
+    {
+      "type": "textarea",
+      "id": "privacy_text",
+      "label": "Privacy text",
+      "default": "🔒 Tus datos están protegidos. No compartimos tu información."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

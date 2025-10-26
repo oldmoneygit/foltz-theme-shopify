@@ -189,6 +189,17 @@
         "cta_link": "/pages/faq"
       }
     },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "show_section": true,
+        "title": "MANTENTE ACTUALIZADO",
+        "subtitle": "Suscríbete a nuestro newsletter y recibe ofertas exclusivas, lanzamientos y noticias del mundo del fútbol.",
+        "placeholder": "Tu correo electrónico",
+        "button_text": "Suscribirse",
+        "privacy_text": "🔒 Tus datos están protegidos. No compartimos tu información."
+      }
+    },
     "featured-products": {
       "type": "featured-products",
       "settings": {
@@ -210,6 +221,7 @@
     "retro-carousel",
     "national-teams-carousel",
     "faq-home",
+    "newsletter",
     "featured-products"
   ]
 }
