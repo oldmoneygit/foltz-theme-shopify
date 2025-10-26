@@ -23,6 +23,7 @@
       "footer": {
         "type": "footer",
         "settings": {
+          "logo": "shopify://shop_images/logo-white.avif",
           "tagline": "Los mejores jerseys de fútbol importados. Autenticidad garantizada, envío a toda Argentina.",
           "instagram_url": "",
           "facebook_url": "",
