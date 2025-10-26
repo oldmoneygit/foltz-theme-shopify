@@ -1,0 +1,31 @@
+{% comment %}FAQ Page{% endcomment %}
+<section class="faq-inst">
+  <div class="faq-inst__wrap">
+    <div class="faq-inst__head"><h1>Preguntas Frecuentes</h1><p>Encontrá respuestas a las dudas más comunes</p></div>
+    <div class="faq-inst__search"><input type="text" id="faq-search" placeholder="Buscar pregunta..."></div>
+    <div class="faq-inst__cats" id="faq-categories"></div>
+    <div class="faq-inst__cta"><h3>¿No encontraste lo que buscabas?</h3><p>¡Nuestro equipo está disponible para ayudarte!</p><a href="https://wa.me/5511999999999" class="btn-y">WhatsApp</a></div>
+  </div>
+</section>
+<script>
+const faqs=[{cat:"Productos",qs:[{q:"¿Qué calidad tienen los productos?",a:"Ofrecemos réplicas premium 1:1, idénticas a los originales. Fabricadas en las mismas fábricas que las grandes marcas."},{q:"¿Tienen garantía los productos?",a:"Sí, todos los productos tienen garantía contra defectos de fabricación."},{q:"¿Todos los talles están disponibles?",a:"Trabajamos con talles del 36 al 44."}]},{cat:"Envíos",qs:[{q:"¿Hacen envíos a toda Argentina?",a:"Sí, Buenos Aires (3-5 días), Interior (7-12 días)."},{q:"¿Puedo rastrear mi pedido?",a:"¡Sí! Recibirás un código de seguimiento."},{q:"¿El envío tiene costo?",a:"GRATIS para compras superiores a ARS 50.000."}]},{cat:"Pagos",qs:[{q:"¿Qué formas de pago aceptan?",a:"Tarjetas, Mercado Pago, transferencia y PIX."},{q:"¿Puedo pagar en cuotas?",a:"Hasta 12 cuotas sin interés."},{q:"¿Es seguro?",a:"Totalmente seguro con encriptación SSL."}]}];
+const cont=document.getElementById('faq-categories');
+faqs.forEach(c=>{const d=document.createElement('div');d.innerHTML=`<h2>${c.cat}</h2>`;c.qs.forEach(q=>{const b=document.createElement('button');b.textContent=q.q;b.onclick=()=>alert(q.a);d.appendChild(b)});cont.appendChild(d)});
+</script>
+<style>
+.faq-inst{background:#000;min-height:100vh;padding:2rem 1rem}
+.faq-inst__wrap{max-width:1280px;margin:0 auto}
+.faq-inst__head{margin-bottom:2rem}
+.faq-inst__head h1{font-size:3rem;font-weight:900;color:#fff;text-transform:uppercase;margin-bottom:1rem}
+.faq-inst__head p{color:rgba(255,255,255,0.6);font-size:1.125rem}
+.faq-inst__search{margin-bottom:2rem}
+.faq-inst__search input{width:100%;max-width:48rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:1rem;color:#fff}
+.faq-inst__cats h2{font-size:1.5rem;font-weight:700;color:#D4FF00;margin:2rem 0 1rem}
+.faq-inst__cats button{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:1rem;color:#fff;text-align:left;margin-bottom:0.75rem;cursor:pointer}
+.faq-inst__cats button:hover{background:rgba(255,255,255,0.1)}
+.faq-inst__cta{margin-top:3rem;background:rgba(212,255,0,0.1);border:2px solid rgba(212,255,0,0.3);border-radius:0.75rem;padding:2rem;text-align:center}
+.faq-inst__cta h3{font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:1rem}
+.faq-inst__cta p{color:rgba(255,255,255,0.8);margin-bottom:1.5rem}
+.btn-y{display:inline-block;background:#D4FF00;color:#000;padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:700;text-decoration:none}
+</style>
+{% schema %}{"name":"FAQ","tag":"section","settings":[],"presets":[{"name":"FAQ"}]}{% endschema %}
