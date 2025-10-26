@@ -1,339 +1,60 @@
-<!--
-  Snippet: Buy Buttons
-  Descrição: Botões de compra (Add to Cart, Buy Now) com design FOLTZ
+{%- form 'product', product, id: product_form_id -%}
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
 
-  Uso:
-  {% render 'buy-buttons', product: product, variant: variant, show_quantity: true %}
--->
+  <button
+    type="submit"
+    name="add"
+    data-add-to-cart
+    style="width: 100%; padding: 16px 32px; background: var(--color-brand-yellow); color: #000000; font-size: 1rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease;"
+    {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+  >
+    {%- if product.selected_or_first_available_variant.available -%}
+      Adicionar ao Carrinho
+    {%- else -%}
+      Esgotado
+    {%- endif -%}
+  </button>
+{%- endform -%}
+
+<script>
+(function() {
+  const form = document.querySelector('#{{ product_form_id }}');
+  if (!form) return;
+
+  const variantIdInput = form.querySelector('[data-variant-id]');
+  const addToCartButton = form.querySelector('[data-add-to-cart]');
+
+  // Listen for variant changes
+  document.addEventListener('variant:changed', function(e) {
+    const variant = e.detail.variant;
+    if (!variant) return;
+
+    variantIdInput.value = variant.id;
+
+    if (variant.available) {
+      addToCartButton.disabled = false;
+      addToCartButton.textContent = 'Adicionar ao Carrinho';
+      addToCartButton.style.opacity = '1';
+      addToCartButton.style.cursor = 'pointer';
+    } else {
+      addToCartButton.disabled = true;
+      addToCartButton.textContent = 'Esgotado';
+      addToCartButton.style.opacity = '0.5';
+      addToCartButton.style.cursor = 'not-allowed';
+    }
+  });
+})();
+</script>
 
 <style>
-  .buy-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .buy-buttons__quantity {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .buy-buttons__quantity-label {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--color-text-subdued);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .buy-buttons__quantity-selector {
-    display: flex;
-    align-items: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .buy-buttons__quantity-btn {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .buy-buttons__quantity-btn:hover {
-    background: rgba(218, 241, 13, 0.1);
-    color: var(--color-brand-yellow);
-  }
-
-  .buy-buttons__quantity-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-
-  .buy-buttons__quantity-input {
-    width: 60px;
-    height: 40px;
-    text-align: center;
-    background: transparent;
-    border: none;
-    color: #FFFFFF;
-    font-size: 1rem;
-    font-weight: 600;
-  }
-
-  .buy-buttons__quantity-input:focus {
-    outline: none;
-  }
-
-  .buy-buttons__add-to-cart {
-    width: 100%;
-    padding: 16px 32px;
-    background: var(--color-brand-yellow);
-    color: #000000;
-    font-size: 1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .buy-buttons__add-to-cart:hover:not(:disabled) {
+  button[data-add-to-cart]:hover:not(:disabled) {
     opacity: 0.9;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
   }
 
-  .buy-buttons__add-to-cart:disabled {
+  button[data-add-to-cart]:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none;
-  }
-
-  .buy-buttons__buy-now {
-    width: 100%;
-    padding: 14px 32px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #FFFFFF;
-    font-size: 0.875rem;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  .buy-buttons__buy-now:hover:not(:disabled) {
-    background: rgba(218, 241, 13, 0.1);
-    border-color: var(--color-brand-yellow);
-    color: var(--color-brand-yellow);
-  }
-
-  .buy-buttons__buy-now:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  .buy-buttons__message {
-    padding: 12px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid #10B981;
-    border-radius: 8px;
-    color: #10B981;
-    font-size: 0.875rem;
-    text-align: center;
-    margin-top: 12px;
-  }
-
-  .buy-buttons__message--error {
-    background: rgba(239, 68, 68, 0.1);
-    border-color: #EF4444;
-    color: #EF4444;
   }
 </style>
-
-{%- assign current_variant = variant | default: product.selected_or_first_available_variant -%}
-{%- assign show_quantity = show_quantity | default: true -%}
-
-<div class="buy-buttons" data-product-form>
-  {%- if show_quantity -%}
-    <div class="buy-buttons__quantity">
-      <span class="buy-buttons__quantity-label">{{ 'products.product.quantity' | t }}:</span>
-      <div class="buy-buttons__quantity-selector">
-        <button
-          type="button"
-          class="buy-buttons__quantity-btn"
-          data-quantity-minus
-          aria-label="{{ 'products.product.decrease_quantity' | t }}"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-        </button>
-        <input
-          type="number"
-          class="buy-buttons__quantity-input"
-          name="quantity"
-          value="1"
-          min="1"
-          data-quantity-input
-          aria-label="{{ 'products.product.quantity' | t }}"
-        >
-        <button
-          type="button"
-          class="buy-buttons__quantity-btn"
-          data-quantity-plus
-          aria-label="{{ 'products.product.increase_quantity' | t }}"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-          </svg>
-        </button>
-      </div>
-    </div>
-  {%- endif -%}
-
-  <button
-    type="button"
-    class="buy-buttons__add-to-cart"
-    data-add-to-cart
-    {% unless current_variant.available %}disabled{% endunless %}
-  >
-    {%- if current_variant.available -%}
-      {{ 'products.product.add_to_cart' | t }}
-    {%- else -%}
-      {{ 'products.product.sold_out' | t }}
-    {%- endif -%}
-  </button>
-
-  {%- if shop.enabled_payment_types.size > 0 -%}
-    <button
-      type="button"
-      class="buy-buttons__buy-now"
-      data-buy-now
-      {% unless current_variant.available %}disabled{% endunless %}
-    >
-      {{ 'products.product.buy_now' | t }}
-    </button>
-  {%- endif -%}
-
-  <div class="buy-buttons__message" data-message style="display: none;"></div>
-</div>
-
-<script>
-  (function() {
-    const form = document.querySelector('[data-product-form]');
-    if (!form) return;
-
-    const quantityInput = form.querySelector('[data-quantity-input]');
-    const minusBtn = form.querySelector('[data-quantity-minus]');
-    const plusBtn = form.querySelector('[data-quantity-plus]');
-    const addToCartBtn = form.querySelector('[data-add-to-cart]');
-    const buyNowBtn = form.querySelector('[data-buy-now]');
-    const message = form.querySelector('[data-message]');
-
-    // Quantity controls
-    if (minusBtn && plusBtn && quantityInput) {
-      minusBtn.addEventListener('click', () => {
-        const current = parseInt(quantityInput.value);
-        if (current > 1) {
-          quantityInput.value = current - 1;
-        }
-      });
-
-      plusBtn.addEventListener('click', () => {
-        const current = parseInt(quantityInput.value);
-        quantityInput.value = current + 1;
-      });
-    }
-
-    // Get current variant ID
-    function getCurrentVariantId() {
-      const variantInput = document.querySelector('[data-variant-id]');
-      return variantInput ? variantInput.value : '{{ current_variant.id }}';
-    }
-
-    // Show message
-    function showMessage(text, isError = false) {
-      message.textContent = text;
-      message.classList.toggle('buy-buttons__message--error', isError);
-      message.style.display = 'block';
-
-      setTimeout(() => {
-        message.style.display = 'none';
-      }, 3000);
-    }
-
-    // Add to cart
-    if (addToCartBtn) {
-      addToCartBtn.addEventListener('click', async () => {
-        const variantId = getCurrentVariantId();
-        const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-
-        addToCartBtn.disabled = true;
-        addToCartBtn.textContent = '{{ 'products.product.adding' | t }}';
-
-        try {
-          const response = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              id: variantId,
-              quantity: quantity
-            })
-          });
-
-          if (response.ok) {
-            showMessage('{{ 'products.product.added_to_cart' | t }}');
-
-            // Trigger cart update event
-            document.dispatchEvent(new CustomEvent('cart:updated'));
-          } else {
-            throw new Error('Failed to add to cart');
-          }
-        } catch (error) {
-          showMessage('{{ 'products.product.error_adding_to_cart' | t }}', true);
-        } finally {
-          addToCartBtn.disabled = false;
-          addToCartBtn.textContent = '{{ 'products.product.add_to_cart' | t }}';
-        }
-      });
-    }
-
-    // Buy now
-    if (buyNowBtn) {
-      buyNowBtn.addEventListener('click', async () => {
-        const variantId = getCurrentVariantId();
-        const quantity = quantityInput ? parseInt(quantityInput.value) : 1;
-
-        try {
-          await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              id: variantId,
-              quantity: quantity
-            })
-          });
-
-          window.location.href = '/checkout';
-        } catch (error) {
-          showMessage('{{ 'products.product.error_adding_to_cart' | t }}', true);
-        }
-      });
-    }
-
-    // Listen for variant changes
-    document.addEventListener('variant:change', (e) => {
-      const variant = e.detail.variant;
-
-      if (variant && variant.available) {
-        addToCartBtn.disabled = false;
-        addToCartBtn.textContent = '{{ 'products.product.add_to_cart' | t }}';
-        if (buyNowBtn) buyNowBtn.disabled = false;
-      } else {
-        addToCartBtn.disabled = true;
-        addToCartBtn.textContent = '{{ 'products.product.sold_out' | t }}';
-        if (buyNowBtn) buyNowBtn.disabled = true;
-      }
-    });
-  })();
-</script>
