@@ -55,6 +55,46 @@
     gap: 12px;
   }
 
+  .best-sellers__cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .best-sellers__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid #D4FF00;
+    color: #D4FF00;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .best-sellers__button:hover {
+    background: #D4FF00;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+  }
+
+  .best-sellers__button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .best-sellers__button:hover svg {
+    transform: translateX(4px);
+  }
+
   @media (min-width: 750px) {
     .best-sellers {
       padding: 80px 0;
@@ -84,6 +124,15 @@
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px;
     }
+
+    .best-sellers__cta {
+      margin-top: 60px;
+    }
+
+    .best-sellers__button {
+      font-size: 1rem;
+      padding: 1.25rem 2.5rem;
+    }
   }
 </style>
 
@@ -105,6 +154,17 @@
         {%- endfor -%}
       {%- endif -%}
     </div>
+
+    {%- if section.settings.show_view_all_button and collection -%}
+      <div class="best-sellers__cta">
+        <a href="{{ collection.url }}" class="best-sellers__button">
+          {{ section.settings.button_text }}
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -149,6 +209,18 @@
       "max": 12,
       "step": 1,
       "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all_button",
+      "label": "Show 'View All' button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "VER TODA LA COLECCIÓN"
     }
   ],
   "presets": [
