@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "historia": {
+      "type": "historia",
+      "settings": {}
+    }
+  },
+  "order": [
+    "historia"
+  ]
+}

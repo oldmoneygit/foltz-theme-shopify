@@ -1,0 +1,486 @@
+{% comment %}
+  Section: About Us (Sobre Nosotros)
+  Página institucional completa
+{% endcomment %}
+
+<style>
+  .about-us {
+    background: #000;
+    min-height: 100vh;
+  }
+
+  .about-us__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  /* Hero Section */
+  .about-us__hero {
+    padding: 3rem 0 2rem;
+    text-align: center;
+  }
+
+  .about-us__title {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .about-us__title--highlight {
+    color: #D4FF00;
+  }
+
+  .about-us__hero-text {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.8);
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__hero {
+      padding: 4rem 0 3rem;
+    }
+
+    .about-us__title {
+      font-size: 3.75rem;
+    }
+
+    .about-us__hero-text {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .about-us__title {
+      font-size: 4.5rem;
+    }
+  }
+
+  /* Mission Section */
+  .about-us__mission {
+    padding: 3rem 0;
+  }
+
+  .about-us__mission-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__mission-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .about-us__mission-main {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+  }
+
+  .about-us__icon {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-us__icon--yellow {
+    color: #D4FF00;
+  }
+
+  .about-us__section-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+
+  .about-us__section-text {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+  }
+
+  .about-us__section-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .about-us__benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-us__benefit {
+    background: linear-gradient(to right, rgba(212, 255, 0, 0.1), rgba(212, 255, 0, 0.05));
+    border: 2px solid rgba(212, 255, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+  }
+
+  .about-us__benefit-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #D4FF00;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-us__benefit-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-us__benefit-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+  }
+
+  /* Values Section */
+  .about-us__values {
+    padding: 3rem 0;
+  }
+
+  .about-us__values-title {
+    font-size: 1.875rem;
+    font-weight: 900;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__values-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .about-us__values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__values-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .about-us__value-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .about-us__value-card:hover {
+    border-color: rgba(212, 255, 0, 0.3);
+  }
+
+  .about-us__value-icon {
+    width: 4rem;
+    height: 4rem;
+    background: #D4FF00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    font-size: 2rem;
+  }
+
+  .about-us__value-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.75rem;
+  }
+
+  .about-us__value-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+  }
+
+  /* Stats Section */
+  .about-us__stats {
+    padding: 3rem 0;
+  }
+
+  .about-us__stats-container {
+    max-width: 80rem;
+    margin: 0 auto;
+    background: linear-gradient(to right, rgba(212, 255, 0, 0.1), rgba(212, 255, 0, 0.05));
+    border: 2px solid rgba(212, 255, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__stats-container {
+      padding: 3rem;
+    }
+  }
+
+  .about-us__stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__stats-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .about-us__stat-number {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #D4FF00;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__stat-number {
+      font-size: 3rem;
+    }
+  }
+
+  .about-us__stat-label {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.875rem;
+  }
+
+  /* CTA Section */
+  .about-us__cta {
+    padding: 3rem 0 5rem;
+    text-align: center;
+  }
+
+  .about-us__cta-title {
+    font-size: 1.875rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .about-us__cta-title {
+      font-size: 2.5rem;
+    }
+  }
+
+  .about-us__cta-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+  }
+
+  .about-us__cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #D4FF00;
+    color: #000;
+    padding: 1rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(212, 255, 0, 0.2);
+  }
+
+  .about-us__cta-button:hover {
+    background: #e5ff33;
+    transform: scale(1.05);
+  }
+</style>
+
+<div class="about-us">
+  <div class="about-us__container">
+    {%- comment %} Hero Section {%- endcomment -%}
+    <div class="about-us__hero">
+      <h1 class="about-us__title">
+        Sobre <span class="about-us__title--highlight">Foltz Fanwear</span>
+      </h1>
+      <p class="about-us__hero-text">
+        Tu destino #1 para jerseys de fútbol de alta calidad premium 1:1
+      </p>
+    </div>
+
+    {%- comment %} Mission Section {%- endcomment -%}
+    <div class="about-us__mission">
+      <div class="about-us__mission-grid">
+        <div class="about-us__mission-main">
+          <svg class="about-us__icon about-us__icon--yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <h2 class="about-us__section-title">Nuestra Misión</h2>
+          <p class="about-us__section-text">
+            En Foltz Fanwear, nos dedicamos a traer la pasión del fútbol directamente a tu armario.
+            Creemos que cada jersey cuenta una historia y cada aficionado merece vestir los colores
+            de su equipo con orgullo.
+          </p>
+          <p class="about-us__section-text">
+            Nuestra misión es proporcionar réplicas premium 1:1 de la más alta calidad,
+            desde las ligas más prestigiosas de Europa hasta los equipos locales de Sudamérica.
+          </p>
+        </div>
+
+        <div class="about-us__benefits">
+          <div class="about-us__benefit">
+            <svg class="about-us__benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <h3 class="about-us__benefit-title">Comunidad Global</h3>
+            <p class="about-us__benefit-text">
+              Más de 50,000 clientes satisfechos en toda Argentina y Latinoamérica
+            </p>
+          </div>
+
+          <div class="about-us__benefit">
+            <svg class="about-us__benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+            <h3 class="about-us__benefit-title">Calidad Premium</h3>
+            <p class="about-us__benefit-text">
+              Réplicas 1:1 de la más alta calidad, indistinguibles de los originales
+            </p>
+          </div>
+
+          <div class="about-us__benefit">
+            <svg class="about-us__benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="2" y1="12" x2="22" y2="12"></line>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+            </svg>
+            <h3 class="about-us__benefit-title">Envío Nacional</h3>
+            <p class="about-us__benefit-text">
+              Entrega rápida y segura a toda Argentina en 3-5 días hábiles
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Values Section {%- endcomment -%}
+    <div class="about-us__values">
+      <h2 class="about-us__values-title">
+        Nuestros <span class="about-us__title--highlight">Valores</span>
+      </h2>
+
+      <div class="about-us__values-grid">
+        <div class="about-us__value-card">
+          <div class="about-us__value-icon">⚽</div>
+          <h3 class="about-us__value-title">Pasión</h3>
+          <p class="about-us__value-text">
+            El fútbol es más que un deporte, es una forma de vida.
+            Compartimos tu pasión por el juego hermoso.
+          </p>
+        </div>
+
+        <div class="about-us__value-card">
+          <div class="about-us__value-icon">✨</div>
+          <h3 class="about-us__value-title">Calidad Premium</h3>
+          <p class="about-us__value-text">
+            Solo ofrecemos réplicas de la más alta calidad 1:1,
+            con atención meticulosa a cada detalle.
+          </p>
+        </div>
+
+        <div class="about-us__value-card">
+          <div class="about-us__value-icon">🤝</div>
+          <h3 class="about-us__value-title">Confianza</h3>
+          <p class="about-us__value-text">
+            Tu satisfacción es nuestra prioridad. Garantizamos la calidad
+            de cada jersey que enviamos.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Stats Section {%- endcomment -%}
+    <div class="about-us__stats">
+      <div class="about-us__stats-container">
+        <div class="about-us__stats-grid">
+          <div class="about-us__stat">
+            <div class="about-us__stat-number">50K+</div>
+            <div class="about-us__stat-label">Clientes Satisfechos</div>
+          </div>
+
+          <div class="about-us__stat">
+            <div class="about-us__stat-number">500+</div>
+            <div class="about-us__stat-label">Modelos Disponibles</div>
+          </div>
+
+          <div class="about-us__stat">
+            <div class="about-us__stat-number">5 años</div>
+            <div class="about-us__stat-label">En el Mercado</div>
+          </div>
+
+          <div class="about-us__stat">
+            <div class="about-us__stat-number">24/7</div>
+            <div class="about-us__stat-label">Atención al Cliente</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} CTA Section {%- endcomment -%}
+    <div class="about-us__cta">
+      <h2 class="about-us__cta-title">
+        ¿Listo para encontrar tu jersey perfecto?
+      </h2>
+      <p class="about-us__cta-text">
+        Explora nuestra colección completa de jerseys de las mejores ligas del mundo
+      </p>
+      <a href="/collections/all" class="about-us__cta-button">
+        Ver Colección
+      </a>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Us",
+  "tag": "section",
+  "class": "section-about-us",
+  "settings": [],
+  "presets": [
+    {
+      "name": "About Us"
+    }
+  ]
+}
+{% endschema %}
