@@ -1,20 +1,161 @@
 {%- form 'product', product, id: product_form_id -%}
   <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-id>
 
-  <button
-    type="submit"
-    name="add"
-    data-add-to-cart
-    style="width: 100%; padding: 16px 32px; background: var(--color-brand-yellow); color: #000000; font-size: 1rem; font-weight: 700; border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s ease;"
-    {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
-  >
-    {%- if product.selected_or_first_available_variant.available -%}
-      Adicionar ao Carrinho
-    {%- else -%}
-      Esgotado
-    {%- endif -%}
-  </button>
+  <div class="buy-buttons-wrapper">
+    <button
+      type="submit"
+      name="add"
+      data-add-to-cart
+      {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+      class="buy-button"
+    >
+      <svg class="buy-button__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="9" cy="21" r="1"></circle>
+        <circle cx="20" cy="21" r="1"></circle>
+        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+      </svg>
+      <span data-button-text>
+        {%- if product.selected_or_first_available_variant.available -%}
+          Agregar al Carrito
+        {%- else -%}
+          Agotado
+        {%- endif -%}
+      </span>
+    </button>
+
+    <button type="button" class="wishlist-button" data-wishlist-button>
+      <svg class="wishlist-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+      <span class="wishlist-button__text">Favoritos</span>
+    </button>
+  </div>
 {%- endform -%}
+
+<style>
+  .buy-buttons-wrapper {
+    display: flex;
+    gap: 12px;
+  }
+
+  .buy-button {
+    flex: 1;
+    padding: 14px 24px;
+    background: #DAF10D;
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(218, 241, 13, 0.2);
+  }
+
+  @media (min-width: 768px) {
+    .buy-button {
+      padding: 16px 32px;
+      font-size: 1.125rem;
+    }
+  }
+
+  .buy-button:hover:not(:disabled) {
+    background: #FAFF00;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(218, 241, 13, 0.3);
+  }
+
+  .buy-button:active:not(:disabled) {
+    transform: scale(0.95);
+  }
+
+  .buy-button:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .buy-button.added {
+    background: #10B981;
+    color: #FFFFFF;
+  }
+
+  .buy-button__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .buy-button__icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .wishlist-button {
+    flex-shrink: 0;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  @media (min-width: 768px) {
+    .wishlist-button {
+      padding: 16px 20px;
+    }
+  }
+
+  .wishlist-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .wishlist-button.active {
+    background: #DAF10D;
+    color: #000000;
+  }
+
+  .wishlist-button.active .wishlist-icon {
+    fill: currentColor;
+  }
+
+  .wishlist-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .wishlist-icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .wishlist-button__text {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .wishlist-button__text {
+      display: inline;
+    }
+  }
+</style>
 
 <script>
 (function() {
@@ -23,6 +164,8 @@
 
   const variantIdInput = form.querySelector('[data-variant-id]');
   const addToCartButton = form.querySelector('[data-add-to-cart]');
+  const buttonText = addToCartButton.querySelector('[data-button-text]');
+  const wishlistButton = document.querySelector('[data-wishlist-button]');
 
   // Listen for variant changes
   document.addEventListener('variant:changed', function(e) {
@@ -33,28 +176,40 @@
 
     if (variant.available) {
       addToCartButton.disabled = false;
-      addToCartButton.textContent = 'Adicionar ao Carrinho';
+      buttonText.textContent = 'Agregar al Carrito';
       addToCartButton.style.opacity = '1';
       addToCartButton.style.cursor = 'pointer';
     } else {
       addToCartButton.disabled = true;
-      addToCartButton.textContent = 'Esgotado';
+      buttonText.textContent = 'Agotado';
       addToCartButton.style.opacity = '0.5';
       addToCartButton.style.cursor = 'not-allowed';
     }
   });
+
+  // Add to cart success feedback
+  form.addEventListener('submit', function(e) {
+    if (!addToCartButton.disabled) {
+      addToCartButton.classList.add('added');
+      buttonText.textContent = '¡Agregado!';
+
+      setTimeout(() => {
+        addToCartButton.classList.remove('added');
+        buttonText.textContent = 'Agregar al Carrito';
+      }, 2000);
+    }
+  });
+
+  // Wishlist toggle
+  if (wishlistButton) {
+    wishlistButton.addEventListener('click', function() {
+      this.classList.toggle('active');
+      const isActive = this.classList.contains('active');
+      const text = this.querySelector('.wishlist-button__text');
+      if (text) {
+        text.textContent = isActive ? 'Guardado' : 'Favoritos';
+      }
+    });
+  }
 })();
 </script>
-
-<style>
-  button[data-add-to-cart]:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(218, 241, 13, 0.3);
-  }
-
-  button[data-add-to-cart]:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-</style>

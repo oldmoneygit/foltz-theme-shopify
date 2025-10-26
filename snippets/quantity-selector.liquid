@@ -1,0 +1,158 @@
+<div class="quantity-selector">
+  <label class="quantity-selector__label">CANTIDAD</label>
+
+  <div class="quantity-selector__controls">
+    <button
+      type="button"
+      class="quantity-selector__button quantity-selector__button--decrease"
+      data-quantity-decrease
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+
+    <input
+      type="number"
+      name="quantity"
+      value="1"
+      min="1"
+      max="10"
+      form="{{ product_form_id }}"
+      class="quantity-selector__input"
+      data-quantity-input
+    >
+
+    <button
+      type="button"
+      class="quantity-selector__button quantity-selector__button--increase"
+      data-quantity-increase
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="5" x2="12" y2="19"></line>
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+      </svg>
+    </button>
+
+    <span class="quantity-selector__max">Máximo 10 unidades</span>
+  </div>
+</div>
+
+<style>
+  .quantity-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .quantity-selector__label {
+    display: block;
+    color: #FFFFFF;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .quantity-selector__controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .quantity-selector__button {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #FFFFFF;
+  }
+
+  .quantity-selector__button:not(:disabled):hover {
+    background: #DAF10D;
+    color: #000000;
+    transform: scale(1.1);
+  }
+
+  .quantity-selector__button:disabled {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+  }
+
+  .quantity-selector__button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .quantity-selector__input {
+    width: 64px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .quantity-selector__input:focus {
+    border-color: #DAF10D;
+    outline: none;
+  }
+
+  .quantity-selector__max {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    margin-left: 8px;
+  }
+</style>
+
+<script>
+  (function() {
+    const quantityInput = document.querySelector('[data-quantity-input]');
+    const decreaseBtn = document.querySelector('[data-quantity-decrease]');
+    const increaseBtn = document.querySelector('[data-quantity-increase]');
+
+    if (!quantityInput || !decreaseBtn || !increaseBtn) return;
+
+    const min = parseInt(quantityInput.min) || 1;
+    const max = parseInt(quantityInput.max) || 10;
+
+    function updateQuantity(newValue) {
+      const value = Math.max(min, Math.min(max, newValue));
+      quantityInput.value = value;
+      updateButtonStates();
+    }
+
+    function updateButtonStates() {
+      const value = parseInt(quantityInput.value) || min;
+      decreaseBtn.disabled = value <= min;
+      increaseBtn.disabled = value >= max;
+    }
+
+    decreaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(quantityInput.value) || min;
+      updateQuantity(currentValue - 1);
+    });
+
+    increaseBtn.addEventListener('click', () => {
+      const currentValue = parseInt(quantityInput.value) || min;
+      updateQuantity(currentValue + 1);
+    });
+
+    quantityInput.addEventListener('input', () => {
+      updateButtonStates();
+    });
+
+    updateButtonStates();
+  })();
+</script>
