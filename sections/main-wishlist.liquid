@@ -211,12 +211,12 @@
     return wishlist ? JSON.parse(wishlist) : [];
   }
 
-  // Format price in Brazilian format (R$ 1.234,56)
+  // Format price in Argentine format ($ 87.777,99)
   function formatPrice(price) {
-    // Convert cents to reais (divide by 100)
-    const priceInReais = price / 100;
-    // Format with Brazilian locale (pt-BR)
-    return priceInReais.toLocaleString('pt-BR', {
+    // Convert cents to pesos (divide by 100)
+    const priceInPesos = price / 100;
+    // Format with Argentine locale (es-AR)
+    return priceInPesos.toLocaleString('es-AR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     });
