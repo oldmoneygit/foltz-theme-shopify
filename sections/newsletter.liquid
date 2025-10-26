@@ -65,45 +65,34 @@
 </section>
 
 <style>
-/* Newsletter Section */
+/* Newsletter Section - Estilo Footer Next.js */
 .newsletter {
-  padding: 3rem 0;
-  background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
+  padding: 4rem 0;
+  background: linear-gradient(to bottom, #000, #09090b, #000);
   position: relative;
+  border-top: 4px solid #D4FF00;
 }
 
 @media (min-width: 768px) {
   .newsletter {
-    padding: 5rem 0;
+    padding: 6rem 0;
   }
 }
 
 .newsletter__container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 1.5rem;
 }
 
 @media (min-width: 768px) {
   .newsletter__container {
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 }
 
 .newsletter__content {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1.5rem;
-  padding: 2.5rem 1.5rem;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-@media (min-width: 768px) {
-  .newsletter__content {
-    padding: 3.5rem 3rem;
-  }
 }
 
 /* Icon */
@@ -111,18 +100,24 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
+  width: 3.5rem;
+  height: 3.5rem;
   margin-bottom: 1.5rem;
-  color: #D4FF00;
-  background: rgba(212, 255, 0, 0.1);
+  color: #000;
+  background: #D4FF00;
   border-radius: 50%;
+  box-shadow: 0 0 30px rgba(212, 255, 0, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.newsletter__icon:hover {
+  transform: scale(1.1);
 }
 
 @media (min-width: 768px) {
   .newsletter__icon {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
   }
 }
 
@@ -143,24 +138,24 @@
 }
 
 .newsletter__subtitle {
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 1rem;
-  margin-bottom: 2rem;
+  color: rgb(156, 163, 175);
+  font-size: 0.875rem;
+  margin-bottom: 2.5rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 @media (min-width: 768px) {
   .newsletter__subtitle {
-    font-size: 1.125rem;
+    font-size: 1rem;
   }
 }
 
 /* Form */
 .newsletter__form-wrapper {
-  max-width: 600px;
+  max-width: 700px;
   margin: 0 auto 1rem;
 }
 
@@ -171,35 +166,37 @@
 .newsletter__input-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @media (min-width: 640px) {
   .newsletter__input-group {
     flex-direction: row;
+    gap: 0.75rem;
   }
 }
 
 .newsletter__input {
   flex: 1;
   padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
+  background: transparent;
+  border: none;
   color: #fff;
   font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .newsletter__input::placeholder {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .newsletter__input:focus {
   outline: none;
-  border-color: #D4FF00;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(212, 255, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .newsletter__button {
@@ -209,13 +206,13 @@
   gap: 0.5rem;
   padding: 1rem 2rem;
   background: #D4FF00;
-  border: 2px solid #D4FF00;
+  border: none;
   color: #000;
   font-weight: 700;
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  border-radius: 0.75rem;
+  letter-spacing: 0.05em;
+  border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -223,34 +220,34 @@
 
 @media (min-width: 768px) {
   .newsletter__button {
-    font-size: 1rem;
+    font-size: 0.9375rem;
   }
 }
 
 .newsletter__button:hover {
-  background: transparent;
-  color: #D4FF00;
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+  background: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(212, 255, 0, 0.25);
 }
 
 .newsletter__button:active {
-  transform: translateY(0);
+  transform: scale(0.98);
 }
 
 /* Privacy */
 .newsletter__privacy {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   font-size: 0.75rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.5;
 }
 
 @media (min-width: 768px) {
   .newsletter__privacy {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
   }
 }
 

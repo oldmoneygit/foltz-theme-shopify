@@ -7,6 +7,7 @@
   assign collection = collections[section.settings.collection]
   assign products_to_show = section.settings.products_to_show | default: 8
   assign show_section = section.settings.show_section | default: true
+  assign featured_image = section.settings.featured_image
 -%}
 
 {%- if show_section and collection and collection.products.size > 0 -%}
@@ -16,19 +17,33 @@
   {%- endif -%}
 
   <div class="collection-carousel__container">
-    {%- comment %} Section Header {%- endcomment -%}
-    <div class="collection-carousel__header">
-      {%- if section.settings.emoji != blank -%}
-        <div class="collection-carousel__emoji">{{ section.settings.emoji }}</div>
+    {%- comment %} Section Header with Optional Featured Image {%- endcomment -%}
+    <div class="collection-carousel__header {% if featured_image %}collection-carousel__header--with-image{% endif %}">
+      {%- if featured_image -%}
+        <div class="collection-carousel__featured-image">
+          <img
+            src="{{ featured_image | image_url: width: 800 }}"
+            alt="{{ section.settings.title }}"
+            loading="lazy"
+            class="collection-carousel__image"
+          >
+          <div class="collection-carousel__image-overlay"></div>
+        </div>
       {%- endif -%}
 
-      <h2 class="collection-carousel__title">
-        {{ section.settings.title | default: collection.title }}
-      </h2>
+      <div class="collection-carousel__header-content">
+        {%- if section.settings.emoji != blank -%}
+          <div class="collection-carousel__emoji">{{ section.settings.emoji }}</div>
+        {%- endif -%}
 
-      {%- if section.settings.subtitle != blank -%}
-        <p class="collection-carousel__subtitle">{{ section.settings.subtitle }}</p>
-      {%- endif -%}
+        <h2 class="collection-carousel__title">
+          {{ section.settings.title | default: collection.title }}
+        </h2>
+
+        {%- if section.settings.subtitle != blank -%}
+          <p class="collection-carousel__subtitle">{{ section.settings.subtitle }}</p>
+        {%- endif -%}
+      </div>
     </div>
 
     {%- comment %} Carousel {%- endcomment -%}
@@ -149,6 +164,71 @@
   }
 }
 
+/* Header with Image Layout */
+.collection-carousel__header--with-image {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  text-align: left;
+}
+
+@media (min-width: 1024px) {
+  .collection-carousel__header--with-image {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+.collection-carousel__featured-image {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  height: 300px;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 768px) {
+  .collection-carousel__featured-image {
+    height: 400px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .collection-carousel__featured-image {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+.collection-carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.collection-carousel__featured-image:hover .collection-carousel__image {
+  transform: scale(1.05);
+}
+
+.collection-carousel__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.8) 100%);
+  opacity: 0.6;
+}
+
+.collection-carousel__header-content {
+  flex: 1;
+}
+
+.collection-carousel__header--with-image .collection-carousel__header-content {
+  text-align: left;
+}
+
 .collection-carousel__emoji {
   font-size: 2.5rem;
   margin-bottom: 1rem;
@@ -181,6 +261,10 @@
   font-size: 0.875rem;
   max-width: 42rem;
   margin: 0 auto;
+}
+
+.collection-carousel__header--with-image .collection-carousel__subtitle {
+  margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -465,6 +549,12 @@ document.addEventListener('DOMContentLoaded', function() {
       "type": "collection",
       "id": "collection",
       "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Image (Optional)",
+      "info": "Add a visual image to display alongside the carousel"
     },
     {
       "type": "text",
