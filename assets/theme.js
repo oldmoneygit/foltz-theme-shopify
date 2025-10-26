@@ -250,6 +250,84 @@
   };
 
   // ============================================
+  // WISHLIST TOAST NOTIFICATION
+  // ============================================
+  window.showWishlistToast = (message, action = 'add') => {
+    // Remove existing toasts
+    document.querySelectorAll('.foltz-toast').forEach(toast => toast.remove());
+
+    const isRemove = action === 'remove';
+    const headerBg = isRemove ? 'linear-gradient(to right, #DC2626, #EF4444)' : 'linear-gradient(to right, #DC2626, #EF4444)';
+    const iconColor = '#DC2626';
+
+    const toast = document.createElement('div');
+    toast.className = 'foltz-toast';
+    toast.innerHTML = `
+      <div class="foltz-toast__content" style="border-color: rgba(239, 68, 68, 0.5);">
+        <!-- Header -->
+        <div class="foltz-toast__header" style="background: ${headerBg}">
+          <div class="foltz-toast__header-content">
+            <div class="foltz-toast__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="none">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="${iconColor}"></path>
+              </svg>
+            </div>
+            <h3 class="foltz-toast__title">${message}</h3>
+          </div>
+          <button class="foltz-toast__close" onclick="this.closest('.foltz-toast').remove()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <!-- Body -->
+        <div class="foltz-toast__body">
+          <p class="foltz-toast__message">${message}</p>
+        </div>
+        <!-- Progress Bar -->
+        <div class="foltz-toast__progress" style="background: rgba(239, 68, 68, 0.8);"></div>
+      </div>
+    `;
+
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 9999;
+      padding: 16px;
+      pointer-events: none;
+      display: flex;
+      justify-content: center;
+    `;
+
+    // Add responsive positioning
+    if (window.innerWidth >= 768) {
+      toast.style.cssText += `
+        top: 16px;
+        right: 16px;
+        bottom: auto;
+        left: auto;
+        justify-content: flex-end;
+      `;
+    }
+
+    document.body.appendChild(toast);
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      toast.style.animation = 'foltzToastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+    });
+
+    // Auto close after 3 seconds
+    setTimeout(() => {
+      toast.style.animation = 'foltzToastSlideOut 0.3s ease-out';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  };
+
+  // ============================================
   // WISHLIST (localStorage)
   // ============================================
   const initWishlist = () => {
@@ -263,24 +341,36 @@
 
     // Add to wishlist
     window.addToWishlist = (productId) => {
+      console.log('Adding to wishlist:', productId);
       const wishlist = getWishlist();
       if (!wishlist.includes(productId)) {
         wishlist.push(productId);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
         updateWishlistUI();
-        showCartNotification('¡Agregado a Favoritos!', 'wishlist');
+        console.log('Wishlist updated:', wishlist);
+
+        // Show toast notification
+        if (typeof window.showWishlistToast === 'function') {
+          window.showWishlistToast('¡Agregado a Favoritos!', 'add');
+        }
       }
     };
 
     // Remove from wishlist
     window.removeFromWishlist = (productId) => {
+      console.log('Removing from wishlist:', productId);
       const wishlist = getWishlist();
       const index = wishlist.indexOf(productId);
       if (index > -1) {
         wishlist.splice(index, 1);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
         updateWishlistUI();
-        showCartNotification('Removido de Favoritos', 'wishlist');
+        console.log('Wishlist updated:', wishlist);
+
+        // Show toast notification
+        if (typeof window.showWishlistToast === 'function') {
+          window.showWishlistToast('Removido de Favoritos', 'remove');
+        }
       }
     };
 
