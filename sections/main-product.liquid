@@ -3,16 +3,23 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-8);
-    padding: var(--spacing-8) var(--container-gutter);
+    padding: 32px var(--container-gutter) var(--spacing-8);
     max-width: var(--container-max-width, 1400px);
     margin: 0 auto;
     background: #000000;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product {
+      padding-top: 48px;
+    }
   }
 
   @media screen and (min-width: 1000px) {
     .product {
       grid-template-columns: 1fr 1fr;
       gap: var(--spacing-12);
+      padding-top: 64px;
     }
   }
 </style>
