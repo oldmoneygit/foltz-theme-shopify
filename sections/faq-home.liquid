@@ -1,0 +1,398 @@
+{% comment %}
+  FAQ Section for Homepage
+  Displays frequently asked questions in accordion format
+{% endcomment %}
+
+{%- liquid
+  assign show_section = section.settings.show_section | default: true
+-%}
+
+{%- if show_section -%}
+<section class="faq-home" data-section-id="{{ section.id }}">
+  <div class="faq-home__container">
+    {%- comment %} Header {%- endcomment -%}
+    <div class="faq-home__header">
+      <div class="faq-home__icon">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+      </div>
+      <h2 class="faq-home__title">{{ section.settings.title | default: "PREGUNTAS FRECUENTES" }}</h2>
+      {%- if section.settings.subtitle != blank -%}
+        <p class="faq-home__subtitle">{{ section.settings.subtitle }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} FAQ Accordion {%- endcomment -%}
+    <div class="faq-home__accordion">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'faq_item' -%}
+          <div class="faq-home__item" data-faq-item>
+            <button class="faq-home__question" data-faq-toggle>
+              <span class="faq-home__question-text">{{ block.settings.question }}</span>
+              <svg class="faq-home__chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+            <div class="faq-home__answer" data-faq-answer>
+              <div class="faq-home__answer-content">
+                {{ block.settings.answer }}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- comment %} CTA Link {%- endcomment -%}
+    {%- if section.settings.show_cta -%}
+      <div class="faq-home__cta">
+        <a href="{{ section.settings.cta_link | default: '/pages/faq' }}" class="faq-home__button">
+          {{ section.settings.cta_text | default: "Ver todas las preguntas" }}
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+/* FAQ Home Section */
+.faq-home {
+  padding: 3rem 0;
+  background: #000;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .faq-home {
+    padding: 5rem 0;
+  }
+}
+
+.faq-home__container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .faq-home__container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Header */
+.faq-home__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faq-home__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  color: #D4FF00;
+}
+
+@media (min-width: 768px) {
+  .faq-home__icon {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+.faq-home__title {
+  font-size: 1.875rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .faq-home__title {
+    font-size: 3rem;
+  }
+}
+
+.faq-home__subtitle {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1rem;
+  max-width: 42rem;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .faq-home__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Accordion */
+.faq-home__accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.faq-home__item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.faq-home__item:hover {
+  border-color: rgba(212, 255, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.faq-home__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.faq-home__question:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.faq-home__question-text {
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding-right: 1rem;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .faq-home__question-text {
+    font-size: 1rem;
+  }
+}
+
+.faq-home__chevron {
+  color: #D4FF00;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-home__item[data-open="true"] .faq-home__chevron {
+  transform: rotate(180deg);
+}
+
+.faq-home__answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.faq-home__item[data-open="true"] .faq-home__answer {
+  max-height: 500px;
+}
+
+.faq-home__answer-content {
+  padding: 0 1.5rem 1rem 1.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .faq-home__answer-content {
+    font-size: 1rem;
+  }
+}
+
+/* CTA */
+.faq-home__cta {
+  margin-top: 2.5rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .faq-home__cta {
+    margin-top: 3rem;
+  }
+}
+
+.faq-home__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: transparent;
+  border: 2px solid #D4FF00;
+  color: #D4FF00;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .faq-home__button {
+    font-size: 1rem;
+  }
+}
+
+.faq-home__button:hover {
+  background: #D4FF00;
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(212, 255, 0, 0.3);
+}
+</style>
+
+<script>
+// FAQ Accordion functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const faqItems = document.querySelectorAll('[data-faq-item]');
+
+  faqItems.forEach(item => {
+    const toggle = item.querySelector('[data-faq-toggle]');
+
+    if (toggle) {
+      toggle.addEventListener('click', () => {
+        const isOpen = item.getAttribute('data-open') === 'true';
+
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.setAttribute('data-open', 'false');
+          }
+        });
+
+        // Toggle current item
+        item.setAttribute('data-open', !isOpen);
+      });
+    }
+  });
+});
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ Home",
+  "tag": "section",
+  "class": "section-faq-home",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "PREGUNTAS FRECUENTES"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Encontrá respuestas a las dudas más comunes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show CTA button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Ver todas las preguntas"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link",
+      "default": "/pages/faq"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "¿Los productos son originales?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "¡Sí! Todos nuestros productos son 100% originales y auténticos."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Home",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Los productos son originales?",
+            "answer": "¡Sí! Todos nuestros productos son 100% originales y auténticos. Trabajamos únicamente con proveedores oficiales y garantizamos la autenticidad de cada artículo."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánto demora el envío?",
+            "answer": "Los plazos de entrega son: Buenos Aires y CABA: 3-5 días hábiles, Provincia de Buenos Aires: 5-7 días hábiles, Interior: 7-12 días hábiles."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué formas de pago aceptan?",
+            "answer": "Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express), Mercado Pago, transferencia bancaria y PIX."
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo cambiar o devolver mi pedido?",
+            "answer": "¡Sí! Aceptamos cambios y devoluciones hasta 30 días después de la recepción. El producto debe estar sin uso, con etiquetas y en el embalaje original."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

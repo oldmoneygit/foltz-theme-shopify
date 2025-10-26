@@ -147,6 +147,48 @@
         "enable_background_effects": true
       }
     },
+    "faq-home": {
+      "type": "faq-home",
+      "blocks": {
+        "faq-1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Los productos son originales?",
+            "answer": "¡Sí! Todos nuestros productos son 100% originales y auténticos. Trabajamos únicamente con proveedores oficiales y garantizamos la autenticidad de cada artículo."
+          }
+        },
+        "faq-2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Cuánto demora el envío?",
+            "answer": "Los plazos de entrega son: Buenos Aires y CABA: 3-5 días hábiles, Provincia de Buenos Aires: 5-7 días hábiles, Interior: 7-12 días hábiles."
+          }
+        },
+        "faq-3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Qué formas de pago aceptan?",
+            "answer": "Aceptamos tarjetas de crédito y débito (Visa, Mastercard, American Express), Mercado Pago, transferencia bancaria y PIX."
+          }
+        },
+        "faq-4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "¿Puedo cambiar o devolver mi pedido?",
+            "answer": "¡Sí! Aceptamos cambios y devoluciones hasta 30 días después de la recepción. El producto debe estar sin uso, con etiquetas y en el embalaje original."
+          }
+        }
+      },
+      "block_order": ["faq-1", "faq-2", "faq-3", "faq-4"],
+      "settings": {
+        "show_section": true,
+        "title": "PREGUNTAS FRECUENTES",
+        "subtitle": "Encontrá respuestas a las dudas más comunes",
+        "show_cta": true,
+        "cta_text": "Ver todas las preguntas",
+        "cta_link": "/pages/faq"
+      }
+    },
     "featured-products": {
       "type": "featured-products",
       "settings": {
@@ -167,6 +209,7 @@
     "long-sleeve-carousel",
     "retro-carousel",
     "national-teams-carousel",
+    "faq-home",
     "featured-products"
   ]
 }
