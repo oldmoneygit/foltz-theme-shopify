@@ -17,7 +17,7 @@
   }
 </style>
 
-{%- assign product_form_id -%}product-form-{{ section.id }}{%- endassign -%}
+{%- capture product_form_id -%}product-form-{{ section.id }}{%- endcapture -%}
 
 <div class="product">
   {%- if product.media.size > 0 -%}
