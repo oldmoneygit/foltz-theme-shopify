@@ -214,18 +214,8 @@ async function generateCSV() {
       // Descrição
       const body = `<p>Camiseta ${title} - ${config.vendor}</p>`;
 
-      // Busca primeira imagem do produto
-      let imageSrc = '';
-      try {
-        const files = fs.readdirSync(productPath);
-        const imageFile = files.find(f => f.match(/\.(jpg|jpeg|png|webp)$/i));
-        if (imageFile) {
-          // URL relativa que será substituída depois
-          imageSrc = `/Leagues/${categoryFolder}/${productName}/${imageFile}`;
-        }
-      } catch (err) {
-        // Ignora erros de leitura
-      }
+      // Imagem será adicionada depois via script de upload
+      const imageSrc = '';
 
       // Cria variantes para cada tamanho
       sizes.forEach((size, index) => {
