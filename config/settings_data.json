@@ -9,6 +9,7 @@
  */
 {
   "current": {
+    "color_background": "#1a1a1a",
     "search_enable_suggestions": true,
     "search_show_images": true,
     "sections": {
