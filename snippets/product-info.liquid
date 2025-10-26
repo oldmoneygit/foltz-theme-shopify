@@ -9,14 +9,6 @@
           <h1 class="product-info__title">
             {{ product.title }}
           </h1>
-
-          {%- if product.tags.size > 0 -%}
-            <div class="product-info__tags">
-              {%- for tag in product.tags limit: 5 -%}
-                <span class="product-tag">#{{ tag }}</span>
-              {%- endfor -%}
-            </div>
-          {%- endif -%}
         </div>
 
       {%- when 'price' -%}
@@ -30,7 +22,7 @@
                 <div class="promo-banner__text">
                   <p class="promo-banner__label">PROMOCIÓN</p>
                   <h3 class="promo-banner__title">
-                    COMPRA 1<br>LLEVA 2
+                    COMPRA 1 LLEVA 2
                   </h3>
                 </div>
                 <div class="promo-banner__badge">
@@ -170,6 +162,7 @@
     color: #FFFFFF;
     line-height: 1.3;
     margin: 0;
+    text-transform: uppercase;
   }
 
   @media (min-width: 768px) {
