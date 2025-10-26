@@ -86,12 +86,13 @@
   .variant-picker__button {
     position: relative;
     min-width: 0;
-    padding: 10px 6px;
+    min-height: 48px;
+    padding: 14px 8px;
     background: rgba(255, 255, 255, 0.05);
     border: none;
     border-radius: 8px;
     color: #FFFFFF;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -99,11 +100,11 @@
     display: block;
   }
 
-  @media (min-width: 768px) {
+  @media (min-width: 750px) {
     .variant-picker__button {
       padding: 12px 8px;
       border-radius: 12px;
-      font-size: 0.875rem;
+      font-size: 1rem;
     }
   }
 
@@ -136,7 +137,7 @@
     align-items: center;
     gap: 6px;
     color: rgba(218, 241, 13, 0.8);
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
     margin-top: 8px;
     cursor: pointer;
