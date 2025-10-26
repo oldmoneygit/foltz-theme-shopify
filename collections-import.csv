@@ -1,0 +1,15 @@
+Handle,Title,Body HTML,Published,Sort Order,Template Suffix,Metafields Global Title Tag,Metafields Global Description Tag,Collection Image Src
+mas-vendidos,Más Vendidos,"<p>Los productos más vendidos de Foltz Fanwear</p>",TRUE,best-selling,,,Los productos más vendidos de Foltz Fanwear,
+premier-league,Premier League,"<p>Liga inglesa - la más competitiva del mundo</p>",TRUE,alpha-asc,,,Camisetas de la Premier League - La liga inglesa más competitiva,
+la-liga,La Liga,"<p>Liga española - Real Madrid Barcelona y más</p>",TRUE,alpha-asc,,,Camisetas de La Liga - Real Madrid Barcelona y más equipos españoles,
+serie-a,Serie A,"<p>Liga italiana - Juventus Milan Inter y más</p>",TRUE,alpha-asc,,,Camisetas de Serie A - Juventus Milan Inter y más equipos italianos,
+bundesliga,Bundesliga,"<p>Liga alemana de fútbol - los mejores equipos de Alemania</p>",TRUE,alpha-asc,,,Camisetas de Bundesliga - Los mejores equipos alemanes,
+ligue-1,Ligue 1,"<p>Liga francesa - PSG Lyon Marseille y más</p>",TRUE,alpha-asc,,,Camisetas de Ligue 1 - PSG Lyon Marseille y más equipos franceses,
+sul-americana,Sul-Americana,"<p>Ligas sudamericanas - Brasil Argentina y más</p>",TRUE,alpha-asc,,,Camisetas Sudamericanas - Brasil Argentina y más,
+liga-portugal,Liga Portugal,"<p>Campeonato portugués - Benfica Porto Sporting</p>",TRUE,alpha-asc,,,Camisetas de Liga Portugal - Benfica Porto Sporting,
+brasileirao,Brasileirão,"<p>Campeonato Brasileño Serie A - los mejores equipos de Brasil</p>",TRUE,alpha-asc,,,Camisetas del Brasileirão - Los mejores equipos de Brasil,
+eredivisie,Eredivisie,"<p>Campeonato holandés de fútbol profesional</p>",TRUE,alpha-asc,,,Camisetas de Eredivisie - Ajax PSV Feyenoord,
+liga-mx,Liga MX,"<p>Campeonato mexicano de fútbol</p>",TRUE,alpha-asc,,,Camisetas de Liga MX - Fútbol mexicano,
+mls,MLS,"<p>Major League Soccer - fútbol americano</p>",TRUE,alpha-asc,,,Camisetas de MLS - Major League Soccer,
+national-teams,National Teams,"<p>Selecciones nacionales de todo el mundo</p>",TRUE,alpha-asc,,,Camisetas de Selecciones Nacionales - Mundial y más,
+manga-longa,Manga Longa,"<p>Camisetas de manga larga de todas las ligas</p>",TRUE,alpha-asc,,,Camisetas de Manga Larga - Todas las ligas

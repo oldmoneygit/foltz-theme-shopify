@@ -19,6 +19,14 @@
         "button_link": "shopify://collections"
       }
     },
+    "best-sellers": {
+      "type": "best-sellers",
+      "settings": {
+        "title": "Best Sellers",
+        "collection": "frontpage",
+        "products_to_show": 8
+      }
+    },
     "how-it-works": {
       "type": "how-it-works",
       "settings": {
@@ -35,12 +43,108 @@
         "enable_background_effects": true
       }
     },
-    "best-sellers": {
-      "type": "best-sellers",
+    "premier-league-carousel": {
+      "type": "collection-carousel",
       "settings": {
-        "title": "Best Sellers",
-        "collection": "frontpage",
-        "products_to_show": 8
+        "show_section": true,
+        "collection": "premier-league",
+        "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "title": "PREMIER LEAGUE",
+        "subtitle": "Las camisetas más icónicas de la liga inglesa",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "la-liga-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "la-liga",
+        "emoji": "🇪🇸",
+        "title": "LA LIGA",
+        "subtitle": "Los clásicos del fútbol español",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "serie-a-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "serie-a",
+        "emoji": "🇮🇹",
+        "title": "SERIE A",
+        "subtitle": "Elegancia italiana en cada camiseta",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "bundesliga-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "bundesliga",
+        "emoji": "🇩🇪",
+        "title": "BUNDESLIGA",
+        "subtitle": "La potencia del fútbol alemán",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "ligue-1-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "ligue-1",
+        "emoji": "🇫🇷",
+        "title": "LIGUE 1",
+        "subtitle": "El estilo francés en tu camiseta",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "long-sleeve-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "long-sleeve",
+        "emoji": "👕",
+        "title": "LONG SLEEVE",
+        "subtitle": "Camisetas de manga larga para todos los estilos",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "retro-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "retro",
+        "emoji": "⏰",
+        "title": "RETRO",
+        "subtitle": "Revive la nostalgia del fútbol clásico",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
+      }
+    },
+    "national-teams-carousel": {
+      "type": "collection-carousel",
+      "settings": {
+        "show_section": true,
+        "collection": "national-teams",
+        "emoji": "🌎",
+        "title": "NATIONAL TEAMS",
+        "subtitle": "Representa tu país con orgullo",
+        "products_to_show": 8,
+        "show_view_all": true,
+        "enable_background_effects": true
       }
     },
     "featured-products": {
@@ -52,9 +156,17 @@
   },
   "order": [
     "hero",
+    "best-sellers",
     "how-it-works",
     "league-collections",
-    "best-sellers",
+    "premier-league-carousel",
+    "la-liga-carousel",
+    "serie-a-carousel",
+    "bundesliga-carousel",
+    "ligue-1-carousel",
+    "long-sleeve-carousel",
+    "retro-carousel",
+    "national-teams-carousel",
     "featured-products"
   ]
 }
