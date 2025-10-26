@@ -22,20 +22,43 @@
     "best-sellers": {
       "type": "best-sellers",
       "settings": {
+        "subtitle": "Lo Más Vendido",
+        "title_prefix": "NUESTROS",
+        "title_highlight": "BEST SELLERS",
+        "description": "Calidad premium 1:1. Réplicas idénticas fabricadas en las mismas fábricas que las grandes marcas.",
         "collection": "frontpage",
-        "products_to_show": 8
+        "products_to_show": 8,
+        "show_view_all_button": true,
+        "button_text": "VER TODA LA COLECCIÓN"
       }
     },
     "how-it-works": {
       "type": "how-it-works",
-      "settings": {}
+      "settings": {
+        "badge_text": "Promoción Activa",
+        "title_prefix": "¿Cómo Funciona el",
+        "promo_name": "COMPRA 1 LLEVA 3",
+        "subtitle": "Es simple: comprá 3 productos y 1 sale completamente GRATIS.",
+        "subtitle_highlight": "¡Sin pegadinhas, sin trucos!",
+        "step1_title": "Agregá 3 Productos",
+        "step1_description": "Elegí tus 3 camisetas favoritas y agregalas al carrito",
+        "step2_title": "1 Sale GRATIS",
+        "step2_description": "El producto de menor valor sale completamente gratis",
+        "step3_title": "Sin Trampas",
+        "step3_description": "No hay trucos, no hay condiciones ocultas. Así de simple",
+        "step4_title": "Descuento Automático",
+        "step4_description": "El descuento se aplica automáticamente en el checkout",
+        "valid_text": "TODOS LOS PRODUCTOS",
+        "info_text": "No importa qué jerseys elijas, la promoción se aplica automáticamente.",
+        "info_text_highlight": "¡Así de fácil!"
+      }
     },
     "league-collections": {
       "type": "league-collections",
       "settings": {
         "show_header": true,
         "subtitle": "🌍 NUESTRAS LIGAS",
-        "title_white": "COLECCIONES ",
+        "title_white": "COLECCIONES",
         "title_yellow": "OFICIALES",
         "description": "Las mejores ligas de fútbol del mundo",
         "enable_background_effects": true
@@ -46,6 +69,7 @@
       "settings": {
         "show_section": true,
         "collection": "premier-league",
+        "featured_image": "shopify://shop_images/replicate-prediction-6pb0s4fqshrma0ct478tqnjve0.jpg",
         "emoji": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
         "title": "PREMIER LEAGUE",
         "subtitle": "Las camisetas más icónicas de la liga inglesa",
