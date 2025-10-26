@@ -10,7 +10,10 @@
   # League names in correct order
   assign league_names = 'Premier League,La Liga,Serie A,Bundesliga,Ligue 1,Eredivisie,Primeira Liga,Liga MX,MLS,Sul-Americana,Brasileirão,National Teams' | split: ','
 
-  # League gradients
+  # League image files (from assets folder)
+  assign league_images = 'premier-league.jpeg,la-liga.jpeg,serie-a.jpeg,bundesliga.jpeg,ligue-1.jpeg,eredivisie.jpeg,primeira-liga.jpeg,liga-mx.jpeg,mls.jpeg,sul-americana.jpeg,brasileirao.jpeg,national-teams.jpeg' | split: ','
+
+  # League gradients (fallback if no image)
   assign gradients = 'from-purple-600 via-pink-600 to-purple-900,from-orange-500 via-red-600 to-orange-700,from-blue-400 via-cyan-500 to-blue-600,from-red-600 via-black to-red-800,from-blue-600 via-blue-700 to-blue-900,from-orange-600 via-blue-600 to-orange-700,from-red-600 via-green-600 to-red-700,from-green-500 via-green-600 to-red-600,from-red-600 via-blue-600 to-red-700,from-cyan-400 via-purple-500 to-purple-700,from-green-500 via-yellow-500 to-blue-600,from-blue-500 via-cyan-500 to-blue-700' | split: ','
 -%}
 
@@ -45,14 +48,21 @@
         {%- if collection != blank and collection.products_count > 0 -%}
           {%- assign league_name = league_names[i] -%}
           {%- assign gradient = gradients[i] -%}
+          {%- assign league_image = league_images[i] -%}
 
           <div class="league-collections__card-wrapper">
             <a href="{{ collection.url }}" class="league-collections__card">
-              <!-- Background Image or Gradient -->
+              <!-- Background Image (from assets or collection) -->
               {%- if collection.image -%}
+                {%- comment %} Use collection image if available {% endcomment -%}
                 <div class="league-collections__card-bg league-collections__card-bg--image"
                      style="background-image: url('{{ collection.image | image_url: width: 800 }}')"></div>
+              {%- elsif league_image -%}
+                {%- comment %} Use league image from assets {% endcomment -%}
+                <div class="league-collections__card-bg league-collections__card-bg--image"
+                     style="background-image: url('{{ league_image | asset_url }}')"></div>
               {%- else -%}
+                {%- comment %} Fallback to gradient {% endcomment -%}
                 <div class="league-collections__card-bg league-collections__card-bg--gradient league-collections__card-bg--{{ handle }}"></div>
               {%- endif -%}
 
