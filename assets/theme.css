@@ -1337,3 +1337,57 @@ ul, ol {
   border-radius: var(--radius-md);
   animation: shimmer 2s linear infinite;
 }
+
+/* ============================================
+   16. RESPONSIVE UTILITIES
+   ============================================ */
+
+/* Hide on mobile (< 768px) */
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Hide on tablet and up (>= 768px) */
+@media (min-width: 768px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Hide on desktop (>= 1024px) */
+@media (min-width: 1024px) {
+  .hide-lg {
+    display: none !important;
+  }
+}
+
+/* Show only on mobile */
+.show-mobile {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* Show only on desktop */
+.show-desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .show-desktop {
+    display: block;
+  }
+}
+
+/* Responsive text sizes - MOBILE FIRST */
+.text-mobile-xs { font-size: 0.625rem; } /* 10px */
+.text-mobile-sm { font-size: 0.75rem; }  /* 12px */
+.text-mobile-base { font-size: 0.875rem; } /* 14px */
+.text-mobile-lg { font-size: 1rem; }     /* 16px */
+
