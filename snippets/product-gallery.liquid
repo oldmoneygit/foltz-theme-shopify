@@ -387,6 +387,46 @@
     });
   }
 
+  // Touch/Swipe navigation
+  const mainImageContainer = gallery.querySelector('.product-gallery__main-image');
+  if (mainImageContainer && totalImages > 1) {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    const minSwipeDistance = 50; // Minimum distance for swipe in pixels
+
+    mainImageContainer.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    mainImageContainer.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      touchEndY = e.changedTouches[0].screenY;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const diffX = touchStartX - touchEndX;
+      const diffY = touchStartY - touchEndY;
+
+      // Only trigger swipe if horizontal movement is greater than vertical
+      if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Swipe left (next image)
+        if (diffX > minSwipeDistance) {
+          const newIndex = currentIndex === totalImages - 1 ? 0 : currentIndex + 1;
+          updateImage(newIndex);
+        }
+        // Swipe right (previous image)
+        else if (diffX < -minSwipeDistance) {
+          const newIndex = currentIndex === 0 ? totalImages - 1 : currentIndex - 1;
+          updateImage(newIndex);
+        }
+      }
+    }
+  }
+
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowLeft' && prevButton) {
