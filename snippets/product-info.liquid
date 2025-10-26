@@ -503,10 +503,12 @@
      MOBILE: Reduzir tamanhos (< 750px)
      ======================================== */
   @media screen and (max-width: 749px) {
-    /* Título do produto: 1.125rem → 0.95rem */
+    /* Título do produto: AUMENTADO e UPPERCASE */
     .product-info__title {
-      font-size: 0.95rem !important;
+      font-size: 1.25rem !important;
       line-height: 1.2;
+      text-transform: uppercase !important;
+      font-weight: 700 !important;
     }
 
     /* Tags: 0.75rem → 0.65rem */
@@ -537,13 +539,14 @@
       font-size: 0.85rem !important;
     }
 
-    /* Preço: 1.125rem → 0.95rem */
+    /* Preço: AUMENTADO promocional, DIMINUÍDO comparado */
     .product-info__price-current {
-      font-size: 0.95rem !important;
+      font-size: 1.5rem !important;
+      font-weight: 700 !important;
     }
 
     .product-info__price-compare {
-      font-size: 0.75rem !important;
+      font-size: 0.65rem !important;
     }
 
     .product-info__price-badge {
