@@ -211,6 +211,17 @@
     return wishlist ? JSON.parse(wishlist) : [];
   }
 
+  // Format price in Brazilian format (R$ 1.234,56)
+  function formatPrice(price) {
+    // Convert cents to reais (divide by 100)
+    const priceInReais = price / 100;
+    // Format with Brazilian locale (pt-BR)
+    return priceInReais.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
   // Render wishlist products
   async function renderWishlist() {
     const wishlist = getWishlist();
@@ -279,8 +290,8 @@
               <div class="product-card-content">
                 <h3 class="product-card-name">${product.title}</h3>
                 <div class="product-card-prices">
-                  ${compareAtPrice && compareAtPrice > price ? `<p class="product-card-price-regular">$${compareAtPrice.toFixed(2)}</p>` : ''}
-                  <p class="product-card-price-sale">$${price.toFixed(2)}</p>
+                  ${compareAtPrice && compareAtPrice > price ? `<p class="product-card-price-regular">$${formatPrice(compareAtPrice)}</p>` : ''}
+                  <p class="product-card-price-sale">$${formatPrice(price)}</p>
                   <div class="product-card-promo"><span>COMPRA 1 LLEVA 2</span></div>
                 </div>
               </div>
