@@ -986,7 +986,7 @@
             </div>
 
             {%- comment %} Promo 3x1 Logic {%- endcomment -%}
-            {%- if total_quantity >= 3 -%}
+            {%- if total_quantity >= 3 and cart.items.size >= 2 -%}
               {%- comment %} Find 2 cheapest products {%- endcomment -%}
               {%- assign sorted_prices = cart.items | sort: 'final_price' -%}
               {%- assign cheapest_price = sorted_prices[0].final_price -%}
@@ -1016,6 +1016,8 @@
                   <p class="cart-summary__promo-text">
                     {%- if total_quantity == 0 -%}
                       ¡Agrega productos para activar la promo 3x1!
+                    {%- elsif cart.items.size < 2 -%}
+                      ¡Agrega al menos 2 productos diferentes para activar la promo 3x1!
                     {%- else -%}
                       ¡Agrega {{ 3 | minus: total_quantity }} {{ 3 | minus: total_quantity | pluralize: 'producto', 'productos' }} más para activar la promo 3x1!
                     {%- endif -%}
@@ -1042,7 +1044,7 @@
 
             {%- comment %} Total {%- endcomment -%}
             {%- assign cart_total = cart.total_price -%}
-            {%- if total_quantity >= 3 -%}
+            {%- if total_quantity >= 3 and cart.items.size >= 2 -%}
               {%- assign cart_total = cart_total | minus: total_discount -%}
             {%- endif -%}
 
@@ -1051,7 +1053,7 @@
               <span class="cart-summary__total-value" data-cart-total>{{ cart_total | money }}</span>
             </div>
 
-            {%- if total_quantity >= 3 -%}
+            {%- if total_quantity >= 3 and cart.items.size >= 2 -%}
               <p class="cart-summary__savings">¡Ahorraste {{ total_discount | money }}!</p>
             {%- endif -%}
 
@@ -1105,7 +1107,7 @@
 
       {%- comment %} Promotional Banner {%- endcomment -%}
       <div class="cart-page__promo">
-        {%- if total_quantity >= 3 -%}
+        {%- if total_quantity >= 3 and cart.items.size >= 2 -%}
           <div class="promo-banner">
             <div class="promo-banner__content">
               <div class="promo-banner__badge">
@@ -1126,10 +1128,17 @@
                 <span class="promo-banner__badge-text">3x1</span>
               </div>
               <div class="promo-banner__text">
-                <h3 class="promo-banner__title">¡Agrega {{ 3 | minus: total_quantity }} {{ 3 | minus: total_quantity | pluralize: 'Producto', 'Productos' }} Más!</h3>
-                <p class="promo-banner__description">
-                  Activa la promoción 3x1 y los 2 productos de menor valor serán GRATIS!
-                </p>
+                {%- if cart.items.size < 2 -%}
+                  <h3 class="promo-banner__title">¡Agrega Más Productos!</h3>
+                  <p class="promo-banner__description">
+                    Necesitás al menos 2 productos diferentes y 3 unidades totales para activar la promo 3x1!
+                  </p>
+                {%- else -%}
+                  <h3 class="promo-banner__title">¡Agrega {{ 3 | minus: total_quantity }} {{ 3 | minus: total_quantity | pluralize: 'Producto', 'Productos' }} Más!</h3>
+                  <p class="promo-banner__description">
+                    Activa la promoción 3x1 y los 2 productos de menor valor serán GRATIS!
+                  </p>
+                {%- endif -%}
               </div>
             </div>
           </div>
@@ -1214,8 +1223,8 @@
     let totalQuantity = cart.items.reduce((sum, item) => sum + item.quantity, 0);
     let cartTotal = cart.total_price;
 
-    if (totalQuantity >= 3) {
-      // Find 2 cheapest products
+    if (totalQuantity >= 3 && cart.items.length >= 2) {
+      // Find 2 cheapest products (only if there are at least 2 different items)
       let sortedPrices = [...cart.items].sort((a, b) => a.final_price - b.final_price);
       let cheapestPrice = sortedPrices[0].final_price;
       let secondCheapestPrice = sortedPrices[1].final_price;
