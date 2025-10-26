@@ -248,12 +248,6 @@
         "button_text": "Suscribirse",
         "privacy_text": "🔒 Tus datos están protegidos. No compartimos tu información."
       }
-    },
-    "featured-products": {
-      "type": "featured-products",
-      "settings": {
-        "title": "Featured Products"
-      }
     }
   },
   "order": [
@@ -271,7 +265,6 @@
     "retro-carousel",
     "national-teams-carousel",
     "faq-home",
-    "newsletter",
-    "featured-products"
+    "newsletter"
   ]
 }
