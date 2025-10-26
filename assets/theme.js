@@ -87,11 +87,11 @@
 
         const data = await response.json();
         updateCartCount();
-        showCartNotification('Product added to cart!');
+        showCartNotification('¡Agregado al Carrito!', 'success');
         return data;
       } catch (error) {
         console.error('Add to cart error:', error);
-        showCartNotification('Error adding product to cart', 'error');
+        showCartNotification('Error al agregar al carrito', 'error');
       }
     };
 
@@ -167,30 +167,85 @@
       }
     };
 
-    // Show cart notification
-    const showCartNotification = (message, type = 'success') => {
-      const notification = document.createElement('div');
-      notification.className = `cart-notification ${type}`;
-      notification.textContent = message;
-      notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'success' ? '#DAF10D' : '#EF4444'};
-        color: #000000;
-        padding: 16px 24px;
-        border-radius: 12px;
-        font-weight: 700;
-        z-index: 9999;
-        animation: slideIn 0.3s ease-out;
+    // Show enhanced toast notification (Next.js style)
+    const showCartNotification = (message, type = 'success', productData = null) => {
+      // Remove existing notifications
+      document.querySelectorAll('.foltz-toast').forEach(toast => toast.remove());
+
+      const isWishlist = type === 'wishlist';
+      const headerBg = isWishlist ? 'linear-gradient(to right, #DC2626, #EF4444)' : 'linear-gradient(to right, #059669, #10B981)';
+      const borderColor = isWishlist ? 'rgba(239, 68, 68, 0.5)' : 'rgba(16, 185, 129, 0.5)';
+      const shadowColor = isWishlist ? 'rgba(239, 68, 68, 0.2)' : 'rgba(16, 185, 129, 0.2)';
+      const iconColor = isWishlist ? '#DC2626' : '#059669';
+      const iconPath = isWishlist
+        ? '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" fill="' + iconColor + '"></path>'
+        : '<polyline points="20 6 9 17 4 12" stroke="' + iconColor + '" stroke-width="3" fill="none"></polyline>';
+
+      const toast = document.createElement('div');
+      toast.className = 'foltz-toast';
+      toast.innerHTML = `
+        <div class="foltz-toast__content">
+          <!-- Header -->
+          <div class="foltz-toast__header" style="background: ${headerBg}">
+            <div class="foltz-toast__header-content">
+              <div class="foltz-toast__icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="none">
+                  ${iconPath}
+                </svg>
+              </div>
+              <h3 class="foltz-toast__title">${message}</h3>
+            </div>
+            <button class="foltz-toast__close" onclick="this.closest('.foltz-toast').remove()">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <!-- Body -->
+          <div class="foltz-toast__body">
+            <p class="foltz-toast__message">${message}</p>
+          </div>
+          <!-- Progress Bar -->
+          <div class="foltz-toast__progress"></div>
+        </div>
       `;
 
-      document.body.appendChild(notification);
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        padding: 16px;
+        pointer-events: none;
+        display: flex;
+        justify-content: center;
+      `;
 
+      // Add responsive positioning
+      if (window.innerWidth >= 768) {
+        toast.style.cssText += `
+          top: 16px;
+          right: 16px;
+          bottom: auto;
+          left: auto;
+          justify-content: flex-end;
+        `;
+      }
+
+      document.body.appendChild(toast);
+
+      // Trigger animation
+      requestAnimationFrame(() => {
+        toast.style.animation = 'foltzToastSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      });
+
+      // Auto close after 5 seconds
       setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease-out';
-        setTimeout(() => notification.remove(), 300);
-      }, 3000);
+        toast.style.animation = 'foltzToastSlideOut 0.3s ease-out';
+        setTimeout(() => toast.remove(), 300);
+      }, 5000);
     };
   };
 
@@ -213,7 +268,7 @@
         wishlist.push(productId);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
         updateWishlistUI();
-        showCartNotification('Added to wishlist!');
+        showCartNotification('¡Agregado a Favoritos!', 'wishlist');
       }
     };
 
@@ -225,7 +280,7 @@
         wishlist.splice(index, 1);
         localStorage.setItem(WISHLIST_KEY, JSON.stringify(wishlist));
         updateWishlistUI();
-        showCartNotification('Removed from wishlist');
+        showCartNotification('Removido de Favoritos', 'wishlist');
       }
     };
 
@@ -238,14 +293,17 @@
     const updateWishlistUI = () => {
       const wishlist = getWishlist();
 
-      // Update heart icons
+      // Update heart icons on product cards
       document.querySelectorAll('[data-product-id]').forEach(element => {
         const productId = parseInt(element.dataset.productId);
-        const heartIcon = element.querySelector('.product-card-wishlist svg, .header-icon svg');
+        const heartIcon = element.querySelector('.product-card-wishlist svg, .wishlist-button svg, .header-icon svg');
 
         if (heartIcon && isInWishlist(productId)) {
           heartIcon.style.fill = '#DAF10D';
           heartIcon.style.stroke = '#DAF10D';
+        } else if (heartIcon && !isInWishlist(productId)) {
+          heartIcon.style.fill = 'none';
+          heartIcon.style.stroke = 'currentColor';
         }
       });
 
@@ -268,16 +326,26 @@
 
     // Add event listeners to wishlist buttons
     document.addEventListener('click', (e) => {
-      const wishlistBtn = e.target.closest('.product-card-wishlist');
+      const wishlistBtn = e.target.closest('.product-card-wishlist, .wishlist-button');
       if (wishlistBtn) {
         e.preventDefault();
-        const productCard = wishlistBtn.closest('[data-product-id]');
-        if (productCard) {
+        const productCard = wishlistBtn.closest('[data-product-id]') || wishlistBtn;
+        if (productCard && productCard.dataset.productId) {
           const productId = parseInt(productCard.dataset.productId);
+          const heartIcon = wishlistBtn.querySelector('svg');
+
           if (isInWishlist(productId)) {
             removeFromWishlist(productId);
+            if (heartIcon) {
+              heartIcon.style.fill = 'none';
+              heartIcon.style.stroke = 'currentColor';
+            }
           } else {
             addToWishlist(productId);
+            if (heartIcon) {
+              heartIcon.style.fill = '#DAF10D';
+              heartIcon.style.stroke = '#DAF10D';
+            }
           }
         }
       }
@@ -419,7 +487,7 @@
     init();
   }
 
-  // Add CSS animations
+  // Add CSS animations and toast styles
   const style = document.createElement('style');
   style.textContent = `
     @keyframes slideIn {
@@ -441,6 +509,155 @@
       to {
         transform: translateX(100%);
         opacity: 0;
+      }
+    }
+
+    @keyframes foltzToastSlideIn {
+      from {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (min-width: 768px) {
+      @keyframes foltzToastSlideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes foltzToastSlideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+      }
+    }
+
+    @keyframes foltzToastSlideOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(100%);
+        opacity: 0;
+      }
+    }
+
+    .foltz-toast__content {
+      width: 100%;
+      max-width: 640px;
+      background: #000000;
+      border: 2px solid;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      pointer-events: auto;
+    }
+
+    .foltz-toast__header {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .foltz-toast__header-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .foltz-toast__icon {
+      width: 32px;
+      height: 32px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .foltz-toast__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .foltz-toast__title {
+      color: #FFFFFF;
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .foltz-toast__title {
+        font-size: 1.125rem;
+      }
+    }
+
+    .foltz-toast__close {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      border-radius: 8px;
+      color: #FFFFFF;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .foltz-toast__close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .foltz-toast__close svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .foltz-toast__body {
+      background: #18181B;
+      padding: 20px;
+    }
+
+    .foltz-toast__message {
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0;
+      font-size: 0.875rem;
+    }
+
+    .foltz-toast__progress {
+      height: 4px;
+      background: rgba(16, 185, 129, 0.8);
+      animation: foltzProgressBar 5s linear;
+      transform-origin: left;
+    }
+
+    @keyframes foltzProgressBar {
+      from {
+        transform: scaleX(1);
+      }
+      to {
+        transform: scaleX(0);
       }
     }
   `;
