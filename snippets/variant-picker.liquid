@@ -1,10 +1,43 @@
-<!--
-  Snippet: Variant Picker
-  Descrição: Seletor de variantes de produto (tamanhos, cores, etc.) com design FOLTZ
+{%- unless product.has_only_default_variant -%}
+  <div class="variant-picker">
+    {%- for option in product.options_with_values -%}
+      <fieldset class="variant-picker__option">
+        <div class="variant-picker__label-wrapper">
+          <legend class="variant-picker__label">{{ option.name }}:</legend>
+          <span class="variant-picker__selected">{{ option.selected_value }}</span>
+        </div>
 
-  Uso:
-  {% render 'variant-picker', product: product, block: block %}
--->
+        <div class="variant-picker__buttons">
+          {%- for value in option.values -%}
+            <input
+              type="radio"
+              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+              name="{{ option.name }}"
+              value="{{ value | escape }}"
+              form="{{ product_form_id }}"
+              {% if option.selected_value == value %}checked{% endif %}
+              class="variant-radio"
+            >
+            <label
+              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+              class="variant-picker__button"
+            >
+              {{ value }}
+            </label>
+          {%- endfor -%}
+        </div>
+      </fieldset>
+    {%- endfor -%}
+
+    <button type="button" class="variant-picker__size-guide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      <span>Guía de tallas</span>
+    </button>
+  </div>
+{%- endunless -%}
 
 <style>
   .variant-picker {
@@ -13,6 +46,8 @@
 
   .variant-picker__option {
     margin-bottom: 0;
+    border: none;
+    padding: 0;
   }
 
   .variant-picker__label-wrapper {
@@ -42,6 +77,12 @@
     gap: 8px;
   }
 
+  .variant-radio {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .variant-picker__button {
     position: relative;
     min-width: 0;
@@ -55,29 +96,22 @@
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: center;
+    display: block;
   }
 
-  .variant-picker__button:hover:not(:disabled) {
+  .variant-picker__button:hover {
     background: rgba(255, 255, 255, 0.1);
     transform: scale(1.05);
   }
 
-  .variant-picker__button:checked + .variant-picker__button,
-  input[type="radio"]:checked + .variant-picker__button {
+  .variant-radio:checked + .variant-picker__button {
     background: #DAF10D;
     color: #000000;
     box-shadow: 0 4px 12px rgba(218, 241, 13, 0.2);
     transform: scale(1.05);
   }
 
-  .variant-picker__button:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    text-decoration: line-through;
-  }
-
-  /* Active state indicator */
-  input[type="radio"]:checked + .variant-picker__button::after {
+  .variant-radio:checked + .variant-picker__button::after {
     content: '';
     position: absolute;
     top: -4px;
@@ -89,7 +123,6 @@
     border: 2px solid #000000;
   }
 
-  /* Size Guide Link */
   .variant-picker__size-guide {
     display: inline-flex;
     align-items: center;
@@ -124,105 +157,38 @@
   }
 </style>
 
-{%- unless product.has_only_default_variant -%}
-  <variant-selector data-url="{{ product.url }}" data-section-id="{{ section.id }}">
-    {%- for option in product.options_with_values -%}
-      <fieldset class="variant-picker__option">
-        <div class="variant-picker__label-wrapper">
-          <legend class="variant-picker__label">{{ option.name }}:</legend>
-          <span class="variant-picker__selected">{{ option.selected_value }}</span>
-        </div>
+<script>
+(function() {
+  const variantPicker = document.querySelector('.variant-picker');
+  if (!variantPicker) return;
 
-        <div class="variant-picker__buttons">
-          {%- for value in option.values -%}
-            <input
-              type="radio"
-              id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-              name="{{ option.name }}"
-              value="{{ value | escape }}"
-              form="{{ product_form_id }}"
-              {% if option.selected_value == value %}checked{% endif %}
-              style="position: absolute; opacity: 0; pointer-events: none;"
-            >
-            <label
-              for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
-              class="variant-picker__button"
-            >
-              {{ value }}
-            </label>
-          {%- endfor -%}
-        </div>
-      </fieldset>
-    {%- endfor -%}
+  const form = document.querySelector('#{{ product_form_id }}');
+  if (!form) return;
 
-    <button type="button" class="variant-picker__size-guide">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-        <circle cx="12" cy="10" r="3"></circle>
-      </svg>
-      <span>Guía de tallas</span>
-    </button>
+  const radioButtons = variantPicker.querySelectorAll('.variant-radio');
+  const selectedDisplays = variantPicker.querySelectorAll('.variant-picker__selected');
 
-    <script type="application/json">
-      {
-        "variants": [
-          {%- for variant in product.variants -%}
-            {
-              "id": {{ variant.id }},
-              "available": {{ variant.available | json }},
-              "option1": {{ variant.option1 | json }},
-              "option2": {{ variant.option2 | json }},
-              "option3": {{ variant.option3 | json }},
-              "price": {{ variant.price }},
-              "compare_at_price": {{ variant.compare_at_price | json }}
-            }{% unless forloop.last %},{% endunless %}
-          {%- endfor -%}
-        ]
+  radioButtons.forEach((radio, index) => {
+    radio.addEventListener('change', function() {
+      if (this.checked) {
+        // Update selected display
+        const fieldset = this.closest('.variant-picker__option');
+        const selectedDisplay = fieldset.querySelector('.variant-picker__selected');
+        if (selectedDisplay) {
+          selectedDisplay.textContent = this.value;
+        }
+
+        // Trigger variant change event
+        const event = new CustomEvent('variant:changed', {
+          bubbles: true,
+          detail: {
+            optionName: this.name,
+            optionValue: this.value
+          }
+        });
+        document.dispatchEvent(event);
       }
-    </script>
-  </variant-selector>
-
-  <script>
-    if (!customElements.get('variant-selector')) {
-      customElements.define('variant-selector', class VariantSelector extends HTMLElement {
-        constructor() {
-          super();
-          this.variants = JSON.parse(this.querySelector('script[type="application/json"]').textContent).variants;
-          this.addEventListener('change', this.onVariantChange.bind(this));
-        }
-
-        onVariantChange() {
-          this.updateOptions();
-          this.updateMasterId();
-          this.updateSelectedText();
-
-          if (!this.currentVariant) return;
-
-          this.dispatchEvent(new CustomEvent('variant:changed', {
-            bubbles: true,
-            detail: { variant: this.currentVariant }
-          }));
-        }
-
-        updateOptions() {
-          this.options = Array.from(this.querySelectorAll('input[type="radio"]:checked'), (input) => input.value);
-        }
-
-        updateMasterId() {
-          this.currentVariant = this.variants.find((variant) => {
-            const variantOptions = [variant.option1, variant.option2, variant.option3].filter(Boolean);
-            return variantOptions.every((option, index) => option === this.options[index]);
-          });
-        }
-
-        updateSelectedText() {
-          this.querySelectorAll('.variant-picker__option').forEach((fieldset, index) => {
-            const selectedValue = this.options[index];
-            const selectedText = fieldset.querySelector('.variant-picker__selected');
-            if (selectedText) selectedText.textContent = selectedValue;
-          });
-        }
-      });
-    }
-  </script>
-{%- endunless -%}
+    });
+  });
+})();
+</script>
