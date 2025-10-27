@@ -9,12 +9,12 @@
  */
 {
   "sections": {
-    "guia-talles-page": {
-      "type": "guia-talles-page",
+    "guia-de-tallas-page": {
+      "type": "guia-de-tallas-page",
       "settings": {}
     }
   },
   "order": [
-    "guia-talles-page"
+    "guia-de-tallas-page"
   ]
 }

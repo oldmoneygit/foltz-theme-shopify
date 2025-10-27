@@ -189,7 +189,7 @@ Premier League → /collections/premier-league
 ```
 Preguntas Frecuentes → /pages/faq
 Seguimiento de Pedido → /pages/rastreamento
-Guía de Tallas → /pages/guia-tamanhos
+Guía de Tallas → /guia-de-tallas
 Cambios y Devoluciones → /pages/politica-trocas
 Política de Privacidad → /pages/privacidade
 ```
@@ -207,7 +207,7 @@ Create these pages: **Online Store → Pages → Add page**
 3. **contato** (Contact)
 4. **faq** (FAQ)
 5. **rastreamento** (Order Tracking)
-6. **guia-tamanhos** (Size Guide)
+6. **guia-de-tallas** (Size Guide)
 7. **politica-trocas** (Returns Policy)
 8. **privacidade** (Privacy Policy)
 9. **ligas** (All Leagues page)
