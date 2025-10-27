@@ -49,9 +49,60 @@
         "enable_image_zoom": true,
         "enable_video_looping": true
       }
+    },
+    "product_info_tabs": {
+      "type": "product-info-tabs",
+      "settings": {}
+    },
+    "product_reviews": {
+      "type": "product-reviews",
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Martín R.",
+            "rating": 5,
+            "review_text": "¡Increíble! La camiseta es idéntica a la original. Calidad premium, envío rápido y el packaging impecable. 100% recomendado.",
+            "verified": true,
+            "date": "Hace 3 días"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Lucía G.",
+            "rating": 5,
+            "review_text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
+            "verified": true,
+            "date": "Hace 1 semana"
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Diego F.",
+            "rating": 5,
+            "review_text": "Es mi tercera compra y siempre perfecto. La promoción 3x1 es lo mejor! Muy buena atención al cliente también.",
+            "verified": true,
+            "date": "Hace 2 semanas"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3"
+      ],
+      "settings": {
+        "heading": "Reseñas de Clientes",
+        "subtitle": "Lo que dicen nuestros clientes sobre este producto",
+        "rating": "4.9"
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "product_info_tabs",
+    "product_reviews"
   ]
 }
