@@ -1,0 +1,116 @@
+{% comment %}
+  FOLTZ AI Chat Widget
+  Widget de chat flutuante integrado ao bot SNKHOUSE
+{% endcomment %}
+
+<!-- FOLTZ AI Chat Widget -->
+<div id="foltz-widget-container"></div>
+
+<script>
+(function() {
+  // ✅ URL do seu widget no Vercel
+  const WIDGET_URL = 'https://snkhouse-bot-foltz-widget.vercel.app';
+
+  // Criar iframe
+  const iframe = document.createElement('iframe');
+  iframe.src = WIDGET_URL;
+  iframe.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 400px;
+    height: 600px;
+    max-width: calc(100vw - 40px);
+    max-height: calc(100vh - 40px);
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 9999;
+    display: none;
+    transition: all 0.3s ease;
+  `;
+  iframe.id = 'foltz-widget-iframe';
+  iframe.allow = 'clipboard-write';
+
+  // Criar botão flutuante
+  const button = document.createElement('button');
+  button.innerHTML = '💬';
+  button.setAttribute('aria-label', 'Abrir chat de soporte');
+  button.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #DAF10D 0%, #C5D60B 100%);
+    color: #1A1A1A;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(218, 241, 13, 0.4);
+    z-index: 9998;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  `;
+  button.id = 'foltz-widget-button';
+
+  // Animações do botão
+  button.addEventListener('mouseenter', () => {
+    button.style.transform = 'scale(1.1)';
+    button.style.boxShadow = '0 6px 20px rgba(218, 241, 13, 0.6)';
+  });
+
+  button.addEventListener('mouseleave', () => {
+    button.style.transform = 'scale(1)';
+    button.style.boxShadow = '0 4px 12px rgba(218, 241, 13, 0.4)';
+  });
+
+  // Toggle widget
+  button.addEventListener('click', () => {
+    const isOpen = iframe.style.display === 'block';
+    iframe.style.display = isOpen ? 'none' : 'block';
+    button.style.display = isOpen ? 'flex' : 'none';
+  });
+
+  // Adicionar ao DOM
+  document.body.appendChild(iframe);
+  document.body.appendChild(button);
+
+  // Listener para fechar widget
+  window.addEventListener('message', (event) => {
+    if (event.origin === WIDGET_URL) {
+      if (event.data.type === 'CLOSE_WIDGET') {
+        iframe.style.display = 'none';
+        button.style.display = 'flex';
+      }
+    }
+  });
+
+  // Responsividade mobile
+  const handleResize = () => {
+    if (window.innerWidth < 768) {
+      iframe.style.width = 'calc(100vw - 20px)';
+      iframe.style.height = 'calc(100vh - 20px)';
+      iframe.style.bottom = '10px';
+      iframe.style.right = '10px';
+      button.style.bottom = '10px';
+      button.style.right = '10px';
+    } else {
+      iframe.style.width = '400px';
+      iframe.style.height = '600px';
+      iframe.style.bottom = '20px';
+      iframe.style.right = '20px';
+      button.style.bottom = '20px';
+      button.style.right = '20px';
+    }
+  };
+
+  window.addEventListener('resize', handleResize);
+  handleResize(); // Executar na inicialização
+
+  console.log('✅ FOLTZ Widget loaded successfully');
+})();
+</script>
