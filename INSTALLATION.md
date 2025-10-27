@@ -189,7 +189,7 @@ Premier League → /collections/premier-league
 ```
 Preguntas Frecuentes → /pages/faq
 Seguimiento de Pedido → /pages/rastreamento
-Guía de Tallas → /guia-de-tallas
+Guía de Tallas → /pages/guia-de-tallas
 Cambios y Devoluciones → /pages/politica-trocas
 Política de Privacidad → /pages/privacidade
 ```
