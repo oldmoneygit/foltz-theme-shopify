@@ -8,7 +8,14 @@
   <div class="hero-background">
     {%- if section.settings.background_image -%}
       <img
-        src="{{ section.settings.background_image | img_url: '2000x' }}"
+        src="{{ section.settings.background_image | img_url: '1024x' }}"
+        srcset="
+          {{ section.settings.background_image | img_url: '640x' }} 640w,
+          {{ section.settings.background_image | img_url: '1024x' }} 1024w,
+          {{ section.settings.background_image | img_url: '1536x' }} 1536w,
+          {{ section.settings.background_image | img_url: '2048x' }} 2048w
+        "
+        sizes="100vw"
         alt="{{ section.settings.title | escape }}"
         loading="eager"
       >
