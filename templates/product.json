@@ -157,6 +157,16 @@
             "verified": true,
             "date": "Hace 2 días"
           }
+        },
+        "review_3GneHC": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Micaela B.",
+            "rating": 5,
+            "review_text": "NO PUEDO CREER QUE LA PROMO ES POSTA! 😱 Compré 1 y me llegaron 3. Todas de excelente calidad. GRACIAS FOLTZ! 💛",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -168,7 +178,8 @@
         "review_LyLdkj",
         "review_JaQRJC",
         "review_KLKEbx",
-        "review_iracmf"
+        "review_iracmf",
+        "review_3GneHC"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
