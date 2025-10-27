@@ -8,8 +8,8 @@
 
 <script>
 (function() {
-  // ✅ URL do seu widget no Vercel
-  const WIDGET_URL = 'https://snkhouse-bot-foltz-widget.vercel.app';
+  // ✅ Usar a rota /embed
+  const WIDGET_URL = 'https://snkhouse-bot-foltz-widget.vercel.app/embed';
 
   // Criar iframe
   const iframe = document.createElement('iframe');
@@ -81,7 +81,7 @@
 
   // Listener para fechar widget
   window.addEventListener('message', (event) => {
-    if (event.origin === WIDGET_URL) {
+    if (event.origin.includes('snkhouse-bot-foltz-widget.vercel.app')) {
       if (event.data.type === 'CLOSE_WIDGET') {
         iframe.style.display = 'none';
         button.style.display = 'flex';
@@ -109,8 +109,8 @@
   };
 
   window.addEventListener('resize', handleResize);
-  handleResize(); // Executar na inicialização
+  handleResize();
 
-  console.log('✅ FOLTZ Widget loaded successfully');
+  console.log('✅ FOLTZ Widget loaded');
 })();
 </script>
