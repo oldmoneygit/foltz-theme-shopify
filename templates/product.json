@@ -213,14 +213,15 @@
             "date": "Hace 2 días"
           }
         },
-        "review_3qrFaW": {
+        "review_LLdJtr": {
           "type": "review",
           "settings": {
-            "customer_name": "Santiago Díaz",
-            "rating": 4,
-            "review_text": "Hincha de River desde chico. Esta camiseta es perfecta, todos los detalles bien hechos. Foltz entiende a los verdaderos fanáticos! 🔴⚪",
+            "customer_name": "Máximo Peralta",
+            "rating": 5,
+            "review_text": "Soy fan del Dortmund desde siempre. La camiseta es PERFECTA, los colores son exactos. Foltz nunca falla! 💛🖤",
+            "image_1": "shopify://shop_images/replicate-prediction-nrq35dqatnrm80ct4sbs9xk8gc.jpg",
             "verified": true,
-            "date": "Hace 2 días"
+            "date": "Hace 8 días"
           }
         }
       },
@@ -239,7 +240,7 @@
         "review_HDBMGb",
         "review_bGDcwq",
         "review_d7AqJP",
-        "review_3qrFaW"
+        "review_LLdJtr"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
