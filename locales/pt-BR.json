@@ -17,6 +17,27 @@
       "submit": "Buscar"
     }
   },
+  "search": {
+    "general": {
+      "title": "Busca",
+      "placeholder": "Qual camiseta você está procurando?",
+      "submit": "Buscar",
+      "results_for": "Resultados para",
+      "results_count": {
+        "one": "{{ count }} resultado encontrado",
+        "other": "{{ count }} resultados encontrados"
+      },
+      "all": "Todos",
+      "products": "Produtos",
+      "pages": "Páginas",
+      "articles": "Artigos",
+      "no_results_title": "Nenhum resultado encontrado",
+      "no_results_message": "Não encontramos resultados para sua busca. Tente outros termos ou explore nossos produtos.",
+      "view_all": "Ver Todos os Produtos",
+      "search_title": "Comece sua busca",
+      "search_message": "Use a busca para encontrar suas camisetas favoritas"
+    }
+  },
   "cart": {
     "general": {
       "title": "Carrito de Compras",

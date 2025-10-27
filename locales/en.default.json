@@ -17,6 +17,27 @@
       "submit": "Search"
     }
   },
+  "search": {
+    "general": {
+      "title": "Search",
+      "placeholder": "What jersey are you looking for?",
+      "submit": "Search",
+      "results_for": "Results for",
+      "results_count": {
+        "one": "{{ count }} result found",
+        "other": "{{ count }} results found"
+      },
+      "all": "All",
+      "products": "Products",
+      "pages": "Pages",
+      "articles": "Articles",
+      "no_results_title": "No results found",
+      "no_results_message": "We couldn't find any results for your search. Try different terms or explore our products.",
+      "view_all": "View All Products",
+      "search_title": "Start your search",
+      "search_message": "Use the search to find your favorite jerseys"
+    }
+  },
   "cart": {
     "general": {
       "title": "Shopping Cart",
