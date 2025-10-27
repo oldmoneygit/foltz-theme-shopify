@@ -78,12 +78,10 @@
               <div class="product-card__info">
                 <h3 class="product-card__title">{{ product.title }}</h3>
                 <div class="product-card__price">
-                  {%- if product.compare_at_price > product.price -%}
-                    <span class="product-card__price--sale">{{ product.price | money }}</span>
-                    <span class="product-card__price--compare">{{ product.compare_at_price | money }}</span>
-                  {%- else -%}
-                    <span class="product-card__price--regular">{{ product.price | money }}</span>
-                  {%- endif -%}
+                  {%- comment %} Calcular compare_at_price como 50% a mais (preço * 1.5) {%- endcomment -%}
+                  {%- assign calculated_compare_price = product.price | times: 1.5 | round -%}
+                  <span class="product-card__price--sale">{{ product.price | money }}</span>
+                  <span class="product-card__price--compare">{{ calculated_compare_price | money }}</span>
                 </div>
               </div>
             </a>

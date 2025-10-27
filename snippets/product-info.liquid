@@ -35,30 +35,25 @@
 
         <div class="product-info__price" {{ block.shopify_attributes }}>
           {%- assign current_variant = product.selected_or_first_available_variant -%}
-          {%- assign compare_at_price = current_variant.compare_at_price -%}
           {%- assign price = current_variant.price -%}
-          {%- assign on_sale = false -%}
-          {%- if compare_at_price and compare_at_price > price -%}
-            {%- assign on_sale = true -%}
-          {%- endif -%}
+
+          {%- comment %} Calcular compare_at_price como 50% a mais (preço * 1.5) {%- endcomment -%}
+          {%- assign compare_at_price = price | times: 1.5 | round -%}
+          {%- assign on_sale = true -%}
 
           <div class="price-container">
-            <div class="price-main {% if on_sale %}on-sale{% endif %}">
+            <div class="price-main on-sale">
               {{ price | money }}
             </div>
 
-            {%- if on_sale -%}
-              <div class="price-compare">
-                {{ compare_at_price | money }}
-              </div>
+            <div class="price-compare">
+              {{ compare_at_price | money }}
+            </div>
 
-              {%- assign savings_amount = compare_at_price | minus: price -%}
-              {%- assign savings_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
-
-              <span class="price-discount-badge">
-                -{{ savings_percent }}%
-              </span>
-            {%- endif -%}
+            {%- comment %} Sempre mostra 50% de desconto {%- endcomment -%}
+            <span class="price-discount-badge">
+              -33%
+            </span>
           </div>
         </div>
 

@@ -60,30 +60,25 @@
 </style>
 
 {%- assign current_variant = variant | default: product.selected_or_first_available_variant -%}
-{%- assign compare_at_price = current_variant.compare_at_price -%}
 {%- assign price = current_variant.price -%}
-{%- assign on_sale = false -%}
-{%- if compare_at_price and compare_at_price > price -%}
-  {%- assign on_sale = true -%}
-{%- endif -%}
+
+{%- comment %} Calcular compare_at_price como 50% a mais (preço * 1.5) {%- endcomment -%}
+{%- assign compare_at_price = price | times: 1.5 | round -%}
+{%- assign on_sale = true -%}
 
 <div class="price-list" data-price-wrapper>
-  <div class="price-list__price {% if on_sale %}price-list__price--sale{% endif %}" data-price>
+  <div class="price-list__price price-list__price--sale" data-price>
     {{ price | money }}
   </div>
 
-  {%- if on_sale -%}
-    <div class="price-list__compare" data-compare-price>
-      {{ compare_at_price | money }}
-    </div>
+  <div class="price-list__compare" data-compare-price>
+    {{ compare_at_price | money }}
+  </div>
 
-    {%- assign savings_amount = compare_at_price | minus: price -%}
-    {%- assign savings_percent = savings_amount | times: 100.0 | divided_by: compare_at_price | round -%}
-
-    <div class="price-list__badge">
-      -{{ savings_percent }}%
-    </div>
-  {%- endif -%}
+  {%- comment %} Sempre mostra 33% de desconto (preço 50% maior resulta em 33% de desconto) {%- endcomment -%}
+  <div class="price-list__badge">
+    -33%
+  </div>
 
   {%- if current_variant.unit_price_measurement -%}
     <div class="price-list__unit">
@@ -112,41 +107,36 @@
       // Update price
       priceElement.textContent = Shopify.formatMoney(variant.price, '{{ shop.money_format }}');
 
-      // Update compare at price
-      if (variant.compare_at_price && variant.compare_at_price > variant.price) {
-        priceElement.classList.add('price-list__price--sale');
+      // Calcular compare_at_price como 50% a mais (preço * 1.5)
+      const calculatedComparePrice = Math.round(variant.price * 1.5);
 
-        if (!compareElement) {
-          const compare = document.createElement('div');
-          compare.className = 'price-list__compare';
-          compare.dataset.comparePrice = '';
-          priceWrapper.insertBefore(compare, priceElement.nextSibling);
-        }
+      priceElement.classList.add('price-list__price--sale');
 
-        compareElement.textContent = Shopify.formatMoney(variant.compare_at_price, '{{ shop.money_format }}');
-        compareElement.style.display = 'block';
+      if (!compareElement) {
+        const compare = document.createElement('div');
+        compare.className = 'price-list__compare';
+        compare.dataset.comparePrice = '';
+        priceWrapper.insertBefore(compare, priceElement.nextSibling);
+        compareElement = compare;
+      }
 
-        // Update/add badge
-        const savingsPercent = Math.round(((variant.compare_at_price - variant.price) / variant.compare_at_price) * 100);
-        let badgeElement = priceWrapper.querySelector('.price-list__badge');
+      compareElement.textContent = Shopify.formatMoney(calculatedComparePrice, '{{ shop.money_format }}');
+      compareElement.style.display = 'block';
 
-        if (!badgeElement) {
-          badgeElement = document.createElement('div');
-          badgeElement.className = 'price-list__badge';
-          priceWrapper.insertBefore(badgeElement, compareElement.nextSibling);
-        }
+      // Sempre mostra 33% de desconto (preço 50% maior resulta em 33% de desconto)
+      let badgeElement = priceWrapper.querySelector('.price-list__badge');
 
-        badgeElement.textContent = `-${savingsPercent}%`;
-        badgeElement.style.display = 'block';
-      } else {
-        priceElement.classList.remove('price-list__price--sale');
+      if (!badgeElement) {
+        badgeElement = document.createElement('div');
+        badgeElement.className = 'price-list__badge';
+        priceWrapper.insertBefore(badgeElement, compareElement.nextSibling);
+      }
 
-        if (compareElement) {
-          compareElement.style.display = 'none';
-        }
+      badgeElement.textContent = `-33%`;
+      badgeElement.style.display = 'block';
 
-        const badgeElement = priceWrapper.querySelector('.price-list__badge');
-        if (badgeElement) {
+      // Remover código do else, sempre mostra preço comparado
+      if (false) {
           badgeElement.style.display = 'none';
         }
       }
