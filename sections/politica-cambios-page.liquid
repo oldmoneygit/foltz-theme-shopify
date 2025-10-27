@@ -1,30 +1,961 @@
-<section style="background:#000;min-height:100vh;padding:2rem 1rem;color:#fff">
-<div style="max-width:1280px;margin:0 auto"><h1 style="font-size:3rem;font-weight:900;margin-bottom:2rem">Política de Cambios y Devoluciones</h1>
-<div style="background:rgba(212,255,0,0.2);border:2px solid rgba(212,255,0,0.5);border-radius:1rem;padding:2rem;margin-bottom:2rem">
-<h2 style="font-size:1.5rem;margin-bottom:1rem">30 días para cambios y devoluciones</h2>
-<p>Tenés 30 días corridos desde la recepción del pedido para solicitar un cambio o devolución.</p></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">Condiciones</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2rem">
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="margin-bottom:0.5rem">Producto sin uso</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem">El artículo no debe haber sido usado</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="margin-bottom:0.5rem">Etiquetas originales</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem">Debe conservar todas las etiquetas</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="margin-bottom:0.5rem">Embalaje original</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem">La caja debe estar en perfecto estado</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="margin-bottom:0.5rem">Accesorios completos</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem">Debe incluir todos los accesorios</p></div></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">¿Cómo solicitar un cambio?</h2>
-<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;margin-bottom:2rem">
-<ol><li style="margin-bottom:1rem"><strong>Contactanos</strong> - Escribinos indicando tu número de pedido</li>
-<li style="margin-bottom:1rem"><strong>Confirmación</strong> - Te enviamos las instrucciones</li>
-<li style="margin-bottom:1rem"><strong>Envío</strong> - Embalá el producto y envialo</li>
-<li style="margin-bottom:1rem"><strong>Inspección</strong> - Verificamos las condiciones</li>
-<li><strong>Cambio o reembolso</strong> - Enviamos nuevo producto o reembolso en 5-7 días</li></ol></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">Costos de envío</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin-bottom:2rem">
-<div style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);padding:1.5rem;border-radius:1rem">
-<h3 style="color:#22c55e;margin-bottom:1rem">Cambio por error de talle</h3><p>Asumimos el costo del envío del nuevo producto</p></div>
-<div style="background:rgba(255,159,64,0.1);border:1px solid rgba(255,159,64,0.3);padding:1.5rem;border-radius:1rem">
-<h3 style="color:#ff9f40;margin-bottom:1rem">Cambio por preferencia</h3><p>Los costos son compartidos</p></div></div>
-<div style="background:rgba(212,255,0,0.1);border:2px solid rgba(212,255,0,0.3);border-radius:1rem;padding:2rem;text-align:center">
-<h3 style="font-size:1.5rem;margin-bottom:1rem">¿Necesitás hacer un cambio?</h3>
-<a href="https://wa.me/5511999999999" style="display:inline-block;background:#D4FF00;color:#000;padding:1rem 2rem;border-radius:0.5rem;font-weight:700;text-decoration:none;margin-right:1rem">WhatsApp</a>
-<a href="mailto:contato@foltz.com.br" style="display:inline-block;background:rgba(255,255,255,0.1);color:#fff;padding:1rem 2rem;border-radius:0.5rem;font-weight:700;text-decoration:none">Email</a></div></div>
+<section class="politica-cambios-page-section" data-section-id="{{ section.id }}">
+  <div class="politica-cambios-page__container">
+
+    {%- comment %} Header {%- endcomment -%}
+    <div class="politica-cambios-page__header">
+      <div class="politica-cambios-page__header-icon-wrapper">
+        <svg class="politica-cambios-page__header-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+      </div>
+      <h1 class="politica-cambios-page__title">
+        POLÍTICA DE CAMBIOS Y <span class="politica-cambios-page__title-highlight">DEVOLUCIONES</span>
+      </h1>
+      <p class="politica-cambios-page__subtitle">
+        Tu satisfacción es nuestra prioridad. Conocé nuestras políticas de cambio y devolución.
+      </p>
+    </div>
+
+    {%- comment %} 30 Days Banner {%- endcomment -%}
+    <div class="politica-cambios-page__banner">
+      <div class="politica-cambios-page__banner-content">
+        <svg class="politica-cambios-page__banner-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <div>
+          <h2 class="politica-cambios-page__banner-title">
+            30 días para cambios y devoluciones
+          </h2>
+          <p class="politica-cambios-page__banner-text">
+            Tenés 30 días corridos desde la recepción del pedido para solicitar un cambio o devolución.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Conditions {%- endcomment -%}
+    <div class="politica-cambios-page__section">
+      <h2 class="politica-cambios-page__section-title">
+        Condiciones para cambios y devoluciones
+      </h2>
+      <div class="politica-cambios-page__conditions-grid">
+        <div class="politica-cambios-page__condition-card">
+          <div class="politica-cambios-page__condition-header">
+            <svg class="politica-cambios-page__check-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <h3 class="politica-cambios-page__condition-title">Producto sin uso</h3>
+          </div>
+          <p class="politica-cambios-page__condition-desc">El artículo no debe haber sido usado ni presentar signos de desgaste</p>
+        </div>
+
+        <div class="politica-cambios-page__condition-card">
+          <div class="politica-cambios-page__condition-header">
+            <svg class="politica-cambios-page__check-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <h3 class="politica-cambios-page__condition-title">Etiquetas originales</h3>
+          </div>
+          <p class="politica-cambios-page__condition-desc">Debe conservar todas las etiquetas y adhesivos originales</p>
+        </div>
+
+        <div class="politica-cambios-page__condition-card">
+          <div class="politica-cambios-page__condition-header">
+            <svg class="politica-cambios-page__check-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <h3 class="politica-cambios-page__condition-title">Embalaje original</h3>
+          </div>
+          <p class="politica-cambios-page__condition-desc">La caja debe estar en perfecto estado, sin daños o escrituras</p>
+        </div>
+
+        <div class="politica-cambios-page__condition-card">
+          <div class="politica-cambios-page__condition-header">
+            <svg class="politica-cambios-page__check-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <h3 class="politica-cambios-page__condition-title">Accesorios completos</h3>
+          </div>
+          <p class="politica-cambios-page__condition-desc">Debe incluir todos los accesorios y documentación original</p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Process {%- endcomment -%}
+    <div class="politica-cambios-page__section">
+      <h2 class="politica-cambios-page__section-title">¿Cómo solicitar un cambio?</h2>
+      <div class="politica-cambios-page__process-card">
+        <div class="politica-cambios-page__process-timeline">
+          <div class="politica-cambios-page__process-item">
+            <div class="politica-cambios-page__process-number">1</div>
+            <div class="politica-cambios-page__process-content">
+              <h3 class="politica-cambios-page__process-title">Contactanos</h3>
+              <p class="politica-cambios-page__process-desc">Escribinos por WhatsApp o email indicando tu número de pedido y el motivo del cambio</p>
+            </div>
+          </div>
+          <div class="politica-cambios-page__process-item">
+            <div class="politica-cambios-page__process-number">2</div>
+            <div class="politica-cambios-page__process-content">
+              <h3 class="politica-cambios-page__process-title">Confirmación</h3>
+              <p class="politica-cambios-page__process-desc">Nuestro equipo verificará tu solicitud y enviará las instrucciones de devolución</p>
+            </div>
+          </div>
+          <div class="politica-cambios-page__process-item">
+            <div class="politica-cambios-page__process-number">3</div>
+            <div class="politica-cambios-page__process-content">
+              <h3 class="politica-cambios-page__process-title">Envío del producto</h3>
+              <p class="politica-cambios-page__process-desc">Embalá el producto en la caja original y envialo a la dirección que te indicaremos</p>
+            </div>
+          </div>
+          <div class="politica-cambios-page__process-item">
+            <div class="politica-cambios-page__process-number">4</div>
+            <div class="politica-cambios-page__process-content">
+              <h3 class="politica-cambios-page__process-title">Inspección</h3>
+              <p class="politica-cambios-page__process-desc">Al recibirlo, inspeccionamos el producto para verificar que cumple las condiciones</p>
+            </div>
+          </div>
+          <div class="politica-cambios-page__process-item">
+            <div class="politica-cambios-page__process-number">5</div>
+            <div class="politica-cambios-page__process-content">
+              <h3 class="politica-cambios-page__process-title">Cambio o reembolso</h3>
+              <p class="politica-cambios-page__process-desc">Enviamos el nuevo producto o procesamos tu reembolso en 5-7 días hábiles</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Shipping Costs {%- endcomment -%}
+    <div class="politica-cambios-page__section">
+      <h2 class="politica-cambios-page__section-title">Costos de envío</h2>
+      <div class="politica-cambios-page__shipping-grid">
+        <div class="politica-cambios-page__shipping-card politica-cambios-page__shipping-card--green">
+          <div class="politica-cambios-page__shipping-header">
+            <svg class="politica-cambios-page__shipping-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <h3 class="politica-cambios-page__shipping-title">Cambio por error de talle</h3>
+          </div>
+          <p class="politica-cambios-page__shipping-text">
+            Si el cambio es por error de talle, <strong class="politica-cambios-page__shipping-highlight">asumimos el costo</strong> del envío del nuevo producto.
+          </p>
+          <p class="politica-cambios-page__shipping-note">
+            El envío de devolución corre por cuenta del cliente.
+          </p>
+        </div>
+
+        <div class="politica-cambios-page__shipping-card politica-cambios-page__shipping-card--orange">
+          <div class="politica-cambios-page__shipping-header">
+            <svg class="politica-cambios-page__shipping-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line>
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+              <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+            <h3 class="politica-cambios-page__shipping-title">Cambio por preferencia</h3>
+          </div>
+          <p class="politica-cambios-page__shipping-text">
+            Si el cambio es por preferencia personal (cambio de modelo), <strong class="politica-cambios-page__shipping-highlight">los costos son compartidos</strong>.
+          </p>
+          <p class="politica-cambios-page__shipping-note">
+            Tanto el envío de devolución como el del nuevo producto.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Exceptions {%- endcomment -%}
+    <div class="politica-cambios-page__section">
+      <h2 class="politica-cambios-page__section-title">Casos que NO aplican para cambio/devolución</h2>
+      <div class="politica-cambios-page__exceptions-list">
+        <div class="politica-cambios-page__exception-item">
+          <svg class="politica-cambios-page__x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <p class="politica-cambios-page__exception-text">Productos usados o con signos de desgaste</p>
+        </div>
+        <div class="politica-cambios-page__exception-item">
+          <svg class="politica-cambios-page__x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <p class="politica-cambios-page__exception-text">Artículos sin etiquetas originales o con caja dañada</p>
+        </div>
+        <div class="politica-cambios-page__exception-item">
+          <svg class="politica-cambios-page__x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <p class="politica-cambios-page__exception-text">Productos modificados o alterados de alguna forma</p>
+        </div>
+        <div class="politica-cambios-page__exception-item">
+          <svg class="politica-cambios-page__x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <p class="politica-cambios-page__exception-text">Solicitudes fuera del plazo de 30 días</p>
+        </div>
+        <div class="politica-cambios-page__exception-item">
+          <svg class="politica-cambios-page__x-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+          <p class="politica-cambios-page__exception-text">Productos en promociones especiales (excepto defecto de fábrica)</p>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} Factory Defects {%- endcomment -%}
+    <div class="politica-cambios-page__defects-card">
+      <div class="politica-cambios-page__defects-content">
+        <svg class="politica-cambios-page__alert-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <div>
+          <h2 class="politica-cambios-page__defects-title">Productos con defectos de fábrica</h2>
+          <p class="politica-cambios-page__defects-desc">
+            Si tu producto llega con algún defecto de fabricación, lo cambiamos inmediatamente sin ningún costo para vos. En estos casos:
+          </p>
+          <ul class="politica-cambios-page__defects-list">
+            <li class="politica-cambios-page__defects-item">
+              <svg class="politica-cambios-page__defects-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>El plazo se extiende a 60 días</span>
+            </li>
+            <li class="politica-cambios-page__defects-item">
+              <svg class="politica-cambios-page__defects-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Todos los costos de envío corren por nuestra cuenta</span>
+            </li>
+            <li class="politica-cambios-page__defects-item">
+              <svg class="politica-cambios-page__defects-check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>Prioridad en el envío del reemplazo</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} CTA {%- endcomment -%}
+    <div class="politica-cambios-page__cta">
+      <svg class="politica-cambios-page__cta-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+      </svg>
+      <h3 class="politica-cambios-page__cta-title">¿Necesitás hacer un cambio o devolución?</h3>
+      <p class="politica-cambios-page__cta-text">
+        Nuestro equipo está listo para ayudarte. Contactanos y te guiaremos en todo el proceso.
+      </p>
+      <div class="politica-cambios-page__cta-buttons">
+        <a
+          href="https://wa.me/5511999999999?text=Hola!%20Necesito%20hacer%20un%20cambio"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="politica-cambios-page__cta-btn politica-cambios-page__cta-btn--primary"
+        >
+          <svg class="politica-cambios-page__whatsapp-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          WhatsApp
+        </a>
+        <a
+          href="mailto:contato@foltz.com.br"
+          class="politica-cambios-page__cta-btn"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
-{% schema %}{"name":"Politica de Cambios","settings":[],"presets":[{"name":"Politica de Cambios"}]}{% endschema %}
+
+<style>
+.politica-cambios-page-section {
+  background: #000;
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.politica-cambios-page-section::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.politica-cambios-page__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.politica-cambios-page__header {
+  padding: 2rem 0 3rem;
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.politica-cambios-page__header-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 241, 13, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(218, 241, 13, 0);
+  }
+}
+
+.politica-cambios-page__header-icon {
+  color: #DAF10D;
+}
+
+.politica-cambios-page__title {
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__title {
+    font-size: 2.5rem;
+  }
+}
+
+.politica-cambios-page__title-highlight {
+  color: #DAF10D;
+}
+
+.politica-cambios-page__subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* 30 Days Banner */
+.politica-cambios-page__banner {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 3rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.politica-cambios-page__banner:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 20px 40px rgba(218, 241, 13, 0.2);
+  transform: translateY(-2px);
+}
+
+.politica-cambios-page__banner-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.politica-cambios-page__banner-icon {
+  color: #DAF10D;
+  flex-shrink: 0;
+}
+
+.politica-cambios-page__banner-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0 0 0.75rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__banner-title {
+    font-size: 1.75rem;
+  }
+}
+
+.politica-cambios-page__banner-text {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+
+/* Section */
+.politica-cambios-page__section {
+  margin-bottom: 3rem;
+}
+
+.politica-cambios-page__section-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Conditions Grid */
+.politica-cambios-page__conditions-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__conditions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.politica-cambios-page__condition-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.3s ease;
+}
+
+.politica-cambios-page__condition-card:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-4px);
+}
+
+.politica-cambios-page__condition-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.politica-cambios-page__check-icon {
+  color: #10B981;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+}
+
+.politica-cambios-page__condition-title {
+  font-weight: 700;
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.politica-cambios-page__condition-desc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin: 0;
+  padding-left: 2.25rem;
+  line-height: 1.5;
+}
+
+/* Process */
+.politica-cambios-page__process-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__process-card {
+    padding: 2.5rem;
+  }
+}
+
+.politica-cambios-page__process-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.politica-cambios-page__process-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.politica-cambios-page__process-timeline::before {
+  content: '';
+  position: absolute;
+  left: 1.25rem;
+  top: 2.5rem;
+  bottom: 2.5rem;
+  width: 3px;
+  background: linear-gradient(to bottom, rgba(218, 241, 13, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 10px;
+}
+
+.politica-cambios-page__process-item {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  position: relative;
+}
+
+.politica-cambios-page__process-number {
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  font-weight: 900;
+  font-size: 1.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 20px rgba(218, 241, 13, 0.4);
+  transition: all 0.3s ease;
+}
+
+.politica-cambios-page__process-item:hover .politica-cambios-page__process-number {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px rgba(218, 241, 13, 0.6);
+}
+
+.politica-cambios-page__process-content {
+  flex: 1;
+  padding-top: 0.25rem;
+}
+
+.politica-cambios-page__process-title {
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.politica-cambios-page__process-desc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Shipping Grid */
+.politica-cambios-page__shipping-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__shipping-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.politica-cambios-page__shipping-card {
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.politica-cambios-page__shipping-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.politica-cambios-page__shipping-card--green {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.politica-cambios-page__shipping-card--green:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.politica-cambios-page__shipping-card--orange {
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.15), rgba(251, 146, 60, 0.05));
+  border: 2px solid rgba(251, 146, 60, 0.3);
+}
+
+.politica-cambios-page__shipping-card--orange:hover {
+  border-color: rgba(251, 146, 60, 0.5);
+}
+
+.politica-cambios-page__shipping-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.politica-cambios-page__shipping-icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.politica-cambios-page__shipping-card:hover .politica-cambios-page__shipping-icon {
+  transform: scale(1.1);
+}
+
+.politica-cambios-page__shipping-card--green .politica-cambios-page__shipping-icon {
+  color: #10B981;
+}
+
+.politica-cambios-page__shipping-card--orange .politica-cambios-page__shipping-icon {
+  color: #FB923C;
+}
+
+.politica-cambios-page__shipping-title {
+  font-weight: 900;
+  margin: 0;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.politica-cambios-page__shipping-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
+}
+
+.politica-cambios-page__shipping-highlight {
+  font-weight: 700;
+}
+
+.politica-cambios-page__shipping-card--green .politica-cambios-page__shipping-highlight {
+  color: #10B981;
+}
+
+.politica-cambios-page__shipping-card--orange .politica-cambios-page__shipping-highlight {
+  color: #FB923C;
+}
+
+.politica-cambios-page__shipping-note {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8125rem;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Exceptions */
+.politica-cambios-page__exceptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.politica-cambios-page__exception-item {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.politica-cambios-page__exception-item:hover {
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 12px 30px rgba(239, 68, 68, 0.2);
+  transform: translateY(-2px);
+}
+
+.politica-cambios-page__x-icon {
+  color: #EF4444;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.politica-cambios-page__exception-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+/* Factory Defects */
+.politica-cambios-page__defects-card {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  backdrop-filter: blur(20px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  margin-bottom: 3rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__defects-card {
+    padding: 2.5rem;
+  }
+}
+
+.politica-cambios-page__defects-card:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 20px 40px rgba(218, 241, 13, 0.2);
+  transform: translateY(-4px);
+}
+
+.politica-cambios-page__defects-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.politica-cambios-page__alert-icon {
+  color: #DAF10D;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.politica-cambios-page__defects-card:hover .politica-cambios-page__alert-icon {
+  transform: scale(1.1);
+}
+
+.politica-cambios-page__defects-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__defects-title {
+    font-size: 1.5rem;
+  }
+}
+
+.politica-cambios-page__defects-desc {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0 0 1.25rem 0;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+
+.politica-cambios-page__defects-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.politica-cambios-page__defects-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+.politica-cambios-page__defects-check {
+  color: #10B981;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+/* CTA */
+.politica-cambios-page__cta {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__cta {
+    padding: 2.5rem;
+  }
+}
+
+.politica-cambios-page__cta:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 20px 40px rgba(218, 241, 13, 0.2);
+  transform: translateY(-4px);
+}
+
+.politica-cambios-page__cta-icon {
+  color: #DAF10D;
+  margin: 0 auto 1.5rem;
+}
+
+.politica-cambios-page__cta-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .politica-cambios-page__cta-title {
+    font-size: 1.5rem;
+  }
+}
+
+.politica-cambios-page__cta-text {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+
+.politica-cambios-page__cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .politica-cambios-page__cta-buttons {
+    flex-direction: row;
+    max-width: none;
+    justify-content: center;
+  }
+}
+
+.politica-cambios-page__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 900;
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+}
+
+.politica-cambios-page__cta-btn--primary {
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  box-shadow: 0 10px 25px rgba(218, 241, 13, 0.3);
+}
+
+.politica-cambios-page__cta-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(218, 241, 13, 0.4);
+  background: linear-gradient(135deg, #FAFF00, #DAF10D);
+}
+
+.politica-cambios-page__cta-btn:not(.politica-cambios-page__cta-btn--primary) {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.politica-cambios-page__cta-btn:not(.politica-cambios-page__cta-btn--primary):hover {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.1));
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+}
+
+.politica-cambios-page__whatsapp-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Política de Cambios Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Política de Cambios Page"
+    }
+  ]
+}
+{% endschema %}
