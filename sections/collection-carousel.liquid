@@ -363,10 +363,26 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 1rem 0;
+  cursor: grab;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  will-change: scroll-position;
 }
 
 .collection-carousel__track::-webkit-scrollbar {
   display: none;
+}
+
+.collection-carousel__track.is-dragging {
+  cursor: grabbing;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.collection-carousel__track.is-dragging * {
+  pointer-events: none;
 }
 
 @media (min-width: 768px) {
@@ -625,29 +641,49 @@
   }
 }
 
-/* Navigation Buttons */
+/* Navigation Buttons - Visíveis em mobile e desktop */
 .collection-carousel__nav {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   z-index: 20;
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid #3f3f46;
-  color: #fff;
-  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid rgba(212, 255, 0, 0.3);
+  color: #D4FF00;
+  padding: 0.625rem;
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(212, 255, 0, 0);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  width: 44px;
+  height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.collection-carousel__nav svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2.5;
 }
 
 @media (min-width: 768px) {
   .collection-carousel__nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+    padding: 0.875rem;
+    width: 56px;
+    height: 56px;
+    border-width: 2px;
+  }
+
+  .collection-carousel__nav svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 3;
   }
 }
 
@@ -655,14 +691,31 @@
   background: #D4FF00;
   border-color: #D4FF00;
   color: #000;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 8px 30px rgba(212, 255, 0, 0.5), 0 0 20px rgba(212, 255, 0, 0.3);
+}
+
+.collection-carousel__nav:active {
+  transform: translateY(-50%) scale(0.95);
+  box-shadow: 0 4px 15px rgba(212, 255, 0, 0.6);
 }
 
 .collection-carousel__nav--prev {
-  left: -1rem;
+  left: 0.5rem;
 }
 
 .collection-carousel__nav--next {
-  right: -1rem;
+  right: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .collection-carousel__nav--prev {
+    left: -1.25rem;
+  }
+
+  .collection-carousel__nav--next {
+    right: -1.25rem;
+  }
 }
 
 /* View All Button */
@@ -709,7 +762,7 @@
 </style>
 
 <script>
-// Carousel with Swipe/Drag Support (Mobile + Desktop)
+// Ultra-Smooth Carousel with Enhanced Swipe/Drag Support
 document.addEventListener('DOMContentLoaded', function() {
   const carousels = document.querySelectorAll('[data-carousel-track]');
 
@@ -717,55 +770,103 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = track.parentElement.querySelector('[data-carousel-prev]');
     const nextBtn = track.parentElement.querySelector('[data-carousel-next]');
 
-    // Button navigation
+    // Calculate optimal scroll distance based on viewport
+    const getScrollDistance = () => {
+      const slideWidth = track.querySelector('.collection-carousel__slide')?.offsetWidth || 300;
+      const gap = 16; // gap in pixels
+      return slideWidth + gap;
+    };
+
+    // Smooth button navigation
     if (prevBtn) {
       prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -400, behavior: 'smooth' });
+        track.scrollBy({
+          left: -getScrollDistance(),
+          behavior: 'smooth'
+        });
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: 400, behavior: 'smooth' });
+        track.scrollBy({
+          left: getScrollDistance(),
+          behavior: 'smooth'
+        });
       });
     }
 
-    // Swipe/Drag functionality
+    // Enhanced Swipe/Drag functionality
     let isDown = false;
     let startX;
     let scrollLeft;
     let velocity = 0;
     let lastX = 0;
     let lastTime = Date.now();
+    let animationFrame = null;
+
+    // Easing function for momentum
+    const easeOutQuint = (t) => 1 + (--t) * t * t * t * t;
+
+    // Apply momentum with smooth easing
+    const applyMomentum = () => {
+      if (Math.abs(velocity) < 0.1) {
+        velocity = 0;
+        animationFrame = null;
+        return;
+      }
+
+      // Friction coefficient
+      const friction = 0.92;
+      velocity *= friction;
+
+      // Apply scroll
+      track.scrollLeft -= velocity * 20;
+
+      // Continue animation
+      animationFrame = requestAnimationFrame(applyMomentum);
+    };
 
     // Mouse events (Desktop)
     track.addEventListener('mousedown', (e) => {
+      // Cancel any ongoing momentum
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+
       isDown = true;
-      track.style.cursor = 'grabbing';
-      track.style.userSelect = 'none';
+      track.classList.add('is-dragging');
       startX = e.pageX - track.offsetLeft;
       scrollLeft = track.scrollLeft;
       velocity = 0;
       lastX = e.pageX;
       lastTime = Date.now();
 
-      // Prevent click on product cards while dragging
       e.preventDefault();
     });
 
     track.addEventListener('mouseleave', () => {
-      isDown = false;
-      track.style.cursor = 'grab';
+      if (isDown) {
+        isDown = false;
+        track.classList.remove('is-dragging');
+
+        // Apply momentum on mouse leave
+        if (Math.abs(velocity) > 0.3) {
+          applyMomentum();
+        }
+      }
     });
 
     track.addEventListener('mouseup', () => {
-      isDown = false;
-      track.style.cursor = 'grab';
+      if (isDown) {
+        isDown = false;
+        track.classList.remove('is-dragging');
 
-      // Apply momentum scrolling
-      if (Math.abs(velocity) > 0.5) {
-        const momentum = velocity * 10;
-        track.scrollBy({ left: momentum, behavior: 'smooth' });
+        // Apply momentum scrolling with enhanced physics
+        if (Math.abs(velocity) > 0.3) {
+          applyMomentum();
+        }
       }
     });
 
@@ -774,59 +875,109 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
 
       const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 1.5; // Scroll speed multiplier
+      const walk = (x - startX) * 2.2; // Increased multiplier for better fluidity
       track.scrollLeft = scrollLeft - walk;
 
-      // Calculate velocity for momentum
+      // Calculate velocity for momentum with smoother sampling
       const now = Date.now();
-      const dt = now - lastTime;
+      const dt = Math.max(now - lastTime, 1);
       const dx = e.pageX - lastX;
-      velocity = dx / (dt || 1);
+
+      // Smooth velocity calculation
+      const newVelocity = dx / dt;
+      velocity = velocity * 0.6 + newVelocity * 0.4; // Weighted average for smoothness
+
       lastX = e.pageX;
       lastTime = now;
     });
 
-    // Touch events (Mobile)
+    // Touch events (Mobile) - Enhanced for ultra-smooth experience
     let touchStartX = 0;
     let touchScrollLeft = 0;
+    let touchVelocities = [];
 
     track.addEventListener('touchstart', (e) => {
+      // Cancel any ongoing momentum
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = null;
+      }
+
       touchStartX = e.touches[0].pageX;
       touchScrollLeft = track.scrollLeft;
       velocity = 0;
+      touchVelocities = [];
       lastX = e.touches[0].pageX;
       lastTime = Date.now();
+
+      track.classList.add('is-dragging');
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
       const x = e.touches[0].pageX;
-      const walk = (touchStartX - x) * 1.2; // Scroll speed multiplier
+      const walk = (touchStartX - x) * 1.8; // Increased multiplier for mobile
       track.scrollLeft = touchScrollLeft + walk;
 
-      // Calculate velocity for momentum
+      // Calculate velocity with multiple samples for accuracy
       const now = Date.now();
-      const dt = now - lastTime;
+      const dt = Math.max(now - lastTime, 1);
       const dx = x - lastX;
-      velocity = dx / (dt || 1);
+
+      const currentVelocity = dx / dt;
+      touchVelocities.push(currentVelocity);
+
+      // Keep only last 5 samples
+      if (touchVelocities.length > 5) {
+        touchVelocities.shift();
+      }
+
+      // Average velocity for smoothness
+      velocity = touchVelocities.reduce((a, b) => a + b, 0) / touchVelocities.length;
+
       lastX = x;
       lastTime = now;
     }, { passive: true });
 
     track.addEventListener('touchend', () => {
-      // Apply momentum scrolling on mobile
-      if (Math.abs(velocity) > 0.5) {
-        const momentum = velocity * -15;
-        track.scrollBy({ left: momentum, behavior: 'smooth' });
+      track.classList.remove('is-dragging');
+
+      // Apply momentum scrolling on mobile with enhanced physics
+      if (Math.abs(velocity) > 0.2) {
+        velocity *= -1; // Invert for touch
+        applyMomentum();
       }
     }, { passive: true });
 
-    // Set cursor style
-    track.style.cursor = 'grab';
+    // Prevent default drag behavior on images and links
+    track.querySelectorAll('img, a').forEach(elem => {
+      elem.addEventListener('dragstart', (e) => e.preventDefault());
 
-    // Prevent default drag behavior on images
-    track.querySelectorAll('img').forEach(img => {
-      img.addEventListener('dragstart', (e) => e.preventDefault());
+      // Prevent click when dragging
+      elem.addEventListener('click', (e) => {
+        if (track.classList.contains('is-dragging')) {
+          e.preventDefault();
+        }
+      });
     });
+
+    // Update button states based on scroll position
+    const updateButtonStates = () => {
+      if (prevBtn && nextBtn) {
+        const isAtStart = track.scrollLeft <= 10;
+        const isAtEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 10;
+
+        prevBtn.style.opacity = isAtStart ? '0.3' : '1';
+        nextBtn.style.opacity = isAtEnd ? '0.3' : '1';
+        prevBtn.style.pointerEvents = isAtStart ? 'none' : 'auto';
+        nextBtn.style.pointerEvents = isAtEnd ? 'none' : 'auto';
+      }
+    };
+
+    // Initial button state
+    updateButtonStates();
+
+    // Update on scroll
+    track.addEventListener('scroll', updateButtonStates);
   });
 });
 </script>
