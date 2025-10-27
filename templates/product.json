@@ -212,6 +212,16 @@
             "verified": true,
             "date": "Hace 2 días"
           }
+        },
+        "review_3qrFaW": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Tomás Luna",
+            "rating": 4,
+            "review_text": "Hincha de River desde chico. Esta camiseta es perfecta, todos los detalles bien hechos. Foltz entiende a los verdaderos fanáticos! 🔴⚪",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -228,7 +238,8 @@
         "review_HbUqMb",
         "review_HDBMGb",
         "review_bGDcwq",
-        "review_d7AqJP"
+        "review_d7AqJP",
+        "review_3qrFaW"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
