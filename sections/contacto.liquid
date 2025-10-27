@@ -1,6 +1,6 @@
 {% comment %}
   Contacto Section
-  Contact page with form and contact info
+  Modern design with pulse animations and gradient effects
 {% endcomment %}
 
 {%- liquid
@@ -12,14 +12,14 @@
   <div class="contacto__container">
     {%- comment %} Header {%- endcomment -%}
     <div class="contacto__header">
-      <div class="contacto__header-title-wrapper">
-        <svg class="contacto__header-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <div class="contacto__header-icon-wrapper">
+        <svg class="contacto__header-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
         </svg>
-        <h1 class="contacto__title">
-          {{ section.settings.title | default: "CONTACTANOS" }}
-        </h1>
       </div>
+      <h1 class="contacto__title">
+        {{ section.settings.title | default: "CONTACTANOS" }}
+      </h1>
       <p class="contacto__subtitle">
         {{ section.settings.subtitle | default: "¡Estamos aquí para ayudarte! Contáctanos." }}
       </p>
@@ -126,7 +126,8 @@
 
           <div id="contacto-success-message" class="contacto__success-message" style="display: none;">
             <svg class="contacto__success-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
             <p>¡Mensaje enviado exitosamente! Nos pondremos en contacto pronto.</p>
           </div>
@@ -219,19 +220,29 @@
 .contacto {
   background: #000;
   min-height: 100vh;
-  padding: 1.5rem 0 3rem;
+  padding: 2rem 0 4rem;
+  position: relative;
+  overflow: hidden;
 }
 
-@media (min-width: 768px) {
-  .contacto {
-    padding: 2rem 0 3rem;
-  }
+.contacto::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .contacto__container {
   max-width: 1536px;
   margin: 0 auto;
   padding: 0 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
@@ -242,51 +253,68 @@
 
 /* Header */
 .contacto__header {
-  margin-bottom: 2rem;
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
 @media (min-width: 768px) {
   .contacto__header {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
   }
 }
 
-.contacto__header-title-wrapper {
-  display: flex;
+.contacto__header-icon-wrapper {
+  display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(250, 255, 0, 0.1));
+  margin-bottom: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 241, 13, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(218, 241, 13, 0);
+  }
 }
 
 .contacto__header-icon {
-  width: 2rem;
-  height: 2rem;
-  color: #D4FF00;
-}
-
-@media (min-width: 768px) {
-  .contacto__header-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-  }
+  color: #DAF10D;
 }
 
 .contacto__title {
-  font-size: 1.875rem;
+  font-size: 2rem;
   font-weight: 900;
   color: #fff;
   text-transform: uppercase;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
 }
 
 @media (min-width: 768px) {
+  .contacto__title {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
   .contacto__title {
     font-size: 3rem;
   }
 }
 
 .contacto__subtitle {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1rem;
+  margin: 0;
 }
 
 @media (min-width: 768px) {
@@ -305,6 +333,7 @@
 @media (min-width: 1024px) {
   .contacto__grid {
     grid-template-columns: 1fr 1fr;
+    gap: 3rem;
   }
 }
 
@@ -317,9 +346,9 @@
 
 /* Contact Cards */
 .contacto__card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  border-radius: 0.75rem;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
   padding: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
@@ -329,41 +358,49 @@
 }
 
 .contacto__card:hover {
-  border-color: rgba(212, 255, 0, 0.5);
-  transform: scale(1.05);
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
 }
 
 .contacto__card--whatsapp {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0) 100%);
-  border-color: rgba(34, 197, 94, 0.3);
+  background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border-color: rgba(16, 185, 129, 0.3);
 }
 
 .contacto__card--whatsapp:hover {
-  border-color: rgba(34, 197, 94, 0.5);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
 }
 
 .contacto__card--instagram {
-  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);
+  background: linear-gradient(to bottom right, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.1));
   border-color: rgba(236, 72, 153, 0.3);
 }
 
 .contacto__card--instagram:hover {
   border-color: rgba(236, 72, 153, 0.5);
+  box-shadow: 0 12px 24px rgba(236, 72, 153, 0.2);
 }
 
 .contacto__card-icon-wrapper {
   width: 3rem;
   height: 3rem;
   border-radius: 0.75rem;
-  background: rgba(212, 255, 0, 0.2);
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(250, 255, 0, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.contacto__card:hover .contacto__card-icon-wrapper {
+  transform: scale(1.1);
 }
 
 .contacto__card-icon-wrapper--whatsapp {
-  background: rgba(34, 197, 94, 0.2);
+  background: rgba(16, 185, 129, 0.2);
 }
 
 .contacto__card-icon-wrapper--instagram {
@@ -373,11 +410,11 @@
 .contacto__card-icon {
   width: 1.5rem;
   height: 1.5rem;
-  color: #D4FF00;
+  color: #DAF10D;
 }
 
 .contacto__card-icon-wrapper--whatsapp .contacto__card-icon {
-  color: #22c55e;
+  color: #10B981;
 }
 
 .contacto__card-icon-wrapper--instagram .contacto__card-icon {
@@ -392,26 +429,28 @@
   color: #fff;
   font-weight: 700;
   font-size: 1.125rem;
-  margin-bottom: 0.25rem;
+  margin: 0 0 0.25rem 0;
 }
 
 .contacto__card-desc {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
 }
 
 .contacto__card-value {
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+  margin: 0 0 0.5rem 0;
 }
 
 .contacto__card-value--whatsapp {
-  color: #4ade80;
+  color: #10B981;
 }
 
 .contacto__card-value--yellow {
-  color: #D4FF00;
+  color: #DAF10D;
 }
 
 .contacto__card-value--instagram {
@@ -419,15 +458,16 @@
 }
 
 .contacto__card-hours {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 0.75rem;
+  margin: 0;
 }
 
 /* Schedule */
 .contacto__schedule {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   font-size: 0.875rem;
   margin-top: 0.75rem;
 }
@@ -435,10 +475,11 @@
 .contacto__schedule-row {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .contacto__schedule-day {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .contacto__schedule-time {
@@ -459,16 +500,21 @@
 }
 
 .contacto__form-wrapper {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.contacto__form-wrapper:hover {
+  border-color: rgba(218, 241, 13, 0.2);
 }
 
 @media (min-width: 768px) {
   .contacto__form-wrapper {
-    padding: 2rem;
+    padding: 2.5rem;
   }
 }
 
@@ -476,16 +522,24 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 1.5rem;
+  margin: 0 0 2rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .contacto__form-title {
+    font-size: 1.75rem;
+  }
 }
 
 /* Success Message */
 .contacto__success-message {
   margin-bottom: 1.5rem;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.5);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
@@ -494,20 +548,22 @@
 .contacto__success-icon {
   flex-shrink: 0;
   margin-top: 0.125rem;
-  color: #22c55e;
+  color: #10B981;
 }
 
 .contacto__success-message p {
-  color: #4ade80;
+  color: #10B981;
   font-size: 0.875rem;
+  font-weight: 600;
   margin: 0;
+  line-height: 1.5;
 }
 
 /* Form */
 .contacto__form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .contacto__form-group {
@@ -529,9 +585,9 @@
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.875rem 1rem;
   color: #fff;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   transition: all 0.3s ease;
 }
 
@@ -542,8 +598,9 @@
 
 .contacto__form-input:focus,
 .contacto__form-textarea:focus {
-  border-color: #D4FF00;
+  border-color: #DAF10D;
   outline: none;
+  box-shadow: 0 0 0 4px rgba(218, 241, 13, 0.1);
 }
 
 .contacto__form-input option {
@@ -552,15 +609,16 @@
 }
 
 .contacto__form-textarea {
-  resize: none;
+  resize: vertical;
+  min-height: 120px;
 }
 
 .contacto__form-button {
   width: 100%;
-  background: linear-gradient(90deg, #D4FF00 0%, #e4ff33 100%);
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
   color: #000;
   font-weight: 900;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   border-radius: 0.5rem;
   border: none;
   cursor: pointer;
@@ -571,15 +629,23 @@
   gap: 0.5rem;
   font-size: 1rem;
   text-transform: uppercase;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(218, 241, 13, 0.3);
 }
 
 .contacto__form-button:hover {
-  box-shadow: 0 10px 30px rgba(212, 255, 0, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(218, 241, 13, 0.4);
+}
+
+.contacto__form-button:active {
+  transform: translateY(0);
 }
 
 .contacto__form-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
 .contacto__form-button-icon {
