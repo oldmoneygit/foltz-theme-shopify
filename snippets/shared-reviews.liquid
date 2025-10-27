@@ -4,10 +4,8 @@
   Configure os reviews aqui para aparecerem em todas as páginas
 {% endcomment %}
 
-{%- liquid
-  # Configuração central de reviews - 15 reviews reais do product.json
-  assign reviews = '
-  [
+{%- capture reviews_json -%}
+[
     {
       "name": "Martín R.",
       "rating": 5,
@@ -161,9 +159,11 @@
       "image_1": "",
       "image_2": ""
     }
-  ]
-  ' | parse_json
+]
+{%- endcapture -%}
 
+{%- liquid
+  assign reviews = reviews_json | parse_json
   assign final_heading = heading | default: "Lo Que Dicen Nuestros Clientes"
   assign final_subtitle = subtitle | default: "Miles de clientes satisfechos con nuestros productos"
   assign final_rating = rating | default: "4.9"
