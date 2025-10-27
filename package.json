@@ -4,7 +4,8 @@
   "description": "Script para atualizar preços em massa no Shopify",
   "main": "update-prices.js",
   "scripts": {
-    "update-prices": "node update-prices.js"
+    "update-prices": "node update-prices.js",
+    "update-long-sleeve": "node update-long-sleeve-prices.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1"
