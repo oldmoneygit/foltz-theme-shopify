@@ -186,7 +186,7 @@
             "customer_name": "Florencia M.",
             "rating": 5,
             "review_text": "Compré para mi novio y quedó re contento! La calidad es excelente y el delivery súper rápido. Foltz no decepciona 🤍",
-            "image_1": "shopify://shop_images/replicate-prediction-anrc0p3t4nrmc0ct4rvrydqh90.jpg",
+            "image_1": "shopify://shop_images/replicate-prediction-fke4h7vxj1rmc0ct4s186eks0g.jpg",
             "verified": true,
             "date": "Hace 2 días"
           }
@@ -198,6 +198,16 @@
             "rating": 5,
             "review_text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
             "image_1": "shopify://shop_images/replicate-prediction-8kz3hrkjd5rmc0ct4s0srcv70w.jpg",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
+        },
+        "review_d7AqJP": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Catalina R",
+            "rating": 5,
+            "review_text": "Primera vez comprando y superó todas mis expectativas! El packaging es hermoso y la camiseta tiene detalles perfectos. 10/10",
             "verified": true,
             "date": "Hace 2 días"
           }
@@ -216,7 +226,8 @@
         "review_3GneHC",
         "review_HbUqMb",
         "review_HDBMGb",
-        "review_bGDcwq"
+        "review_bGDcwq",
+        "review_d7AqJP"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
