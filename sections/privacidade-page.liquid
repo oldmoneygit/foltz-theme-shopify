@@ -1,30 +1,675 @@
-<section style="background:#000;min-height:100vh;padding:2rem 1rem;color:#fff">
-<div style="max-width:1280px;margin:0 auto"><h1 style="font-size:3rem;font-weight:900;margin-bottom:2rem">Política de Privacidade</h1>
-<p style="color:rgba(255,255,255,0.6);margin-bottom:2rem">Sua privacidade é importante para nós. Última atualização: Octubre 2025</p>
-<div style="background:rgba(34,197,94,0.2);border:2px solid rgba(34,197,94,0.5);border-radius:1rem;padding:2rem;margin-bottom:2rem">
-<h2 style="font-size:1.5rem;margin-bottom:1rem">Sua informação está protegida</h2>
-<p>Utilizamos criptografia SSL de 256 bits e as melhores práticas de segurança para proteger seus dados pessoais e financeiros.</p></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">Informações que coletamos</h2>
-<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;margin-bottom:2rem">
-<h3 style="margin-bottom:1rem">Dados pessoais:</h3><ul style="margin-bottom:1.5rem">
-<li>Nome completo e dados de contato (email, telefone)</li><li>Endereço de envio e cobrança</li><li>Informações de conta</li></ul>
-<h3 style="margin-bottom:1rem">Dados de transação:</h3><ul style="margin-bottom:1.5rem">
-<li>Histórico de compras</li><li>Métodos de pagamento (criptografados)</li><li>Informações de envio</li></ul>
-<h3 style="margin-bottom:1rem">Dados técnicos:</h3><ul><li>Endereço IP e navegador</li><li>Cookies e dados de navegação</li><li>Dispositivo e sistema operacional</li></ul></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">Como usamos suas informações?</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-bottom:2rem">
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3>Processar pedidos</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-top:0.5rem">Para gerenciar suas compras e envios</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3>Pagamentos seguros</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-top:0.5rem">Processar transações de forma segura</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3>Prevenção de fraude</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-top:0.5rem">Detectar atividades suspeitas</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3>Melhorar serviços</h3><p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-top:0.5rem">Personalizar sua experiência</p></div></div>
-<h2 style="color:#D4FF00;font-size:1.5rem;margin:2rem 0 1rem">Seus direitos</h2>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin-bottom:2rem">
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="color:#D4FF00;margin-bottom:0.5rem">Acesso</h3><p style="font-size:0.875rem">Solicitar cópia dos seus dados</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="color:#D4FF00;margin-bottom:0.5rem">Retificação</h3><p style="font-size:0.875rem">Atualizar informações incorretas</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="color:#D4FF00;margin-bottom:0.5rem">Eliminação</h3><p style="font-size:0.875rem">Solicitar eliminação de dados</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:1.5rem;border-radius:1rem"><h3 style="color:#D4FF00;margin-bottom:0.5rem">Portabilidade</h3><p style="font-size:0.875rem">Receber dados em formato legível</p></div></div>
-<div style="background:rgba(212,255,0,0.1);border:2px solid rgba(212,255,0,0.3);border-radius:1rem;padding:2rem;text-align:center">
-<h3 style="font-size:1.5rem;margin-bottom:1rem">Dúvidas sobre privacidade?</h3>
-<a href="mailto:contato@foltz.com.br" style="display:inline-block;background:#D4FF00;color:#000;padding:1rem 2rem;border-radius:0.5rem;font-weight:700;text-decoration:none">Contatar sobre privacidade</a></div></div>
+{% comment %}
+  Privacy Policy Page
+  Modern design with pulse animations and gradient effects
+{% endcomment %}
+
+<section class="privacidade-page" data-section-id="{{ section.id }}">
+  <div class="privacidade-page__container">
+    <!-- Header -->
+    <div class="privacidade-page__header">
+      <div class="privacidade-page__header-icon-wrapper">
+        <svg class="privacidade-page__header-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+      </div>
+      <h1 class="privacidade-page__title">POLÍTICA DE PRIVACIDADE</h1>
+      <p class="privacidade-page__subtitle">Sua privacidade é importante para nós. Veja como protegemos seus dados.</p>
+      <p class="privacidade-page__date">Última atualização: Octubre 2025</p>
+    </div>
+
+    <!-- Security Banner -->
+    <div class="privacidade-page__security-banner">
+      <div class="privacidade-page__security-icon-wrapper">
+        <svg class="privacidade-page__security-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+        </svg>
+      </div>
+      <div>
+        <h2 class="privacidade-page__security-title">Sua informação está protegida</h2>
+        <p class="privacidade-page__security-text">Utilizamos criptografia SSL de 256 bits e as melhores práticas de segurança para proteger seus dados pessoais e financeiros.</p>
+      </div>
+    </div>
+
+    <!-- Data Collection -->
+    <div class="privacidade-page__section">
+      <h2 class="privacidade-page__section-title">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+          <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+          <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        </svg>
+        Informações que coletamos
+      </h2>
+      <div class="privacidade-page__data-card">
+        <div class="privacidade-page__data-group">
+          <h3 class="privacidade-page__data-heading">Dados pessoais:</h3>
+          <ul class="privacidade-page__data-list">
+            <li>Nome completo e dados de contato (email, telefone)</li>
+            <li>Endereço de envio e cobrança</li>
+            <li>Informações de conta (se criar uma)</li>
+          </ul>
+        </div>
+        <div class="privacidade-page__data-group">
+          <h3 class="privacidade-page__data-heading">Dados de transação:</h3>
+          <ul class="privacidade-page__data-list">
+            <li>Histórico de compras e pedidos</li>
+            <li>Métodos de pagamento (criptografados e tokenizados)</li>
+            <li>Informações de envio e rastreamento</li>
+          </ul>
+        </div>
+        <div class="privacidade-page__data-group">
+          <h3 class="privacidade-page__data-heading">Dados técnicos:</h3>
+          <ul class="privacidade-page__data-list">
+            <li>Endereço IP e tipo de navegador</li>
+            <li>Cookies e dados de navegação</li>
+            <li>Dispositivo e sistema operacional</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Usage Grid -->
+    <div class="privacidade-page__section">
+      <h2 class="privacidade-page__section-title">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+          <circle cx="12" cy="12" r="3"></circle>
+        </svg>
+        Como usamos suas informações?
+      </h2>
+      <div class="privacidade-page__usage-grid">
+        <div class="privacidade-page__usage-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="8.5" cy="7" r="4"></circle>
+            <polyline points="17 11 19 13 23 9"></polyline>
+          </svg>
+          <h3>Processar pedidos</h3>
+          <p>Para gerenciar suas compras, envios e comunicações relacionadas</p>
+        </div>
+        <div class="privacidade-page__usage-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+            <line x1="1" y1="10" x2="23" y2="10"></line>
+          </svg>
+          <h3>Processamento de pagamentos</h3>
+          <p>Para processar transações de forma segura com nossos provedores</p>
+        </div>
+        <div class="privacidade-page__usage-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+          <h3>Prevenção de fraude</h3>
+          <p>Para detectar e prevenir atividades fraudulentas ou suspeitas</p>
+        </div>
+        <div class="privacidade-page__usage-card">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <h3>Melhorar serviços</h3>
+          <p>Para personalizar sua experiência e melhorar nossos produtos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rights Grid -->
+    <div class="privacidade-page__section">
+      <h2 class="privacidade-page__section-title">Seus direitos sobre seus dados</h2>
+      <div class="privacidade-page__rights-grid">
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </div>
+          <h3>Acesso</h3>
+          <p>Você pode solicitar uma cópia de todos os dados que temos sobre você</p>
+        </div>
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </div>
+          <h3>Retificação</h3>
+          <p>Você pode atualizar ou corrigir informações incorretas a qualquer momento</p>
+        </div>
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </div>
+          <h3>Eliminação</h3>
+          <p>Você pode solicitar a eliminação de seus dados pessoais</p>
+        </div>
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </div>
+          <h3>Portabilidade</h3>
+          <p>Você pode solicitar seus dados em formato legível por máquina</p>
+        </div>
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"></line>
+            </svg>
+          </div>
+          <h3>Oposição</h3>
+          <p>Você pode se opor ao processamento de seus dados para fins de marketing</p>
+        </div>
+        <div class="privacidade-page__right-card">
+          <div class="privacidade-page__right-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3>Limitação</h3>
+          <p>Você pode solicitar limitar o processamento de seus dados em certos casos</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="privacidade-page__cta">
+      <div class="privacidade-page__cta-content">
+        <h3 class="privacidade-page__cta-title">Dúvidas sobre privacidade?</h3>
+        <p class="privacidade-page__cta-text">Se você tiver dúvidas sobre esta política ou sobre como lidamos com seus dados, não hesite em nos contatar.</p>
+      </div>
+      <div class="privacidade-page__cta-buttons">
+        <a href="mailto:contato@foltz.com.br" class="privacidade-page__cta-btn privacidade-page__cta-btn--primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contatar sobre privacidade
+        </a>
+        <a href="/contacto" class="privacidade-page__cta-btn">Suporte geral</a>
+      </div>
+    </div>
+  </div>
 </section>
-{% schema %}{"name":"Privacidade","settings":[],"presets":[{"name":"Privacidade"}]}{% endschema %}
+
+<style>
+/* Base Section */
+.privacidade-page {
+  background: #000;
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.privacidade-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.privacidade-page__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.privacidade-page__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.privacidade-page__header-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(250, 255, 0, 0.1));
+  margin-bottom: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 241, 13, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(218, 241, 13, 0);
+  }
+}
+
+.privacidade-page__header-icon {
+  color: #DAF10D;
+}
+
+.privacidade-page__title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__title {
+    font-size: 2.5rem;
+  }
+}
+
+.privacidade-page__subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 0.5rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+.privacidade-page__date {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+/* Security Banner */
+.privacidade-page__security-banner {
+  background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.privacidade-page__security-banner:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__security-banner {
+    padding: 2rem;
+  }
+}
+
+.privacidade-page__security-icon-wrapper {
+  flex-shrink: 0;
+}
+
+.privacidade-page__security-icon {
+  color: #10B981;
+}
+
+.privacidade-page__security-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.5rem 0;
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__security-title {
+    font-size: 1.5rem;
+  }
+}
+
+.privacidade-page__security-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Sections */
+.privacidade-page__section {
+  margin-bottom: 3rem;
+}
+
+.privacidade-page__section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 1.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__section-title {
+    font-size: 1.75rem;
+  }
+}
+
+.privacidade-page__section-title svg {
+  color: #DAF10D;
+  flex-shrink: 0;
+}
+
+/* Data Card */
+.privacidade-page__data-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.privacidade-page__data-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__data-card {
+    padding: 2rem;
+  }
+}
+
+.privacidade-page__data-group {
+  margin-bottom: 2rem;
+}
+
+.privacidade-page__data-group:last-child {
+  margin-bottom: 0;
+}
+
+.privacidade-page__data-heading {
+  color: #DAF10D;
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.privacidade-page__data-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.privacidade-page__data-list li {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.6;
+}
+
+.privacidade-page__data-list li::before {
+  content: "•";
+  color: #DAF10D;
+  position: absolute;
+  left: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  top: -2px;
+}
+
+/* Usage Grid */
+.privacidade-page__usage-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .privacidade-page__usage-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .privacidade-page__usage-grid {
+    gap: 1.5rem;
+  }
+}
+
+.privacidade-page__usage-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.privacidade-page__usage-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.privacidade-page__usage-card svg {
+  color: #DAF10D;
+  margin-bottom: 1rem;
+}
+
+.privacidade-page__usage-card h3 {
+  color: #fff;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+}
+
+.privacidade-page__usage-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9375rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Rights Grid */
+.privacidade-page__rights-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .privacidade-page__rights-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .privacidade-page__rights-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.privacidade-page__right-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.privacidade-page__right-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.privacidade-page__right-icon {
+  margin-bottom: 1rem;
+}
+
+.privacidade-page__right-icon svg {
+  color: #DAF10D;
+}
+
+.privacidade-page__right-card h3 {
+  color: #fff;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.125rem;
+}
+
+.privacidade-page__right-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9375rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* CTA */
+.privacidade-page__cta {
+  background: linear-gradient(to bottom right, rgba(218, 241, 13, 0.1), rgba(234, 255, 0, 0.05));
+  border: 1px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1rem;
+  padding: 2rem 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.privacidade-page__cta:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 12px 24px rgba(218, 241, 13, 0.2);
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__cta {
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+}
+
+.privacidade-page__cta-content {
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .privacidade-page__cta-content {
+    margin-bottom: 0;
+    flex: 1;
+  }
+}
+
+.privacidade-page__cta-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.75rem 0;
+}
+
+.privacidade-page__cta-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.privacidade-page__cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .privacidade-page__cta-buttons {
+    flex-direction: row;
+  }
+}
+
+.privacidade-page__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.875rem 1.5rem;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.privacidade-page__cta-btn--primary {
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  box-shadow: 0 4px 12px rgba(218, 241, 13, 0.3);
+}
+
+.privacidade-page__cta-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(218, 241, 13, 0.4);
+}
+
+.privacidade-page__cta-btn:not(.privacidade-page__cta-btn--primary) {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.privacidade-page__cta-btn:not(.privacidade-page__cta-btn--primary):hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+</style>
+
+{% schema %}
+{
+  "name": "Privacidade Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Privacidade Page"
+    }
+  ]
+}
+{% endschema %}
