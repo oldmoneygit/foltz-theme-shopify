@@ -28,13 +28,117 @@
       </fieldset>
     {%- endfor -%}
 
-    <a href="/pages/guia-de-tallas" target="_blank" class="variant-picker__size-guide">
+    <button type="button" class="variant-picker__size-guide" id="open-size-guide-modal">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
         <circle cx="12" cy="10" r="3"></circle>
       </svg>
       <span>Guía de tallas</span>
-    </a>
+    </button>
+  </div>
+
+  {%- comment %} Modal da Guia de Tallas {%- endcomment -%}
+  <div class="size-guide-modal" id="size-guide-modal">
+    <div class="size-guide-modal__overlay" id="size-guide-modal-overlay"></div>
+    <div class="size-guide-modal__content">
+      <button class="size-guide-modal__close" id="close-size-guide-modal" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <div class="size-guide-modal__header">
+        <svg class="size-guide-modal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
+          <path d="m14.5 12.5 2-2"></path>
+          <path d="m11.5 9.5 2-2"></path>
+          <path d="m8.5 6.5 2-2"></path>
+          <path d="m17.5 15.5 2-2"></path>
+        </svg>
+        <h2 class="size-guide-modal__title">GUÍA DE TALLES</h2>
+        <p class="size-guide-modal__subtitle">Encontrá el talle perfecto para tu camiseta</p>
+      </div>
+
+      <div class="size-guide-modal__table-wrapper">
+        <table class="size-guide-modal__table">
+          <thead>
+            <tr>
+              <th>TALLE</th>
+              <th>PECHO (CM)</th>
+              <th>ANCHO (CM)</th>
+              <th>LARGO (CM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="size-guide-modal__size">S</td>
+              <td>88-96</td>
+              <td>49</td>
+              <td>68</td>
+            </tr>
+            <tr>
+              <td class="size-guide-modal__size">M</td>
+              <td>96-104</td>
+              <td>52</td>
+              <td>70</td>
+            </tr>
+            <tr>
+              <td class="size-guide-modal__size">L</td>
+              <td>104-112</td>
+              <td>55</td>
+              <td>72</td>
+            </tr>
+            <tr>
+              <td class="size-guide-modal__size">XL</td>
+              <td>112-120</td>
+              <td>58</td>
+              <td>74</td>
+            </tr>
+            <tr>
+              <td class="size-guide-modal__size">XXL</td>
+              <td>120-128</td>
+              <td>61</td>
+              <td>76</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="size-guide-modal__tips">
+        <h3 class="size-guide-modal__tips-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 16v-4"></path>
+            <path d="M12 8h.01"></path>
+          </svg>
+          Consejos importantes
+        </h3>
+        <ul class="size-guide-modal__tips-list">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Nuestras camisetas tienen corte entallado tipo slim fit
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Si preferís un calce más holgado, te recomendamos elegir un talle más grande
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Las medidas son aproximadas y pueden variar ±2cm
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 {%- endunless -%}
 
@@ -155,6 +259,315 @@
   .variant-picker__size-guide span {
     text-decoration: underline;
   }
+
+  /* Modal da Guia de Tallas */
+  .size-guide-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    padding: 1rem;
+  }
+
+  .size-guide-modal.is-open {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .size-guide-modal__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .size-guide-modal__content {
+    position: relative;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 2px solid rgba(218, 241, 13, 0.2);
+    border-radius: 1.5rem;
+    max-width: 650px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__content {
+      padding: 2rem;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.96);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .size-guide-modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+
+  .size-guide-modal__close:hover {
+    background: rgba(218, 241, 13, 0.2);
+    border-color: #DAF10D;
+    color: #DAF10D;
+    transform: rotate(90deg);
+  }
+
+  .size-guide-modal__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .size-guide-modal__header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-top: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__header {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .size-guide-modal__icon {
+    width: 48px;
+    height: 48px;
+    color: #DAF10D;
+    margin: 0 auto 1rem;
+  }
+
+  .size-guide-modal__title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__title {
+      font-size: 2rem;
+    }
+  }
+
+  .size-guide-modal__subtitle {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .size-guide-modal__table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__table-wrapper {
+      margin-bottom: 2rem;
+    }
+  }
+
+  .size-guide-modal__table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .size-guide-modal__table thead tr {
+    background: rgba(218, 241, 13, 0.1);
+    border-bottom: 2px solid rgba(218, 241, 13, 0.3);
+  }
+
+  .size-guide-modal__table th {
+    padding: 0.875rem 0.75rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #DAF10D;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__table th {
+      padding: 1rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  .size-guide-modal__table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+  }
+
+  .size-guide-modal__table tbody tr:hover {
+    background: rgba(218, 241, 13, 0.05);
+  }
+
+  .size-guide-modal__table td {
+    padding: 0.875rem 0.75rem;
+    text-align: center;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__table td {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  }
+
+  .size-guide-modal__size {
+    font-weight: 700;
+    color: #DAF10D !important;
+    font-size: 1rem !important;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__size {
+      font-size: 1.125rem !important;
+    }
+  }
+
+  .size-guide-modal__tips {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__tips {
+      padding: 1.5rem;
+    }
+  }
+
+  .size-guide-modal__tips-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #DAF10D;
+    margin: 0 0 1rem 0;
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__tips-title {
+      font-size: 1.125rem;
+    }
+  }
+
+  .size-guide-modal__tips-title svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .size-guide-modal__tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .size-guide-modal__tips-list li {
+    display: flex;
+    gap: 0.625rem;
+    align-items: flex-start;
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  @media (min-width: 640px) {
+    .size-guide-modal__tips-list li {
+      font-size: 0.875rem;
+    }
+  }
+
+  .size-guide-modal__tips-list svg {
+    width: 16px;
+    height: 16px;
+    color: #10B981;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  /* Scrollbar personalizada para o modal */
+  .size-guide-modal__content::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .size-guide-modal__content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  .size-guide-modal__content::-webkit-scrollbar-thumb {
+    background: rgba(218, 241, 13, 0.3);
+    border-radius: 4px;
+  }
+
+  .size-guide-modal__content::-webkit-scrollbar-thumb:hover {
+    background: rgba(218, 241, 13, 0.5);
+  }
+
+  /* Prevent body scroll when modal is open */
+  body.modal-open {
+    overflow: hidden;
+  }
 </style>
 
 <script>
@@ -189,6 +602,55 @@
         document.dispatchEvent(event);
       }
     });
+  });
+
+  // Size Guide Modal Control
+  const sizeGuideModal = document.getElementById('size-guide-modal');
+  const openModalBtn = document.getElementById('open-size-guide-modal');
+  const closeModalBtn = document.getElementById('close-size-guide-modal');
+  const modalOverlay = document.getElementById('size-guide-modal-overlay');
+
+  function openModal() {
+    if (sizeGuideModal) {
+      sizeGuideModal.classList.add('is-open');
+      document.body.classList.add('modal-open');
+
+      // Add focus trap
+      sizeGuideModal.setAttribute('role', 'dialog');
+      sizeGuideModal.setAttribute('aria-modal', 'true');
+      closeModalBtn.focus();
+    }
+  }
+
+  function closeModal() {
+    if (sizeGuideModal) {
+      sizeGuideModal.classList.remove('is-open');
+      document.body.classList.remove('modal-open');
+
+      // Return focus to trigger button
+      if (openModalBtn) {
+        openModalBtn.focus();
+      }
+    }
+  }
+
+  if (openModalBtn) {
+    openModalBtn.addEventListener('click', openModal);
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeModal);
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', closeModal);
+  }
+
+  // Close modal with ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sizeGuideModal && sizeGuideModal.classList.contains('is-open')) {
+      closeModal();
+    }
   });
 })();
 </script>
