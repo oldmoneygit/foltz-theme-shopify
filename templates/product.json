@@ -168,6 +168,17 @@
             "verified": true,
             "date": "Hace 2 días"
           }
+        },
+        "review_HbUqMb": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Mateo Villalba",
+            "rating": 5,
+            "review_text": "Pedí un domingo y me llegó el martes! Una locura lo rápido que fue. La camiseta es hermosa, se ve re premium.",
+            "image_1": "shopify://shop_images/replicate-prediction-x5h7e3tn3srma0ct4rvbbhzvnm.jpg",
+            "verified": true,
+            "date": "Hace 5 días"
+          }
         }
       },
       "block_order": [
@@ -180,7 +191,8 @@
         "review_JaQRJC",
         "review_KLKEbx",
         "review_iracmf",
-        "review_3GneHC"
+        "review_3GneHC",
+        "review_HbUqMb"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
