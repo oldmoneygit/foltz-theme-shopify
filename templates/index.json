@@ -248,6 +248,11 @@
         "button_text": "Suscribirse",
         "privacy_text": "🔒 Tus datos están protegidos. No compartimos tu información."
       }
+    },
+    "contacto_Lck8mX": {
+      "type": "contacto",
+      "name": "Contacto",
+      "settings": {}
     }
   },
   "order": [
@@ -265,6 +270,7 @@
     "retro-carousel",
     "national-teams-carousel",
     "faq-home",
-    "newsletter"
+    "newsletter",
+    "contacto_Lck8mX"
   ]
 }
