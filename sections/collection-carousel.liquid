@@ -359,15 +359,16 @@
   display: flex;
   gap: 1rem;
   overflow-x: auto;
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   padding: 1rem 0;
   cursor: grab;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   will-change: scroll-position;
   scroll-padding: 0 1rem;
+  overscroll-behavior-x: contain;
 }
 
 .collection-carousel__track::-webkit-scrollbar {
@@ -377,7 +378,7 @@
 .collection-carousel__track.is-dragging {
   cursor: grabbing;
   scroll-behavior: auto;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -396,7 +397,6 @@
   flex: 0 0 calc(50% - 0.5rem);
   min-width: 0;
   scroll-snap-align: start;
-  scroll-snap-stop: always;
 }
 
 @media (min-width: 480px) {
@@ -897,79 +897,48 @@ document.addEventListener('DOMContentLoaded', function() {
       lastTime = now;
     });
 
-    // Touch events (Mobile) - Optimized for iPhone responsiveness
+    // Touch events (Mobile) - Ultra-smooth native scrolling
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchScrollLeft = 0;
-    let touchVelocities = [];
     let isDragging = false;
+    let isScrollingVertically = false;
 
     track.addEventListener('touchstart', (e) => {
-      // Cancel any ongoing momentum
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-
       touchStartX = e.touches[0].pageX;
+      touchStartY = e.touches[0].pageY;
       touchScrollLeft = track.scrollLeft;
-      velocity = 0;
-      touchVelocities = [];
-      lastX = e.touches[0].pageX;
-      lastTime = Date.now();
       isDragging = false;
-
-      track.classList.add('is-dragging');
+      isScrollingVertically = false;
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
-      const x = e.touches[0].pageX;
-      const walk = (touchStartX - x) * (isIOS ? 2.2 : 1.8); // Higher multiplier for iOS
+      const touchX = e.touches[0].pageX;
+      const touchY = e.touches[0].pageY;
+      const deltaX = touchStartX - touchX;
+      const deltaY = touchStartY - touchY;
 
-      // Mark as dragging if moved more than 5px
-      if (Math.abs(walk) > 5) {
+      // Detect scroll direction on first move
+      if (!isDragging && !isScrollingVertically) {
+        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+          isScrollingVertically = true;
+          return;
+        }
         isDragging = true;
+        track.classList.add('is-dragging');
       }
 
-      track.scrollLeft = touchScrollLeft + walk;
+      // Allow vertical scrolling
+      if (isScrollingVertically) return;
 
-      // Simplified velocity calculation for faster response
-      const now = Date.now();
-      const dt = Math.max(now - lastTime, 1);
-      const dx = x - lastX;
-
-      const currentVelocity = dx / dt;
-      touchVelocities.push(currentVelocity);
-
-      // Keep only last 3 samples for faster response (reduced from 5)
-      if (touchVelocities.length > 3) {
-        touchVelocities.shift();
-      }
-
-      // Direct velocity calculation - less smoothing for faster response
-      velocity = touchVelocities.reduce((a, b) => a + b, 0) / touchVelocities.length;
-
-      lastX = x;
-      lastTime = now;
+      // Ultra-smooth horizontal scrolling
+      track.scrollLeft = touchScrollLeft + deltaX;
     }, { passive: true });
 
     track.addEventListener('touchend', () => {
       track.classList.remove('is-dragging');
-
-      // On iOS, rely more on native scroll-snap, use lighter momentum
-      const momentumThreshold = isIOS ? 0.3 : 0.2;
-
-      if (isDragging && Math.abs(velocity) > momentumThreshold) {
-        velocity *= -1; // Invert for touch
-
-        // On iOS, apply less aggressive momentum to work with scroll-snap
-        if (isIOS) {
-          velocity *= 0.7;
-        }
-
-        applyMomentum();
-      }
-
       isDragging = false;
+      isScrollingVertically = false;
     }, { passive: true });
 
     // Prevent default drag behavior on images and links
