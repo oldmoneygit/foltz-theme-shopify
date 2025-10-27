@@ -11,40 +11,6 @@
           </h1>
         </div>
 
-        {%- comment %} Urgency & Scarcity Banner {%- endcomment -%}
-        <div class="urgency-banner">
-          <div class="urgency-banner__main">
-            <div class="urgency-banner__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="12" cy="12" r="10"></circle>
-                <polyline points="12 6 12 12 16 14"></polyline>
-              </svg>
-            </div>
-            <div class="urgency-banner__content">
-              <p class="urgency-banner__title">🔥 ¡PROMOCIÓN 3x1 TERMINANDO!</p>
-              <p class="urgency-banner__timer">
-                Tiempo restante: <span id="urgency-timer">--:--:--</span>
-              </p>
-            </div>
-          </div>
-          <div class="urgency-banner__demand">
-            <div class="urgency-banner__demand-indicator">
-              <div class="urgency-banner__demand-bar"></div>
-            </div>
-            <p class="urgency-banner__demand-text">
-              <span class="urgency-banner__demand-icon">👥</span>
-              <span id="demand-viewers">12</span> personas están viendo esto ahora
-            </p>
-          </div>
-          <div class="urgency-banner__stock">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <span>Solo quedan <strong id="stock-count">7</strong> unidades en stock</span>
-          </div>
-        </div>
-
       {%- when 'price' -%}
         <div class="product-info__promo-banner" {{ block.shopify_attributes }}>
           <img
@@ -92,6 +58,40 @@
       {%- when 'buy_buttons' -%}
         <div class="product-info__buy-buttons" {{ block.shopify_attributes }}>
           {%- render 'buy-buttons', product: product, product_form_id: product_form_id -%}
+        </div>
+
+        {%- comment %} Urgency & Scarcity Banner {%- endcomment -%}
+        <div class="urgency-banner">
+          <div class="urgency-banner__main">
+            <div class="urgency-banner__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="urgency-banner__content">
+              <p class="urgency-banner__title">🔥 ¡PROMOCIÓN 3x1 TERMINANDO!</p>
+              <p class="urgency-banner__timer">
+                Tiempo restante: <span id="urgency-timer">--:--:--</span>
+              </p>
+            </div>
+          </div>
+          <div class="urgency-banner__demand">
+            <div class="urgency-banner__demand-indicator">
+              <div class="urgency-banner__demand-bar" id="demand-bar"></div>
+            </div>
+            <p class="urgency-banner__demand-text">
+              <span class="urgency-banner__demand-icon">👥</span>
+              <span id="demand-viewers">12</span> personas están viendo esto ahora
+            </p>
+          </div>
+          <div class="urgency-banner__stock">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Solo quedan <strong id="stock-count">7</strong> unidades en stock</span>
+          </div>
         </div>
 
       {%- when 'description' -%}
@@ -661,6 +661,7 @@
   .urgency-banner__demand-text span:not(.urgency-banner__demand-icon) {
     color: #DAF10D;
     font-weight: 900;
+    transition: all 0.3s ease;
   }
 
   .urgency-banner__stock {
@@ -670,6 +671,26 @@
     font-size: 0.75rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
+  }
+
+  /* Number change animation */
+  @keyframes numberChange {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.2);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .number-changing {
+    animation: numberChange 0.4s ease;
   }
 
   @media (min-width: 768px) {
@@ -739,7 +760,18 @@
 
 <script>
 (function() {
-  // Urgency Timer - 24 hour countdown
+  // Helper: Add animation class to element
+  function animateNumberChange(element) {
+    element.classList.add('number-changing');
+    setTimeout(() => element.classList.remove('number-changing'), 400);
+  }
+
+  // Helper: Get random interval within range
+  function getRandomInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  // Urgency Timer - 24 hour countdown with increased urgency
   function initUrgencyTimer() {
     const timerElement = document.getElementById('urgency-timer');
     if (!timerElement) return;
@@ -768,52 +800,124 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      timerElement.textContent =
-        String(hours).padStart(2, '0') + ':' +
-        String(minutes).padStart(2, '0') + ':' +
-        String(seconds).padStart(2, '0');
+      // Show milliseconds in final minute for extra urgency
+      if (hours === 0 && minutes === 0) {
+        const milliseconds = Math.floor((distance % 1000) / 10);
+        timerElement.textContent =
+          String(hours).padStart(2, '0') + ':' +
+          String(minutes).padStart(2, '0') + ':' +
+          String(seconds).padStart(2, '0') + '.' +
+          String(milliseconds).padStart(2, '0');
+        timerElement.style.color = '#EF4444'; // Red in final minute
+      } else if (hours === 0 && minutes < 10) {
+        timerElement.textContent =
+          String(hours).padStart(2, '0') + ':' +
+          String(minutes).padStart(2, '0') + ':' +
+          String(seconds).padStart(2, '0');
+        timerElement.style.color = '#F59E0B'; // Orange in final 10 minutes
+      } else {
+        timerElement.textContent =
+          String(hours).padStart(2, '0') + ':' +
+          String(minutes).padStart(2, '0') + ':' +
+          String(seconds).padStart(2, '0');
+        timerElement.style.color = '#DAF10D'; // Normal yellow
+      }
     }
 
     updateTimer();
-    setInterval(updateTimer, 1000);
+    setInterval(updateTimer, 100); // Update every 100ms for smooth milliseconds
   }
 
-  // Dynamic viewers count - varies between 8-15
+  // Dynamic viewers count - natural fluctuation around baseline
   function initViewersCount() {
     const viewersElement = document.getElementById('demand-viewers');
+    const demandBar = document.getElementById('demand-bar');
     if (!viewersElement) return;
 
+    // Start with baseline between 10-13
+    let baselineViewers = Math.floor(Math.random() * 4) + 10;
+    let currentViewers = baselineViewers;
+
     function updateViewers() {
-      const count = Math.floor(Math.random() * 8) + 8; // 8-15
-      viewersElement.textContent = count;
+      // Fluctuate ±3 from baseline, but never below 5 or above 18
+      const change = Math.floor(Math.random() * 7) - 3; // -3 to +3
+      currentViewers = Math.max(5, Math.min(18, baselineViewers + change));
+
+      // Occasionally shift baseline slightly (simulate traffic patterns)
+      if (Math.random() > 0.7) {
+        baselineViewers = Math.max(8, Math.min(15, baselineViewers + (Math.random() > 0.5 ? 1 : -1)));
+      }
+
+      animateNumberChange(viewersElement);
+      viewersElement.textContent = currentViewers;
+
+      // Update demand bar width based on viewers (40-90%)
+      if (demandBar) {
+        const barWidth = 40 + (currentViewers / 18) * 50; // 40-90%
+        demandBar.style.width = barWidth + '%';
+      }
+
+      // Schedule next update with random interval (8-18 seconds)
+      setTimeout(updateViewers, getRandomInterval(8000, 18000));
     }
 
     updateViewers();
-    setInterval(updateViewers, 15000); // Update every 15 seconds
   }
 
-  // Dynamic stock count - varies between 3-9
+  // Dynamic stock count - decreases over time (simulates real purchases)
   function initStockCount() {
     const stockElement = document.getElementById('stock-count');
     if (!stockElement) return;
 
-    function updateStock() {
-      const count = Math.floor(Math.random() * 7) + 3; // 3-9
-      stockElement.textContent = count;
+    // Initialize stock from localStorage or start at 8-12
+    let currentStock = localStorage.getItem('foltz_current_stock');
 
-      // Change color if stock is very low
-      const banner = document.querySelector('.urgency-banner__stock');
-      if (banner) {
-        if (count <= 4) {
-          stockElement.style.color = '#EF4444'; // Red
-        } else {
-          stockElement.style.color = '#DAF10D'; // Yellow
-        }
-      }
+    if (!currentStock || parseInt(currentStock) < 3) {
+      currentStock = Math.floor(Math.random() * 5) + 8; // 8-12
+      localStorage.setItem('foltz_current_stock', currentStock);
+    } else {
+      currentStock = parseInt(currentStock);
     }
 
-    updateStock();
-    setInterval(updateStock, 20000); // Update every 20 seconds
+    function updateStock() {
+      // 60% chance stock stays same, 40% chance it decreases by 1
+      if (Math.random() > 0.6 && currentStock > 3) {
+        currentStock -= 1;
+        localStorage.setItem('foltz_current_stock', currentStock);
+      }
+
+      animateNumberChange(stockElement);
+      stockElement.textContent = currentStock;
+
+      // Change color based on stock level
+      if (currentStock <= 3) {
+        stockElement.style.color = '#EF4444'; // Red - Critical
+        stockElement.style.fontWeight = '900';
+      } else if (currentStock <= 5) {
+        stockElement.style.color = '#F59E0B'; // Orange - Low
+      } else {
+        stockElement.style.color = '#DAF10D'; // Yellow - Normal
+      }
+
+      // Update more frequently when stock is low (creates urgency)
+      const nextInterval = currentStock <= 5
+        ? getRandomInterval(10000, 20000)  // 10-20s when low
+        : getRandomInterval(25000, 45000); // 25-45s when normal
+
+      setTimeout(updateStock, nextInterval);
+    }
+
+    // Initial display
+    stockElement.textContent = currentStock;
+    if (currentStock <= 3) {
+      stockElement.style.color = '#EF4444';
+      stockElement.style.fontWeight = '900';
+    } else if (currentStock <= 5) {
+      stockElement.style.color = '#F59E0B';
+    }
+
+    // Start updates
+    setTimeout(updateStock, getRandomInterval(15000, 30000));
   }
 
   // Initialize all urgency features
