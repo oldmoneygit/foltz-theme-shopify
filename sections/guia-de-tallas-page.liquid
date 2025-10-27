@@ -1,65 +1,67 @@
-<section class="guia-talles-page-section" data-section-id="{{ section.id }}">
-  <div class="guia-talles-page__container">
-    {%- comment %} Header {%- endcomment -%}
-    <div class="guia-talles-page__header">
-      <div class="guia-talles-page__header-wrapper">
-        <svg class="guia-talles-page__icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
-          <path d="m14.5 12.5 2-2"></path>
-          <path d="m11.5 9.5 2-2"></path>
-          <path d="m8.5 6.5 2-2"></path>
-          <path d="m17.5 15.5 2-2"></path>
-        </svg>
-        <h1 class="guia-talles-page__title">GUÍA DE TALLES</h1>
+<section class="size-guide-page">
+  <div class="size-guide-container">
+    {%- comment %} Header Section {%- endcomment -%}
+    <div class="size-guide-header">
+      <div class="size-guide-header__content">
+        <div class="size-guide-header__icon-wrapper">
+          <svg class="size-guide-header__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
+            <path d="m14.5 12.5 2-2"></path>
+            <path d="m11.5 9.5 2-2"></path>
+            <path d="m8.5 6.5 2-2"></path>
+            <path d="m17.5 15.5 2-2"></path>
+          </svg>
+        </div>
+        <h1 class="size-guide-header__title">GUÍA DE TALLES</h1>
       </div>
-      <p class="guia-talles-page__subtitle">
-        Encontrá el talle perfecto para vos
+      <p class="size-guide-header__subtitle">
+        Encontrá el talle perfecto para tu camiseta
       </p>
     </div>
 
     {%- comment %} Size Table {%- endcomment -%}
-    <div class="guia-talles-page__table-wrapper">
-      <div class="guia-talles-page__table-container">
-        <div class="guia-talles-page__table-scroll">
-          <table class="guia-talles-page__table">
+    <div class="size-guide-table-section">
+      <div class="size-guide-table-wrapper">
+        <div class="size-guide-table-scroll">
+          <table class="size-guide-table">
             <thead>
-              <tr class="guia-talles-page__table-header-row">
-                <th class="guia-talles-page__table-header">TALLE</th>
-                <th class="guia-talles-page__table-header">PECHO (CM)</th>
-                <th class="guia-talles-page__table-header">ANCHO (CM)</th>
-                <th class="guia-talles-page__table-header">LARGO (CM)</th>
+              <tr class="size-guide-table__header-row">
+                <th class="size-guide-table__header">TALLE</th>
+                <th class="size-guide-table__header">PECHO (CM)</th>
+                <th class="size-guide-table__header">ANCHO (CM)</th>
+                <th class="size-guide-table__header">LARGO (CM)</th>
               </tr>
             </thead>
             <tbody>
-              <tr class="guia-talles-page__table-row">
-                <td class="guia-talles-page__table-cell guia-talles-page__table-cell--primary">S</td>
-                <td class="guia-talles-page__table-cell">88-96</td>
-                <td class="guia-talles-page__table-cell">49</td>
-                <td class="guia-talles-page__table-cell">68</td>
+              <tr class="size-guide-table__row">
+                <td class="size-guide-table__cell size-guide-table__cell--size">S</td>
+                <td class="size-guide-table__cell">88-96</td>
+                <td class="size-guide-table__cell">49</td>
+                <td class="size-guide-table__cell">68</td>
               </tr>
-              <tr class="guia-talles-page__table-row">
-                <td class="guia-talles-page__table-cell guia-talles-page__table-cell--primary">M</td>
-                <td class="guia-talles-page__table-cell">96-104</td>
-                <td class="guia-talles-page__table-cell">52</td>
-                <td class="guia-talles-page__table-cell">70</td>
+              <tr class="size-guide-table__row">
+                <td class="size-guide-table__cell size-guide-table__cell--size">M</td>
+                <td class="size-guide-table__cell">96-104</td>
+                <td class="size-guide-table__cell">52</td>
+                <td class="size-guide-table__cell">70</td>
               </tr>
-              <tr class="guia-talles-page__table-row">
-                <td class="guia-talles-page__table-cell guia-talles-page__table-cell--primary">L</td>
-                <td class="guia-talles-page__table-cell">104-112</td>
-                <td class="guia-talles-page__table-cell">55</td>
-                <td class="guia-talles-page__table-cell">72</td>
+              <tr class="size-guide-table__row">
+                <td class="size-guide-table__cell size-guide-table__cell--size">L</td>
+                <td class="size-guide-table__cell">104-112</td>
+                <td class="size-guide-table__cell">55</td>
+                <td class="size-guide-table__cell">72</td>
               </tr>
-              <tr class="guia-talles-page__table-row">
-                <td class="guia-talles-page__table-cell guia-talles-page__table-cell--primary">XL</td>
-                <td class="guia-talles-page__table-cell">112-120</td>
-                <td class="guia-talles-page__table-cell">58</td>
-                <td class="guia-talles-page__table-cell">74</td>
+              <tr class="size-guide-table__row">
+                <td class="size-guide-table__cell size-guide-table__cell--size">XL</td>
+                <td class="size-guide-table__cell">112-120</td>
+                <td class="size-guide-table__cell">58</td>
+                <td class="size-guide-table__cell">74</td>
               </tr>
-              <tr class="guia-talles-page__table-row">
-                <td class="guia-talles-page__table-cell guia-talles-page__table-cell--primary">XXL</td>
-                <td class="guia-talles-page__table-cell">120-128</td>
-                <td class="guia-talles-page__table-cell">61</td>
-                <td class="guia-talles-page__table-cell">76</td>
+              <tr class="size-guide-table__row">
+                <td class="size-guide-table__cell size-guide-table__cell--size">XXL</td>
+                <td class="size-guide-table__cell">120-128</td>
+                <td class="size-guide-table__cell">61</td>
+                <td class="size-guide-table__cell">76</td>
               </tr>
             </tbody>
           </table>
@@ -67,423 +69,606 @@
       </div>
     </div>
 
-    {%- comment %} Info Grid {%- endcomment -%}
-    <div class="guia-talles-page__info-grid">
-      {%- comment %} Como medir {%- endcomment -%}
-      <div class="guia-talles-page__info-card">
-        <h2 class="guia-talles-page__info-title">
-          <svg class="guia-talles-page__info-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    {%- comment %} Info Cards Grid {%- endcomment -%}
+    <div class="size-guide-info-grid">
+      {%- comment %} Como Medir Card {%- endcomment -%}
+      <div class="size-guide-card">
+        <div class="size-guide-card__header">
+          <svg class="size-guide-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
             <path d="m14.5 12.5 2-2"></path>
             <path d="m11.5 9.5 2-2"></path>
             <path d="m8.5 6.5 2-2"></path>
             <path d="m17.5 15.5 2-2"></path>
           </svg>
-          Cómo tomar tus medidas
-        </h2>
-        <ol class="guia-talles-page__steps-list">
-          <li class="guia-talles-page__step-item">
-            <span class="guia-talles-page__step-number">1</span>
-            <span class="guia-talles-page__step-text"><strong>Pecho:</strong> Medí el contorno de tu pecho en la parte más ancha, pasando la cinta por las axilas</span>
+          <h2 class="size-guide-card__title">Cómo tomar tus medidas</h2>
+        </div>
+        <ol class="size-guide-steps">
+          <li class="size-guide-step">
+            <span class="size-guide-step__number">1</span>
+            <div class="size-guide-step__content">
+              <strong>Pecho:</strong> Medí el contorno de tu pecho en la parte más ancha, pasando la cinta por las axilas
+            </div>
           </li>
-          <li class="guia-talles-page__step-item">
-            <span class="guia-talles-page__step-number">2</span>
-            <span class="guia-talles-page__step-text"><strong>Ancho:</strong> Medí de hombro a hombro en la parte más ancha de tu espalda</span>
+          <li class="size-guide-step">
+            <span class="size-guide-step__number">2</span>
+            <div class="size-guide-step__content">
+              <strong>Ancho:</strong> Medí de hombro a hombro en la parte más ancha de tu espalda
+            </div>
           </li>
-          <li class="guia-talles-page__step-item">
-            <span class="guia-talles-page__step-number">3</span>
-            <span class="guia-talles-page__step-text"><strong>Largo:</strong> Medí desde el punto más alto del hombro hasta donde querés que llegue la camiseta</span>
+          <li class="size-guide-step">
+            <span class="size-guide-step__number">3</span>
+            <div class="size-guide-step__content">
+              <strong>Largo:</strong> Medí desde el punto más alto del hombro hasta donde querés que llegue la camiseta
+            </div>
           </li>
-          <li class="guia-talles-page__step-item">
-            <span class="guia-talles-page__step-number">4</span>
-            <span class="guia-talles-page__step-text">Para mayor precisión, tomá las medidas sobre una camiseta que te quede bien</span>
+          <li class="size-guide-step">
+            <span class="size-guide-step__number">4</span>
+            <div class="size-guide-step__content">
+              Para mayor precisión, tomá las medidas sobre una camiseta que te quede bien
+            </div>
           </li>
-          <li class="guia-talles-page__step-item">
-            <span class="guia-talles-page__step-number">5</span>
-            <span class="guia-talles-page__step-text">Compará tus medidas con la tabla de arriba para encontrar tu talle ideal</span>
+          <li class="size-guide-step">
+            <span class="size-guide-step__number">5</span>
+            <div class="size-guide-step__content">
+              Compará tus medidas con la tabla de arriba para encontrar tu talle ideal
+            </div>
           </li>
         </ol>
       </div>
 
-      {%- comment %} Consejos {%- endcomment -%}
-      <div class="guia-talles-page__info-card">
-        <h2 class="guia-talles-page__info-title">
-          <svg class="guia-talles-page__info-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      {%- comment %} Consejos Card {%- endcomment -%}
+      <div class="size-guide-card">
+        <div class="size-guide-card__header">
+          <svg class="size-guide-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"></circle>
             <path d="M12 16v-4"></path>
             <path d="M12 8h.01"></path>
           </svg>
-          Consejos importantes
-        </h2>
-        <ul class="guia-talles-page__tips-list">
-          <li class="guia-talles-page__tip-item">
-            <svg class="guia-talles-page__check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <h2 class="size-guide-card__title">Consejos importantes</h2>
+        </div>
+        <ul class="size-guide-tips">
+          <li class="size-guide-tip">
+            <svg class="size-guide-tip__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
-            <span class="guia-talles-page__tip-text">Nuestras camisetas tienen corte entallado tipo slim fit</span>
+            <span class="size-guide-tip__text">Nuestras camisetas tienen corte entallado tipo slim fit</span>
           </li>
-          <li class="guia-talles-page__tip-item">
-            <svg class="guia-talles-page__check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <li class="size-guide-tip">
+            <svg class="size-guide-tip__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
-            <span class="guia-talles-page__tip-text">Si preferís un calce más holgado, te recomendamos elegir un talle más grande</span>
+            <span class="size-guide-tip__text">Si preferís un calce más holgado, te recomendamos elegir un talle más grande</span>
           </li>
-          <li class="guia-talles-page__tip-item">
-            <svg class="guia-talles-page__check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <li class="size-guide-tip">
+            <svg class="size-guide-tip__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
-            <span class="guia-talles-page__tip-text">Las medidas son aproximadas y pueden variar ±2cm</span>
+            <span class="size-guide-tip__text">Las medidas son aproximadas y pueden variar ±2cm</span>
           </li>
-          <li class="guia-talles-page__tip-item">
-            <svg class="guia-talles-page__check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <li class="size-guide-tip">
+            <svg class="size-guide-tip__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
-            <span class="guia-talles-page__tip-text">Si estás entre dos talles, elegí el talle mayor</span>
+            <span class="size-guide-tip__text">Si estás entre dos talles, elegí el talle mayor</span>
           </li>
-          <li class="guia-talles-page__tip-item">
-            <svg class="guia-talles-page__check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <li class="size-guide-tip">
+            <svg class="size-guide-tip__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>
-            <span class="guia-talles-page__tip-text">¿Tenés dudas? ¡Contactanos y te ayudamos a elegir!</span>
+            <span class="size-guide-tip__text">¿Tenés dudas? ¡Contactanos y te ayudamos a elegir!</span>
           </li>
         </ul>
       </div>
     </div>
 
-    {%- comment %} CTA {%- endcomment -%}
-    <div class="guia-talles-page__cta">
-      <h3 class="guia-talles-page__cta-title">¿Dudas sobre talles?</h3>
-      <p class="guia-talles-page__cta-text">
-        ¡Nuestro equipo puede ayudarte a elegir el talle ideal! Contactanos por WhatsApp.
-      </p>
-      <a
-        href="https://wa.me/5511999999999?text=Olá!%20Preciso%20de%20ajuda%20com%20os%20tamanhos"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="guia-talles-page__cta-btn"
-      >
-        <svg class="guia-talles-page__whatsapp-icon" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-        </svg>
-        Hablar por WhatsApp
-      </a>
+    {%- comment %} WhatsApp CTA {%- endcomment -%}
+    <div class="size-guide-cta">
+      <div class="size-guide-cta__content">
+        <h3 class="size-guide-cta__title">¿Dudas sobre talles?</h3>
+        <p class="size-guide-cta__text">
+          ¡Nuestro equipo puede ayudarte a elegir el talle ideal! Contactanos por WhatsApp.
+        </p>
+        <a
+          href="https://wa.me/5511999999999?text=Hola!%20Necesito%20ayuda%20con%20los%20talles"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="size-guide-cta__button"
+        >
+          <svg class="size-guide-cta__icon" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+          </svg>
+          Hablar por WhatsApp
+        </a>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-.guia-talles-page-section {
-  background: #000;
+/* ============================================
+   MODERN SIZE GUIDE - MOBILE FIRST
+   ============================================ */
+
+/* Base Section */
+.size-guide-page {
   min-height: 100vh;
-  padding: 1.5rem 0 3rem;
+  background: #000000;
+  padding: 24px 0 48px;
 }
 
-.guia-talles-page__container {
+.size-guide-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 0 16px;
 }
 
-/* Header */
-.guia-talles-page__header {
-  margin-bottom: 2rem;
+/* ============================================
+   HEADER
+   ============================================ */
+.size-guide-header {
+  margin-bottom: 32px;
+  text-align: center;
 }
 
-.guia-talles-page__header-wrapper {
+.size-guide-header__content {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 
-.guia-talles-page__icon {
-  color: #D4FF00;
-  width: 2rem;
-  height: 2rem;
+.size-guide-header__icon-wrapper {
   flex-shrink: 0;
 }
 
-.guia-talles-page__title {
-  font-size: 1.875rem;
+.size-guide-header__icon {
+  width: 32px;
+  height: 32px;
+  color: #DAF10D;
+  stroke-width: 2.5;
+}
+
+.size-guide-header__title {
+  font-size: 28px;
   font-weight: 900;
-  color: #fff;
+  color: #FFFFFF;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
+  line-height: 1.1;
 }
 
-.guia-talles-page__subtitle {
-  font-size: 1rem;
+.size-guide-header__subtitle {
+  font-size: 16px;
   color: rgba(255, 255, 255, 0.6);
   margin: 0;
+  line-height: 1.5;
 }
 
-/* Table */
-.guia-talles-page__table-wrapper {
-  margin-bottom: 2rem;
+/* ============================================
+   SIZE TABLE
+   ============================================ */
+.size-guide-table-section {
+  margin-bottom: 32px;
 }
 
-.guia-talles-page__table-container {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-  backdrop-filter: blur(0.25rem);
-  border-radius: 0.75rem;
+.size-guide-table-wrapper {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(218, 241, 13, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
-.guia-talles-page__table-scroll {
+.size-guide-table-scroll {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
-.guia-talles-page__table {
+.size-guide-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.guia-talles-page__table-header-row {
-  background: rgba(212, 255, 0, 0.2);
-  border-bottom: 1px solid rgba(212, 255, 0, 0.3);
+.size-guide-table__header-row {
+  background: linear-gradient(90deg, rgba(218, 241, 13, 0.15) 0%, rgba(218, 241, 13, 0.08) 100%);
+  border-bottom: 2px solid rgba(218, 241, 13, 0.3);
 }
 
-.guia-talles-page__table-header {
-  padding: 1rem;
+.size-guide-table__header {
+  padding: 16px 12px;
   text-align: left;
-  color: #D4FF00;
+  color: #DAF10D;
   font-weight: 900;
-  font-size: 0.875rem;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 }
 
-.guia-talles-page__table-row {
+.size-guide-table__row {
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  transition: background-color 0.3s ease;
+  transition: all 0.2s ease;
 }
 
-.guia-talles-page__table-row:hover {
-  background: rgba(255, 255, 255, 0.05);
+.size-guide-table__row:last-child {
+  border-bottom: none;
 }
 
-.guia-talles-page__table-cell {
-  padding: 0.75rem 1rem;
+.size-guide-table__row:hover {
+  background: rgba(218, 241, 13, 0.05);
+  transform: scale(1.01);
+}
+
+.size-guide-table__cell {
+  padding: 14px 12px;
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.875rem;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
-.guia-talles-page__table-cell--primary {
-  color: #fff;
-  font-weight: 700;
+.size-guide-table__cell--size {
+  color: #DAF10D;
+  font-weight: 900;
+  font-size: 18px;
 }
 
-/* Info Grid */
-.guia-talles-page__info-grid {
+/* ============================================
+   INFO GRID
+   ============================================ */
+.size-guide-info-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 24px;
+  margin-bottom: 32px;
 }
 
-.guia-talles-page__info-card {
-  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-  backdrop-filter: blur(0.25rem);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
+.size-guide-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 24px;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
-.guia-talles-page__info-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 1.5rem 0;
+.size-guide-card__header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.guia-talles-page__info-icon {
-  color: #D4FF00;
-  width: 1.5rem;
-  height: 1.5rem;
+.size-guide-card__icon {
+  width: 24px;
+  height: 24px;
+  color: #DAF10D;
   flex-shrink: 0;
+  stroke-width: 2.5;
 }
 
-/* Steps List */
-.guia-talles-page__steps-list {
+.size-guide-card__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ============================================
+   STEPS LIST
+   ============================================ */
+.size-guide-steps {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 }
 
-.guia-talles-page__step-item {
+.size-guide-step {
   display: flex;
-  gap: 0.75rem;
+  gap: 12px;
   align-items: flex-start;
 }
 
-.guia-talles-page__step-number {
+.size-guide-step__number {
   flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
-  background: #D4FF00;
-  color: #000;
-  font-weight: 700;
-  font-size: 0.875rem;
+  background: linear-gradient(135deg, #DAF10D 0%, #FAFF00 100%);
+  color: #000000;
+  font-weight: 900;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 12px rgba(218, 241, 13, 0.3);
 }
 
-.guia-talles-page__step-text {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.875rem;
-  line-height: 1.5;
+.size-guide-step__content {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  line-height: 1.6;
+  padding-top: 4px;
 }
 
-/* Tips List */
-.guia-talles-page__tips-list {
+.size-guide-step__content strong {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ============================================
+   TIPS LIST
+   ============================================ */
+.size-guide-tips {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 16px;
 }
 
-.guia-talles-page__tip-item {
+.size-guide-tip {
   display: flex;
-  gap: 0.75rem;
+  gap: 12px;
   align-items: flex-start;
 }
 
-.guia-talles-page__check-icon {
-  color: #D4FF00;
-  width: 1.25rem;
-  height: 1.25rem;
+.size-guide-tip__check {
+  width: 20px;
+  height: 20px;
+  color: #DAF10D;
   flex-shrink: 0;
-  margin-top: 0.125rem;
+  margin-top: 2px;
+  stroke-width: 2.5;
 }
 
-.guia-talles-page__tip-text {
+.size-guide-tip__text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+.size-guide-cta {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.12) 0%, rgba(234, 255, 0, 0.08) 100%);
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+.size-guide-cta__content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.size-guide-cta__title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.size-guide-cta__text {
   color: rgba(255, 255, 255, 0.8);
-  font-size: 0.875rem;
-  line-height: 1.5;
+  margin: 0 0 24px 0;
+  line-height: 1.6;
+  font-size: 15px;
 }
 
-/* CTA */
-.guia-talles-page__cta {
-  background: linear-gradient(to right, rgba(212, 255, 0, 0.1), rgba(234, 255, 0, 0.1));
-  border: 1px solid rgba(212, 255, 0, 0.3);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-}
-
-.guia-talles-page__cta-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 1rem 0;
-}
-
-.guia-talles-page__cta-text {
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 1.5rem 0;
-  line-height: 1.5;
-}
-
-.guia-talles-page__cta-btn {
+.size-guide-cta__button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  background: #D4FF00;
-  color: #000;
-  font-weight: 700;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  gap: 10px;
+  background: linear-gradient(135deg, #DAF10D 0%, #FAFF00 100%);
+  color: #000000;
+  font-weight: 900;
+  font-size: 16px;
+  padding: 14px 32px;
+  border-radius: 12px;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(218, 241, 13, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
-.guia-talles-page__cta-btn:hover {
-  background: #e5ff33;
+.size-guide-cta__button:hover {
+  background: linear-gradient(135deg, #FAFF00 0%, #DAF10D 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(218, 241, 13, 0.6);
 }
 
-.guia-talles-page__whatsapp-icon {
-  width: 1.25rem;
-  height: 1.25rem;
+.size-guide-cta__icon {
+  width: 20px;
+  height: 20px;
 }
 
-/* Responsive */
+/* ============================================
+   TABLET RESPONSIVE (768px+)
+   ============================================ */
 @media (min-width: 768px) {
-  .guia-talles-page-section {
-    padding: 2rem 0 3rem;
+  .size-guide-page {
+    padding: 48px 0 64px;
   }
 
-  .guia-talles-page__header {
-    margin-bottom: 3rem;
+  .size-guide-container {
+    padding: 0 32px;
   }
 
-  .guia-talles-page__icon {
-    width: 2.5rem;
-    height: 2.5rem;
+  .size-guide-header {
+    margin-bottom: 48px;
   }
 
-  .guia-talles-page__title {
-    font-size: 3rem;
+  .size-guide-header__icon {
+    width: 40px;
+    height: 40px;
   }
 
-  .guia-talles-page__subtitle {
-    font-size: 1.125rem;
+  .size-guide-header__title {
+    font-size: 48px;
   }
 
-  .guia-talles-page__table-header,
-  .guia-talles-page__table-cell {
-    font-size: 1rem;
+  .size-guide-header__subtitle {
+    font-size: 18px;
   }
 
-  .guia-talles-page__info-grid {
+  .size-guide-table-section {
+    margin-bottom: 48px;
+  }
+
+  .size-guide-table__header {
+    padding: 20px 16px;
+    font-size: 14px;
+  }
+
+  .size-guide-table__cell {
+    padding: 18px 16px;
+    font-size: 16px;
+  }
+
+  .size-guide-table__cell--size {
+    font-size: 20px;
+  }
+
+  .size-guide-info-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 48px;
   }
 
-  .guia-talles-page__info-card {
-    padding: 2rem;
+  .size-guide-card {
+    padding: 32px;
   }
 
-  .guia-talles-page__step-text,
-  .guia-talles-page__tip-text {
-    font-size: 1rem;
+  .size-guide-card__title {
+    font-size: 22px;
   }
 
-  .guia-talles-page__cta {
-    padding: 2rem;
+  .size-guide-step__content,
+  .size-guide-tip__text {
+    font-size: 15px;
+  }
+
+  .size-guide-cta {
+    padding: 48px 40px;
+  }
+
+  .size-guide-cta__title {
+    font-size: 28px;
+  }
+
+  .size-guide-cta__text {
+    font-size: 16px;
+  }
+
+  .size-guide-cta__button {
+    font-size: 17px;
+    padding: 16px 40px;
   }
 }
 
-@media (min-width: 640px) {
-  .guia-talles-page__step-text,
-  .guia-talles-page__tip-text {
-    font-size: 0.9375rem;
+/* ============================================
+   DESKTOP RESPONSIVE (1024px+)
+   ============================================ */
+@media (min-width: 1024px) {
+  .size-guide-header__icon {
+    width: 48px;
+    height: 48px;
   }
+
+  .size-guide-header__title {
+    font-size: 56px;
+  }
+
+  .size-guide-card__icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .size-guide-card__title {
+    font-size: 24px;
+  }
+
+  .size-guide-step__number {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .size-guide-step__content,
+  .size-guide-tip__text {
+    font-size: 16px;
+  }
+
+  .size-guide-cta__title {
+    font-size: 32px;
+  }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.size-guide-header,
+.size-guide-table-section,
+.size-guide-card,
+.size-guide-cta {
+  animation: fadeIn 0.6s ease-out backwards;
+}
+
+.size-guide-table-section {
+  animation-delay: 0.1s;
+}
+
+.size-guide-card:first-child {
+  animation-delay: 0.2s;
+}
+
+.size-guide-card:last-child {
+  animation-delay: 0.3s;
+}
+
+.size-guide-cta {
+  animation-delay: 0.4s;
 }
 </style>
 
 {% schema %}
 {
-  "name": "Guía de Talles Page",
+  "name": "Guía de Talles",
   "settings": [],
   "presets": [
     {
-      "name": "Guía de Talles Page"
+      "name": "Guía de Talles"
     }
   ]
 }
