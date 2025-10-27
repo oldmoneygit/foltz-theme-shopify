@@ -4,55 +4,66 @@
 {%- endcomment -%}
 
 <section class="hero">
-  <!-- Background Image - Desktop -->
-  <div class="hero-background hero-background-desktop">
-    {%- if section.settings.background_image_desktop -%}
-      <img
-        src="{{ section.settings.background_image_desktop | img_url: '1536x' }}"
-        srcset="
-          {{ section.settings.background_image_desktop | img_url: '1024x' }} 1024w,
-          {{ section.settings.background_image_desktop | img_url: '1536x' }} 1536w,
-          {{ section.settings.background_image_desktop | img_url: '2048x' }} 2048w
-        "
-        sizes="100vw"
-        alt="{{ section.settings.title | escape }}"
-        loading="eager"
-      >
-    {%- else -%}
-      <img
-        src="{{ 'hero-placeholder.jpg' | asset_url }}"
-        alt="Hero Desktop"
-        loading="eager"
-      >
-    {%- endif -%}
-  </div>
+  <!-- Background Image - Responsive Picture Tag -->
+  <div class="hero-background">
+    {%- if section.settings.background_image_mobile or section.settings.background_image_desktop -%}
+      <picture>
+        {%- comment -%} Mobile image (for screens up to 749px) {%- endcomment -%}
+        {%- if section.settings.background_image_mobile -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ section.settings.background_image_mobile | img_url: '375x' }} 375w,
+              {{ section.settings.background_image_mobile | img_url: '550x' }} 550w,
+              {{ section.settings.background_image_mobile | img_url: '750x' }} 750w
+            "
+            sizes="100vw"
+          >
+        {%- endif -%}
 
-  <!-- Background Image - Mobile -->
-  <div class="hero-background hero-background-mobile">
-    {%- if section.settings.background_image_mobile -%}
-      <img
-        src="{{ section.settings.background_image_mobile | img_url: '800x' }}"
-        srcset="
-          {{ section.settings.background_image_mobile | img_url: '640x' }} 640w,
-          {{ section.settings.background_image_mobile | img_url: '800x' }} 800w,
-          {{ section.settings.background_image_mobile | img_url: '1024x' }} 1024w
-        "
-        sizes="100vw"
-        alt="{{ section.settings.title | escape }}"
-        loading="eager"
-      >
-    {%- elsif section.settings.background_image_desktop -%}
-      {%- comment -%} Fallback to desktop image if mobile not set {%- endcomment -%}
-      <img
-        src="{{ section.settings.background_image_desktop | img_url: '800x' }}"
-        alt="{{ section.settings.title | escape }}"
-        loading="eager"
-      >
+        {%- comment -%} Tablet image (for screens 750px to 989px) {%- endcomment -%}
+        {%- if section.settings.background_image_desktop -%}
+          <source
+            media="(min-width: 750px) and (max-width: 989px)"
+            srcset="
+              {{ section.settings.background_image_desktop | img_url: '750x' }} 750w,
+              {{ section.settings.background_image_desktop | img_url: '990x' }} 990w
+            "
+            sizes="100vw"
+          >
+        {%- endif -%}
+
+        {%- comment -%} Desktop image (for screens 990px and up) {%- endcomment -%}
+        {%- if section.settings.background_image_desktop -%}
+          <source
+            media="(min-width: 990px)"
+            srcset="
+              {{ section.settings.background_image_desktop | img_url: '1100x' }} 1100w,
+              {{ section.settings.background_image_desktop | img_url: '1500x' }} 1500w,
+              {{ section.settings.background_image_desktop | img_url: '1780x' }} 1780w,
+              {{ section.settings.background_image_desktop | img_url: '2000x' }} 2000w,
+              {{ section.settings.background_image_desktop | img_url: '3000x' }} 3000w
+            "
+            sizes="100vw"
+          >
+        {%- endif -%}
+
+        {%- comment -%} Fallback image {%- endcomment -%}
+        <img
+          src="{{ section.settings.background_image_desktop | default: section.settings.background_image_mobile | img_url: '1500x' }}"
+          alt="{{ section.settings.title | escape }}"
+          loading="eager"
+          width="100%"
+          height="auto"
+        >
+      </picture>
     {%- else -%}
       <img
         src="{{ 'hero-placeholder.jpg' | asset_url }}"
-        alt="Hero Mobile"
+        alt="Hero"
         loading="eager"
+        width="100%"
+        height="auto"
       >
     {%- endif -%}
   </div>
