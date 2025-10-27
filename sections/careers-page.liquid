@@ -1,1 +1,916 @@
-<section style="background:#000;min-height:100vh;padding:2rem 1rem;color:#fff"><div style="max-width:1280px;margin:0 auto"><h1 style="font-size:3rem;font-weight:900;margin-bottom:1rem;text-align:center">Trabaja con Nosotros</h1><p style="color:rgba(255,255,255,0.8);font-size:1.25rem;margin-bottom:3rem;text-align:center">Únete a un equipo apasionado por el fútbol</p><h2 style="font-size:2rem;font-weight:900;text-align:center;margin-bottom:2rem">Posiciones Abiertas</h2><div style="margin-bottom:3rem"><div style="background:rgba(255,255,255,0.05);border-radius:1rem;padding:2rem;margin-bottom:1rem"><h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">Especialista en Atención al Cliente</h3><p style="color:#D4FF00;margin-bottom:1rem">Tiempo Completo - Buenos Aires</p><p style="color:rgba(255,255,255,0.7)">Buscamos persona apasionada por servicio al cliente</p></div><div style="background:rgba(255,255,255,0.05);border-radius:1rem;padding:2rem;margin-bottom:1rem"><h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">Gestor de Redes Sociales</h3><p style="color:#D4FF00;margin-bottom:1rem">Tiempo Completo - Remoto</p><p style="color:rgba(255,255,255,0.7)">Creador de contenido para redes sociales</p></div><div style="background:rgba(255,255,255,0.05);border-radius:1rem;padding:2rem"><h3 style="font-size:1.5rem;font-weight:700;margin-bottom:1rem">Coordinador de Logística</h3><p style="color:#D4FF00;margin-bottom:1rem">Tiempo Completo - Buenos Aires</p><p style="color:rgba(255,255,255,0.7)">Garantizar entregas a tiempo en Argentina</p></div></div><div style="max-width:48rem;margin:0 auto;background:rgba(255,255,255,0.05);border-radius:1rem;padding:3rem"><h2 style="font-size:2rem;font-weight:900;text-align:center;margin-bottom:2rem">Aplica Ahora</h2>{% form 'contact' %}<div style="margin-bottom:1.5rem"><label style="display:block;color:#fff;font-weight:700;margin-bottom:0.5rem">Nombre *</label><input type="text" name="contact[name]" required style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff"></div><div style="margin-bottom:1.5rem"><label style="display:block;color:#fff;font-weight:700;margin-bottom:0.5rem">Email *</label><input type="email" name="contact[email]" required style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff"></div><div style="margin-bottom:1.5rem"><label style="display:block;color:#fff;font-weight:700;margin-bottom:0.5rem">Posición *</label><select name="contact[position]" required style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff"><option>Atención al Cliente</option><option>Redes Sociales</option><option>Logística</option></select></div><div style="margin-bottom:1.5rem"><label style="display:block;color:#fff;font-weight:700;margin-bottom:0.5rem">Mensaje</label><textarea name="contact[body]" rows="5" style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff;resize:none"></textarea></div><button type="submit" style="width:100%;background:#D4FF00;color:#000;padding:1rem;border-radius:0.5rem;font-weight:900;text-transform:uppercase;border:none;cursor:pointer">Enviar Aplicación</button>{% endform %}</div></div></section>{% schema %}{"name":"Careers","settings":[],"presets":[{"name":"Careers"}]}{% endschema %}
+{% comment %}
+  Careers Page
+  Modern design with pulse animations and gradient effects
+{% endcomment %}
+
+<section class="careers-page" data-section-id="{{ section.id }}">
+  <div class="careers-page__container">
+
+    <!-- Hero Section -->
+    <div class="careers-page__hero">
+      <div class="careers-page__hero-icon-wrapper">
+        <svg class="careers-page__hero-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+        </svg>
+      </div>
+      <h1 class="careers-page__title">
+        Trabaja con <span class="careers-page__title-highlight">Nosotros</span>
+      </h1>
+      <p class="careers-page__subtitle">
+        Únete a un equipo apasionado por el fútbol y la excelencia
+      </p>
+    </div>
+
+    <!-- Why Join Us Section -->
+    <div class="careers-page__why-join">
+      <h2 class="careers-page__section-title">
+        ¿Por qué <span class="careers-page__section-title-highlight">Foltz Fanwear?</span>
+      </h2>
+
+      <!-- Benefits Grid -->
+      <div class="careers-page__benefits-grid">
+        <div class="careers-page__benefit-card">
+          <div class="careers-page__benefit-icon-wrapper">
+            <svg class="careers-page__benefit-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </div>
+          <h3 class="careers-page__benefit-title">Crecimiento Profesional</h3>
+          <p class="careers-page__benefit-text">
+            Oportunidades de desarrollo y capacitación continua
+          </p>
+        </div>
+
+        <div class="careers-page__benefit-card">
+          <div class="careers-page__benefit-icon-wrapper">
+            <svg class="careers-page__benefit-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="careers-page__benefit-title">Ambiente Colaborativo</h3>
+          <p class="careers-page__benefit-text">
+            Equipo joven, dinámico y apasionado por el fútbol
+          </p>
+        </div>
+
+        <div class="careers-page__benefit-card">
+          <div class="careers-page__benefit-icon-wrapper">
+            <svg class="careers-page__benefit-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <h3 class="careers-page__benefit-title">Beneficios Competitivos</h3>
+          <p class="careers-page__benefit-text">
+            Salario competitivo, descuentos en productos y más
+          </p>
+        </div>
+      </div>
+
+      <!-- Culture Section -->
+      <div class="careers-page__culture-box">
+        <h3 class="careers-page__culture-title">Nuestra Cultura</h3>
+        <p class="careers-page__culture-text">
+          En Foltz Fanwear, creemos que trabajar debe ser tan emocionante como ver un partido de fútbol.
+          Nuestro equipo está compuesto por personas apasionadas que aman lo que hacen y comparten
+          valores de excelencia, colaboración e innovación.
+        </p>
+        <p class="careers-page__culture-text">
+          Valoramos la creatividad, la iniciativa y el espíritu de equipo. Si te apasiona el fútbol
+          y quieres ser parte de una empresa en crecimiento, este es tu lugar.
+        </p>
+      </div>
+    </div>
+
+    <!-- Open Positions Section -->
+    <div class="careers-page__positions">
+      <h2 class="careers-page__section-title">
+        Posiciones <span class="careers-page__section-title-highlight">Abiertas</span>
+      </h2>
+
+      <div class="careers-page__positions-list">
+        <!-- Position 1 -->
+        <div class="careers-page__position-card">
+          <div class="careers-page__position-header">
+            <h3 class="careers-page__position-title">
+              <svg class="careers-page__position-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <polyline points="16 11 18 13 22 9"></polyline>
+              </svg>
+              Especialista en Atención al Cliente
+            </h3>
+            <div class="careers-page__position-meta">
+              <span class="careers-page__position-type">Tiempo Completo</span>
+              <span class="careers-page__position-separator">•</span>
+              <span class="careers-page__position-location">Buenos Aires, Argentina</span>
+            </div>
+          </div>
+          <p class="careers-page__position-desc">
+            Buscamos una persona apasionada por el servicio al cliente para unirse a nuestro equipo. Serás responsable de ayudar a nuestros clientes con sus consultas y pedidos.
+          </p>
+          <a href="#aplicar" class="careers-page__position-link">
+            Aplicar ahora →
+          </a>
+        </div>
+
+        <!-- Position 2 -->
+        <div class="careers-page__position-card">
+          <div class="careers-page__position-header">
+            <h3 class="careers-page__position-title">
+              <svg class="careers-page__position-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+              Gestor de Redes Sociales
+            </h3>
+            <div class="careers-page__position-meta">
+              <span class="careers-page__position-type">Tiempo Completo</span>
+              <span class="careers-page__position-separator">•</span>
+              <span class="careers-page__position-location">Remoto</span>
+            </div>
+          </div>
+          <p class="careers-page__position-desc">
+            Estamos buscando un creador de contenido creativo para gestionar nuestras redes sociales y conectar con nuestra comunidad de aficionados al fútbol.
+          </p>
+          <a href="#aplicar" class="careers-page__position-link">
+            Aplicar ahora →
+          </a>
+        </div>
+
+        <!-- Position 3 -->
+        <div class="careers-page__position-card">
+          <div class="careers-page__position-header">
+            <h3 class="careers-page__position-title">
+              <svg class="careers-page__position-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13"></rect>
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                <circle cx="18.5" cy="18.5" r="2.5"></circle>
+              </svg>
+              Coordinador de Logística
+            </h3>
+            <div class="careers-page__position-meta">
+              <span class="careers-page__position-type">Tiempo Completo</span>
+              <span class="careers-page__position-separator">•</span>
+              <span class="careers-page__position-location">Buenos Aires, Argentina</span>
+            </div>
+          </div>
+          <p class="careers-page__position-desc">
+            Únete a nuestro equipo de logística para garantizar que los pedidos lleguen a tiempo a nuestros clientes en toda Argentina.
+          </p>
+          <a href="#aplicar" class="careers-page__position-link">
+            Aplicar ahora →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Form Section -->
+    <div id="aplicar" class="careers-page__form-wrapper">
+      <div class="careers-page__form-box">
+        <div class="careers-page__form-header">
+          <h2 class="careers-page__form-title">
+            Aplica <span class="careers-page__title-highlight">Ahora</span>
+          </h2>
+          <p class="careers-page__form-subtitle">
+            Completa el formulario y adjunta tu CV. Nos pondremos en contacto contigo pronto.
+          </p>
+        </div>
+
+        {% if form.posted_successfully? %}
+          <div class="careers-page__success-message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <p>¡Aplicación enviada con éxito! Nos pondremos en contacto pronto.</p>
+          </div>
+        {% endif %}
+
+        {% form 'contact' %}
+          <div class="careers-page__form-grid">
+            <div class="careers-page__form-group">
+              <label for="contact-name" class="careers-page__label">
+                Nombre Completo *
+              </label>
+              <input
+                type="text"
+                id="contact-name"
+                name="contact[name]"
+                class="careers-page__input"
+                placeholder="Juan Pérez"
+                required
+              />
+            </div>
+
+            <div class="careers-page__form-group">
+              <label for="contact-email" class="careers-page__label">
+                Email *
+              </label>
+              <input
+                type="email"
+                id="contact-email"
+                name="contact[email]"
+                class="careers-page__input"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="careers-page__form-grid">
+            <div class="careers-page__form-group">
+              <label for="contact-phone" class="careers-page__label">
+                Teléfono *
+              </label>
+              <input
+                type="tel"
+                id="contact-phone"
+                name="contact[phone]"
+                class="careers-page__input"
+                placeholder="+54 9 11 1234-5678"
+                required
+              />
+            </div>
+
+            <div class="careers-page__form-group">
+              <label for="contact-position" class="careers-page__label">
+                Posición de Interés *
+              </label>
+              <select
+                id="contact-position"
+                name="contact[position]"
+                class="careers-page__select"
+                required
+              >
+                <option value="">Selecciona una posición</option>
+                <option value="Especialista en Atención al Cliente">Especialista en Atención al Cliente</option>
+                <option value="Gestor de Redes Sociales">Gestor de Redes Sociales</option>
+                <option value="Coordinador de Logística">Coordinador de Logística</option>
+                <option value="Otra posición">Otra posición</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="careers-page__form-group">
+            <label for="contact-message" class="careers-page__label">
+              Mensaje / Carta de Presentación
+            </label>
+            <textarea
+              id="contact-message"
+              name="contact[body]"
+              class="careers-page__textarea"
+              rows="6"
+              placeholder="Cuéntanos por qué quieres unirte a nuestro equipo..."
+            ></textarea>
+            <p class="careers-page__cv-note">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              Por favor, adjunta tu CV en formato PDF en el mensaje o envíalo a <a href="mailto:careers@foltz.com.ar" class="careers-page__email-link">careers@foltz.com.ar</a>
+            </p>
+          </div>
+
+          <button type="submit" class="careers-page__submit-btn">
+            <svg class="careers-page__submit-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+            Enviar Aplicación
+          </button>
+
+          <p class="careers-page__privacy-note">
+            Al enviar este formulario, aceptas que tus datos sean procesados de acuerdo con nuestra
+            <a href="/pages/privacidade" class="careers-page__privacy-link">Política de Privacidad</a>.
+          </p>
+        {% endform %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+/* Base Section */
+.careers-page {
+  background: #000;
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.careers-page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.careers-page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.careers-page__hero {
+  padding: 2rem 0;
+  text-align: center;
+  max-width: 64rem;
+  margin: 0 auto 3rem;
+}
+
+@media (min-width: 768px) {
+  .careers-page__hero {
+    padding: 3rem 0 2rem;
+  }
+}
+
+.careers-page__hero-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(250, 255, 0, 0.1));
+  margin-bottom: 1.5rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 241, 13, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(218, 241, 13, 0);
+  }
+}
+
+.careers-page__hero-icon {
+  color: #DAF10D;
+}
+
+.careers-page__title {
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .careers-page__title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .careers-page__title {
+    font-size: 3.75rem;
+  }
+}
+
+.careers-page__title-highlight {
+  color: #DAF10D;
+}
+
+.careers-page__subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__subtitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .careers-page__subtitle {
+    font-size: 1.5rem;
+  }
+}
+
+/* Why Join Section */
+.careers-page__why-join {
+  max-width: 72rem;
+  margin: 0 auto 4rem;
+  padding: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__why-join {
+    padding: 3rem 0;
+  }
+}
+
+.careers-page__section-title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 2.5rem 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__section-title {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .careers-page__section-title {
+    font-size: 2.5rem;
+  }
+}
+
+.careers-page__section-title-highlight {
+  color: #DAF10D;
+}
+
+/* Benefits Grid */
+.careers-page__benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .careers-page__benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .careers-page__benefits-grid {
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+}
+
+.careers-page__benefit-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.careers-page__benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(218, 241, 13, 0.3);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.careers-page__benefit-icon-wrapper {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(250, 255, 0, 0.1));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  transition: all 0.3s ease;
+}
+
+.careers-page__benefit-card:hover .careers-page__benefit-icon-wrapper {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(218, 241, 13, 0.4);
+}
+
+.careers-page__benefit-icon {
+  color: #DAF10D;
+}
+
+.careers-page__benefit-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+}
+
+.careers-page__benefit-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Culture Box */
+.careers-page__culture-box {
+  background: linear-gradient(to bottom right, rgba(218, 241, 13, 0.1), rgba(234, 255, 0, 0.05));
+  border: 1px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.careers-page__culture-box:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 12px 24px rgba(218, 241, 13, 0.2);
+}
+
+@media (min-width: 768px) {
+  .careers-page__culture-box {
+    padding: 3rem;
+  }
+}
+
+.careers-page__culture-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #DAF10D;
+  margin: 0 0 1rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.careers-page__culture-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin: 0 0 1rem 0;
+}
+
+.careers-page__culture-text:last-child {
+  margin-bottom: 0;
+}
+
+/* Positions Section */
+.careers-page__positions {
+  max-width: 72rem;
+  margin: 0 auto 4rem;
+  padding: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__positions {
+    padding: 3rem 0;
+  }
+}
+
+.careers-page__positions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.careers-page__position-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s ease;
+}
+
+.careers-page__position-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .careers-page__position-card {
+    padding: 2rem;
+  }
+}
+
+.careers-page__position-header {
+  margin-bottom: 1rem;
+}
+
+.careers-page__position-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .careers-page__position-title {
+    font-size: 1.5rem;
+  }
+}
+
+.careers-page__position-icon {
+  color: #DAF10D;
+  flex-shrink: 0;
+}
+
+.careers-page__position-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.careers-page__position-type {
+  color: #DAF10D;
+  font-weight: 600;
+}
+
+.careers-page__position-separator {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.careers-page__position-location {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.careers-page__position-desc {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+.careers-page__position-link {
+  color: #DAF10D;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.careers-page__position-link:hover {
+  color: #FAFF00;
+  transform: translateX(4px);
+}
+
+/* Form Section */
+.careers-page__form-wrapper {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__form-wrapper {
+    padding: 3rem 0;
+  }
+}
+
+.careers-page__form-box {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+}
+
+@media (min-width: 640px) {
+  .careers-page__form-box {
+    padding: 3rem;
+  }
+}
+
+.careers-page__form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.careers-page__form-title {
+  font-size: 1.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin: 0 0 1rem 0;
+}
+
+@media (min-width: 768px) {
+  .careers-page__form-title {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .careers-page__form-title {
+    font-size: 2.5rem;
+  }
+}
+
+.careers-page__form-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+.careers-page__success-message {
+  background: linear-gradient(to right, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 0.75rem;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.careers-page__success-message svg {
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.careers-page__success-message p {
+  color: #10B981;
+  font-weight: 600;
+  margin: 0;
+}
+
+.careers-page__form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .careers-page__form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.careers-page__form-group {
+  margin-bottom: 1.5rem;
+}
+
+.careers-page__label {
+  display: block;
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.careers-page__input,
+.careers-page__select,
+.careers-page__textarea {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 0.9375rem;
+  transition: all 0.3s ease;
+}
+
+.careers-page__input::placeholder,
+.careers-page__textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.careers-page__input:focus,
+.careers-page__select:focus,
+.careers-page__textarea:focus {
+  outline: none;
+  border-color: #DAF10D;
+  box-shadow: 0 0 0 4px rgba(218, 241, 13, 0.1);
+}
+
+.careers-page__select {
+  cursor: pointer;
+}
+
+.careers-page__select option {
+  background: #000;
+  color: #fff;
+}
+
+.careers-page__textarea {
+  resize: vertical;
+  min-height: 150px;
+}
+
+.careers-page__cv-note {
+  margin-top: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  line-height: 1.5;
+}
+
+.careers-page__cv-note svg {
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.careers-page__email-link {
+  color: #DAF10D;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.careers-page__email-link:hover {
+  color: #FAFF00;
+}
+
+.careers-page__submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 900;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(218, 241, 13, 0.3);
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .careers-page__submit-btn {
+    font-size: 1.125rem;
+  }
+}
+
+.careers-page__submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(218, 241, 13, 0.4);
+}
+
+.careers-page__submit-btn:active {
+  transform: translateY(0);
+}
+
+.careers-page__submit-icon {
+  flex-shrink: 0;
+}
+
+.careers-page__privacy-note {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.careers-page__privacy-link {
+  color: rgba(218, 241, 13, 0.7);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.careers-page__privacy-link:hover {
+  color: #DAF10D;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Careers",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Careers"
+    }
+  ]
+}
+{% endschema %}
