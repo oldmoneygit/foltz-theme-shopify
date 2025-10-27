@@ -11,6 +11,40 @@
           </h1>
         </div>
 
+        {%- comment %} Urgency & Scarcity Banner {%- endcomment -%}
+        <div class="urgency-banner">
+          <div class="urgency-banner__main">
+            <div class="urgency-banner__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="urgency-banner__content">
+              <p class="urgency-banner__title">🔥 ¡PROMOCIÓN 3x1 TERMINANDO!</p>
+              <p class="urgency-banner__timer">
+                Tiempo restante: <span id="urgency-timer">--:--:--</span>
+              </p>
+            </div>
+          </div>
+          <div class="urgency-banner__demand">
+            <div class="urgency-banner__demand-indicator">
+              <div class="urgency-banner__demand-bar"></div>
+            </div>
+            <p class="urgency-banner__demand-text">
+              <span class="urgency-banner__demand-icon">👥</span>
+              <span id="demand-viewers">12</span> personas están viendo esto ahora
+            </p>
+          </div>
+          <div class="urgency-banner__stock">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Solo quedan <strong id="stock-count">7</strong> unidades en stock</span>
+          </div>
+        </div>
+
       {%- when 'price' -%}
         <div class="product-info__promo-banner" {{ block.shopify_attributes }}>
           <img
@@ -487,4 +521,312 @@
       padding: 16px !important;
     }
   }
+
+  /* ========================================
+     URGENCY & SCARCITY BANNER
+     ======================================== */
+  .urgency-banner {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+    border: 2px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 12px 0;
+    animation: urgencyPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes urgencyPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 20px 0 rgba(239, 68, 68, 0.2);
+    }
+  }
+
+  .urgency-banner__main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .urgency-banner__icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #EF4444, #DC2626);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    animation: urgencyIconSpin 3s linear infinite;
+  }
+
+  @keyframes urgencyIconSpin {
+    0%, 90% {
+      transform: rotate(0deg);
+    }
+    95% {
+      transform: rotate(10deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+
+  .urgency-banner__icon svg {
+    color: #FFFFFF;
+  }
+
+  .urgency-banner__content {
+    flex: 1;
+  }
+
+  .urgency-banner__title {
+    font-size: 0.875rem;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0 0 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (min-width: 768px) {
+    .urgency-banner__title {
+      font-size: 1rem;
+    }
+  }
+
+  .urgency-banner__timer {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .urgency-banner__timer span {
+    color: #DAF10D;
+    font-weight: 900;
+    font-size: 0.875rem;
+    font-family: monospace;
+  }
+
+  .urgency-banner__demand {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+
+  .urgency-banner__demand-indicator {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .urgency-banner__demand-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #DAF10D, #FAFF00);
+    width: 75%;
+    border-radius: 2px;
+    animation: demandPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes demandPulse {
+    0%, 100% {
+      width: 75%;
+    }
+    50% {
+      width: 85%;
+    }
+  }
+
+  .urgency-banner__demand-text {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+
+  .urgency-banner__demand-icon {
+    font-size: 1rem;
+  }
+
+  .urgency-banner__demand-text span:not(.urgency-banner__demand-icon) {
+    color: #DAF10D;
+    font-weight: 900;
+  }
+
+  .urgency-banner__stock {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    .urgency-banner__stock {
+      font-size: 0.8125rem;
+    }
+  }
+
+  .urgency-banner__stock svg {
+    color: #10B981;
+    flex-shrink: 0;
+  }
+
+  .urgency-banner__stock strong {
+    color: #DAF10D;
+    font-weight: 900;
+  }
+
+  /* Mobile adjustments */
+  @media screen and (max-width: 749px) {
+    .urgency-banner {
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .urgency-banner__main {
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .urgency-banner__icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .urgency-banner__icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .urgency-banner__title {
+      font-size: 0.8125rem !important;
+    }
+
+    .urgency-banner__timer {
+      font-size: 0.6875rem;
+    }
+
+    .urgency-banner__timer span {
+      font-size: 0.8125rem;
+    }
+
+    .urgency-banner__demand {
+      padding: 8px 10px;
+      margin-bottom: 8px;
+    }
+
+    .urgency-banner__demand-text {
+      font-size: 0.6875rem;
+    }
+
+    .urgency-banner__stock {
+      font-size: 0.6875rem;
+    }
+  }
 </style>
+
+<script>
+(function() {
+  // Urgency Timer - 24 hour countdown
+  function initUrgencyTimer() {
+    const timerElement = document.getElementById('urgency-timer');
+    if (!timerElement) return;
+
+    // Check if there's a stored end time
+    let endTime = localStorage.getItem('foltz_promo_end');
+
+    if (!endTime || new Date(endTime) < new Date()) {
+      // Set new end time to 24 hours from now
+      endTime = new Date(Date.now() + 24 * 60 * 60 * 1000).getTime();
+      localStorage.setItem('foltz_promo_end', endTime);
+    }
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = endTime - now;
+
+      if (distance < 0) {
+        // Reset timer to 24 hours when it reaches 0
+        endTime = new Date(Date.now() + 24 * 60 * 60 * 1000).getTime();
+        localStorage.setItem('foltz_promo_end', endTime);
+        return;
+      }
+
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      timerElement.textContent =
+        String(hours).padStart(2, '0') + ':' +
+        String(minutes).padStart(2, '0') + ':' +
+        String(seconds).padStart(2, '0');
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  }
+
+  // Dynamic viewers count - varies between 8-15
+  function initViewersCount() {
+    const viewersElement = document.getElementById('demand-viewers');
+    if (!viewersElement) return;
+
+    function updateViewers() {
+      const count = Math.floor(Math.random() * 8) + 8; // 8-15
+      viewersElement.textContent = count;
+    }
+
+    updateViewers();
+    setInterval(updateViewers, 15000); // Update every 15 seconds
+  }
+
+  // Dynamic stock count - varies between 3-9
+  function initStockCount() {
+    const stockElement = document.getElementById('stock-count');
+    if (!stockElement) return;
+
+    function updateStock() {
+      const count = Math.floor(Math.random() * 7) + 3; // 3-9
+      stockElement.textContent = count;
+
+      // Change color if stock is very low
+      const banner = document.querySelector('.urgency-banner__stock');
+      if (banner) {
+        if (count <= 4) {
+          stockElement.style.color = '#EF4444'; // Red
+        } else {
+          stockElement.style.color = '#DAF10D'; // Yellow
+        }
+      }
+    }
+
+    updateStock();
+    setInterval(updateStock, 20000); // Update every 20 seconds
+  }
+
+  // Initialize all urgency features
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      initUrgencyTimer();
+      initViewersCount();
+      initStockCount();
+    });
+  } else {
+    initUrgencyTimer();
+    initViewersCount();
+    initStockCount();
+  }
+})();
+</script>
