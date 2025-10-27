@@ -179,6 +179,16 @@
             "verified": true,
             "date": "Hace 5 días"
           }
+        },
+        "review_HDBMGb": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Florencia M.",
+            "rating": 5,
+            "review_text": "Compré para mi novio y quedó re contento! La calidad es excelente y el delivery súper rápido. Foltz no decepciona 🤍",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -192,7 +202,8 @@
         "review_KLKEbx",
         "review_iracmf",
         "review_3GneHC",
-        "review_HbUqMb"
+        "review_HbUqMb",
+        "review_HDBMGb"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
