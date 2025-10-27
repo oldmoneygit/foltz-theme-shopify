@@ -4,16 +4,15 @@
 {%- endcomment -%}
 
 <section class="hero">
-  <!-- Background Image -->
-  <div class="hero-background">
-    {%- if section.settings.background_image -%}
+  <!-- Background Image - Desktop -->
+  <div class="hero-background hero-background-desktop">
+    {%- if section.settings.background_image_desktop -%}
       <img
-        src="{{ section.settings.background_image | img_url: '1024x' }}"
+        src="{{ section.settings.background_image_desktop | img_url: '1536x' }}"
         srcset="
-          {{ section.settings.background_image | img_url: '640x' }} 640w,
-          {{ section.settings.background_image | img_url: '1024x' }} 1024w,
-          {{ section.settings.background_image | img_url: '1536x' }} 1536w,
-          {{ section.settings.background_image | img_url: '2048x' }} 2048w
+          {{ section.settings.background_image_desktop | img_url: '1024x' }} 1024w,
+          {{ section.settings.background_image_desktop | img_url: '1536x' }} 1536w,
+          {{ section.settings.background_image_desktop | img_url: '2048x' }} 2048w
         "
         sizes="100vw"
         alt="{{ section.settings.title | escape }}"
@@ -22,7 +21,37 @@
     {%- else -%}
       <img
         src="{{ 'hero-placeholder.jpg' | asset_url }}"
-        alt="Hero"
+        alt="Hero Desktop"
+        loading="eager"
+      >
+    {%- endif -%}
+  </div>
+
+  <!-- Background Image - Mobile -->
+  <div class="hero-background hero-background-mobile">
+    {%- if section.settings.background_image_mobile -%}
+      <img
+        src="{{ section.settings.background_image_mobile | img_url: '800x' }}"
+        srcset="
+          {{ section.settings.background_image_mobile | img_url: '640x' }} 640w,
+          {{ section.settings.background_image_mobile | img_url: '800x' }} 800w,
+          {{ section.settings.background_image_mobile | img_url: '1024x' }} 1024w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.title | escape }}"
+        loading="eager"
+      >
+    {%- elsif section.settings.background_image_desktop -%}
+      {%- comment -%} Fallback to desktop image if mobile not set {%- endcomment -%}
+      <img
+        src="{{ section.settings.background_image_desktop | img_url: '800x' }}"
+        alt="{{ section.settings.title | escape }}"
+        loading="eager"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'hero-placeholder.jpg' | asset_url }}"
+        alt="Hero Mobile"
         loading="eager"
       >
     {%- endif -%}
@@ -67,9 +96,24 @@
   "name": "Hero",
   "settings": [
     {
+      "type": "header",
+      "content": "Imagens"
+    },
+    {
       "type": "image_picker",
-      "id": "background_image",
-      "label": "Background Image"
+      "id": "background_image_desktop",
+      "label": "Imagem de Fundo - Desktop",
+      "info": "Recomendado: 2048x1080px (paisagem/horizontal)"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mobile",
+      "label": "Imagem de Fundo - Mobile",
+      "info": "Recomendado: 800x1200px (retrato/vertical). Se não definida, usa a imagem desktop."
+    },
+    {
+      "type": "header",
+      "content": "Conteúdo"
     },
     {
       "type": "text",
