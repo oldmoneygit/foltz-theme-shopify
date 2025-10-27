@@ -10,85 +10,90 @@
 {
   "general": {
     "breadcrumb": {
-      "home": "Home"
+      "home": "Inicio"
     },
     "search": {
-      "placeholder": "Search jerseys...",
-      "submit": "Search"
+      "placeholder": "Buscar camisetas...",
+      "submit": "Buscar"
+    },
+    "cart": {
+      "title": "Carrito de Compras",
+      "empty": "Tu carrito está vacío",
+      "continue_shopping": "Seguir Comprando"
     }
   },
   "search": {
     "general": {
-      "title": "Search",
-      "placeholder": "What jersey are you looking for?",
-      "submit": "Search",
-      "results_for": "Results for",
+      "title": "Búsqueda",
+      "placeholder": "¿Qué camiseta estás buscando?",
+      "submit": "Buscar",
+      "results_for": "Resultados para",
       "results_count": {
-        "one": "{{ count }} result found",
-        "other": "{{ count }} results found"
+        "one": "{{ count }} resultado encontrado",
+        "other": "{{ count }} resultados encontrados"
       },
-      "all": "All",
-      "products": "Products",
-      "pages": "Pages",
-      "articles": "Articles",
-      "no_results_title": "No results found",
-      "no_results_message": "We couldn't find any results for your search. Try different terms or explore our products.",
-      "view_all": "View All Products",
-      "search_title": "Start your search",
-      "search_message": "Use the search to find your favorite jerseys"
+      "all": "Todos",
+      "products": "Productos",
+      "pages": "Páginas",
+      "articles": "Artículos",
+      "no_results_title": "Sin resultados",
+      "no_results_message": "No se encontraron resultados para tu búsqueda. Intentá con otros términos o explorá nuestros productos.",
+      "view_all": "Ver Todos los Productos",
+      "search_title": "Comenzá tu búsqueda",
+      "search_message": "Usá el buscador para encontrar tus camisetas favoritas"
     }
   },
   "cart": {
     "general": {
-      "title": "Shopping Cart",
-      "item_count": "{{ count }} items in your cart",
-      "item_count_one": "1 item in your cart",
-      "empty_title": "Your cart is empty",
-      "empty_message": "You haven't added any products yet. Explore our collection!",
-      "continue_shopping": "Explore Products",
-      "summary": "Order Summary",
+      "title": "Carrito",
+      "item_count": "{{ count }} artículos en tu carrito",
+      "item_count_one": "1 artículo en tu carrito",
+      "empty_title": "Tu carrito está vacío",
+      "empty_message": "Todavía no has agregado ningún producto. ¡Explorá nuestra colección!",
+      "continue_shopping": "Explorar Productos",
+      "summary": "Resumen del Pedido",
       "subtotal": "Subtotal",
       "total": "Total",
-      "taxes_notice": "Taxes and shipping calculated at checkout",
-      "checkout": "Checkout",
-      "discount": "Discount",
-      "increase": "Increase quantity",
-      "decrease": "Decrease quantity",
-      "remove": "Remove",
-      "remove_confirm": "Are you sure you want to remove this item?",
-      "error": "Error updating cart. Please try again."
+      "taxes_notice": "Impuestos y envío calculados al finalizar la compra",
+      "checkout": "Finalizar Compra",
+      "discount": "Descuento",
+      "increase": "Aumentar cantidad",
+      "decrease": "Disminuir cantidad",
+      "remove": "Eliminar",
+      "remove_confirm": "¿Estás seguro de que querés eliminar este artículo?",
+      "error": "Error al actualizar el carrito. Por favor, intentá de nuevo."
     }
   },
   "products": {
-    "add_to_cart": "Add to Cart",
-    "sold_out": "Sold Out",
-    "limited_stock": "Limited Stock",
+    "add_to_cart": "Agregar al Carrito",
+    "sold_out": "Agotado",
+    "limited_stock": "Stock Limitado",
     "product": {
-      "reviews": "reviews",
-      "description": "Description",
-      "details": "Product Details",
+      "reviews": "reseñas",
+      "description": "Descripción",
+      "details": "Detalles del Producto",
       "sku": "SKU",
-      "vendor": "Brand",
-      "type": "Type",
-      "availability": "Availability",
-      "in_stock": "In Stock",
-      "out_of_stock": "Out of Stock",
-      "tags": "Tags",
-      "quantity": "Quantity",
-      "increase_quantity": "Increase quantity",
-      "decrease_quantity": "Decrease quantity",
-      "add_to_cart": "Add to Cart",
-      "sold_out": "Sold Out",
-      "buy_now": "Buy Now",
-      "adding": "Adding...",
-      "added_to_cart": "Product added to cart!",
-      "error_adding_to_cart": "Error adding product to cart",
-      "shipping": "Shipping & Delivery",
-      "shipping_info": "Free shipping to all of Brazil. Delivery time: 5-10 business days.",
-      "returns": "Returns",
-      "returns_info": "We accept returns within 30 days of purchase. Product must be unused with tags.",
-      "share": "Share",
-      "new": "New"
+      "vendor": "Marca",
+      "type": "Tipo",
+      "availability": "Disponibilidad",
+      "in_stock": "En Stock",
+      "out_of_stock": "Agotado",
+      "tags": "Etiquetas",
+      "quantity": "Cantidad",
+      "increase_quantity": "Aumentar cantidad",
+      "decrease_quantity": "Disminuir cantidad",
+      "add_to_cart": "Agregar al Carrito",
+      "sold_out": "Agotado",
+      "buy_now": "Comprar Ahora",
+      "adding": "Agregando...",
+      "added_to_cart": "¡Producto agregado al carrito!",
+      "error_adding_to_cart": "Error al agregar producto al carrito",
+      "shipping": "Envío y Entrega",
+      "shipping_info": "Envío gratis a toda Argentina. Tiempo de entrega: 5-10 días hábiles.",
+      "returns": "Devoluciones",
+      "returns_info": "Aceptamos devoluciones dentro de los 30 días posteriores a la compra. El producto debe estar sin uso y con etiquetas.",
+      "share": "Compartir",
+      "new": "Nuevo"
     }
   }
 }
