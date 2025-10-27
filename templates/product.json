@@ -102,13 +102,37 @@
             "verified": true,
             "date": "Hace 2 días"
           }
+        },
+        "review_KbHUV4": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Camila S",
+            "rating": 5,
+            "review_text": "Súper conforme con mi compra! La calidad es increíble y el packaging venía hermoso. Volveré a comprar seguro 💙",
+            "image_1": "shopify://shop_images/replicate-prediction-ze48am313hrma0ct4jzsrmjaac.jpg",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
+        },
+        "review_LyLdkj": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Franco R.",
+            "rating": 5,
+            "review_text": "Llegó en tiempo récord! La promo 3x1 es real, no es chamuyo. Calidad 10 puntos.",
+            "image_1": "shopify://shop_images/replicate-prediction-y9g6mshvvxrma0ct4k0se7e7pr.jpg",
+            "verified": true,
+            "date": "Hace 1 día"
+          }
         }
       },
       "block_order": [
         "review_1",
         "review_2",
         "review_3",
-        "review_QWG4zV"
+        "review_QWG4zV",
+        "review_KbHUV4",
+        "review_LyLdkj"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
