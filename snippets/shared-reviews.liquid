@@ -1,0 +1,181 @@
+{% comment %}
+  Shared Reviews Snippet
+  Reviews compartilhados entre páginas de produto e home page
+  Configure os reviews aqui para aparecerem em todas as páginas
+{% endcomment %}
+
+{%- liquid
+  # Configuração central de reviews
+  assign reviews = '
+  [
+    {
+      "name": "Lucas M.",
+      "rating": 5,
+      "text": "¡Increíble! La calidad es idéntica a la original. Llegó en 5 días y el empaque era perfecto.",
+      "verified": true,
+      "date": "Hace 1 día",
+      "image_1": "",
+      "image_2": ""
+    },
+    {
+      "name": "Mariana S.",
+      "rating": 5,
+      "text": "Perfecta, tal cual las fotos. El envío fue súper rápido y seguro. Ya compré 3 camisetas.",
+      "verified": true,
+      "date": "Hace 3 días",
+      "image_1": "",
+      "image_2": ""
+    },
+    {
+      "name": "Diego R.",
+      "rating": 5,
+      "text": "Calidad premium 1:1. Ya es mi tercera compra y siempre perfecta. Recomiendo 100%.",
+      "verified": true,
+      "date": "Hace 5 días",
+      "image_1": "",
+      "image_2": ""
+    },
+    {
+      "name": "Camila T.",
+      "rating": 5,
+      "text": "Excelente atención y producto de primera. El chat me respondió al instante. Muy contenta!",
+      "verified": true,
+      "date": "Hace 1 semana",
+      "image_1": "",
+      "image_2": ""
+    },
+    {
+      "name": "Mateo P.",
+      "rating": 5,
+      "text": "Mejor de lo que esperaba. La tela es de muy buena calidad y los detalles son perfectos.",
+      "verified": true,
+      "date": "Hace 1 semana",
+      "image_1": "",
+      "image_2": ""
+    },
+    {
+      "name": "Sofía L.",
+      "rating": 5,
+      "text": "¡Me encantó! Todos me preguntan dónde la compré. Gran compra, súper recomendado.",
+      "verified": true,
+      "date": "Hace 2 semanas",
+      "image_1": "",
+      "image_2": ""
+    }
+  ]
+  ' | parse_json
+
+  assign heading = section.settings.heading | default: "Lo Que Dicen Nuestros Clientes"
+  assign subtitle = section.settings.subtitle | default: "Miles de clientes satisfechos con nuestros productos"
+  assign avg_rating = section.settings.rating | default: "4.9"
+  assign review_count = reviews.size
+-%}
+
+<section class="product-reviews shared-reviews" data-section-id="{{ section.id }}">
+  <div class="product-reviews__container">
+    <!-- Header -->
+    <div class="product-reviews__header">
+      <h2 class="product-reviews__heading">{{ heading }}</h2>
+      <p class="product-reviews__subtitle">{{ subtitle }}</p>
+
+      <div class="product-reviews__stats">
+        <div class="product-reviews__rating">
+          <div class="product-reviews__stars">
+            {% for i in (1..5) %}
+              <svg class="product-reviews__star product-reviews__star--filled" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            {% endfor %}
+          </div>
+          <span class="product-reviews__rating-text">{{ avg_rating }}/5</span>
+        </div>
+        <span class="product-reviews__count">{{ review_count }} Reseñas Verificadas</span>
+      </div>
+    </div>
+
+    <!-- Reviews Grid -->
+    <div class="product-reviews__grid">
+      {% for review in reviews %}
+        <div class="product-review">
+          <!-- Review Header -->
+          <div class="product-review__header">
+            <div class="product-review__author">
+              <div class="product-review__avatar">
+                {{ review.name | slice: 0 | upcase }}
+              </div>
+              <div class="product-review__author-info">
+                <h3 class="product-review__name">{{ review.name }}</h3>
+                <div class="product-review__stars">
+                  {% for i in (1..5) %}
+                    {% if i <= review.rating %}
+                      <svg class="product-review__star product-review__star--filled" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                    {% else %}
+                      <svg class="product-review__star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                      </svg>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+
+            {% if review.verified %}
+              <span class="product-review__badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Verificado
+              </span>
+            {% endif %}
+          </div>
+
+          <!-- Review Content -->
+          <p class="product-review__text">{{ review.text }}</p>
+
+          <!-- Review Images (if available) -->
+          {% if review.image_1 != blank or review.image_2 != blank %}
+            <div class="product-review__images">
+              {% if review.image_1 != blank %}
+                <div class="product-review__image-wrapper">
+                  <img
+                    src="{{ review.image_1 | image_url: width: 400 }}"
+                    alt="Foto del cliente"
+                    class="product-review__image"
+                    loading="lazy"
+                  >
+                </div>
+              {% endif %}
+
+              {% if review.image_2 != blank %}
+                <div class="product-review__image-wrapper">
+                  <img
+                    src="{{ review.image_2 | image_url: width: 400 }}"
+                    alt="Comprobación de envío"
+                    class="product-review__image"
+                  >
+                  <span class="product-review__image-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="1" y="3" width="15" height="13"></rect>
+                      <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                      <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                      <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    Envío
+                  </span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <!-- Review Footer -->
+          <div class="product-review__footer">
+            <span class="product-review__date">{{ review.date }}</span>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
