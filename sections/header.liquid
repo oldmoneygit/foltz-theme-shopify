@@ -28,19 +28,54 @@
       </a>
 
       <!-- Search Bar (desktop only) -->
-      <div class="header-search">
-        <form action="/search" method="get">
+      <div class="header-search" id="header-search-wrapper">
+        <form action="/search" method="get" id="header-search-form">
           <input
             type="text"
             name="q"
             placeholder="{{ 'general.search.placeholder' | t }}"
             autocomplete="off"
             id="header-search-input"
+            aria-label="Buscar productos"
+            aria-autocomplete="list"
+            aria-controls="search-results-dropdown"
+            aria-expanded="false"
           >
           <button type="submit" aria-label="{{ 'general.search.submit' | t }}">
             {% render 'icon-search', size: 20 %}
           </button>
         </form>
+
+        <!-- Live Search Dropdown -->
+        <div class="search-results-dropdown" id="search-results-dropdown" role="listbox" aria-label="Resultados de búsqueda">
+          <div class="search-results-loading" id="search-loading">
+            <div class="search-spinner"></div>
+            <span>Buscando...</span>
+          </div>
+
+          <div class="search-results-content" id="search-results-content">
+            <!-- Products will be inserted here -->
+          </div>
+
+          <div class="search-results-empty" id="search-empty" style="display: none;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              <path d="M8 11h6"></path>
+            </svg>
+            <p>No se encontraron productos</p>
+          </div>
+
+          <div class="search-results-footer" id="search-footer" style="display: none;">
+            <a href="#" class="search-view-all" id="search-view-all">
+              Ver todos los resultados
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+        </div>
       </div>
 
       <!-- Actions: Wishlist & Cart -->
@@ -155,6 +190,171 @@
 </div>
 
 <style>
+/* Live Search Dropdown Styles */
+.header-search {
+  position: relative;
+}
+
+.search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  border: 2px solid rgba(218, 241, 13, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  max-height: 480px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
+
+.search-results-dropdown.active {
+  display: block;
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.search-results-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 32px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+}
+
+.search-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(218, 241, 13, 0.2);
+  border-top-color: #DAF10D;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.search-results-content {
+  padding: 8px;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.search-result-item:hover {
+  background: rgba(218, 241, 13, 0.08);
+}
+
+.search-result-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.search-result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-result-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-result-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+}
+
+.search-result-price-sale {
+  color: #DAF10D;
+  font-weight: 700;
+}
+
+.search-result-price-regular {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: line-through;
+  font-size: 0.75rem;
+}
+
+.search-results-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.search-results-empty svg {
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 16px;
+}
+
+.search-results-empty p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+}
+
+.search-results-footer {
+  padding: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.search-view-all {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(218, 241, 13, 0.1);
+  border: 1px solid rgba(218, 241, 13, 0.2);
+  border-radius: 8px;
+  color: #DAF10D;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.search-view-all:hover {
+  background: rgba(218, 241, 13, 0.15);
+  border-color: rgba(218, 241, 13, 0.4);
+}
+
 /* Mobile Menu Specific Styles */
 .mobile-menu-header {
   display: flex;
@@ -363,6 +563,162 @@
   color: var(--color-brand-yellow);
 }
 </style>
+
+<script>
+(function() {
+  const searchInput = document.getElementById('header-search-input');
+  const searchForm = document.getElementById('header-search-form');
+  const searchDropdown = document.getElementById('search-results-dropdown');
+  const searchContent = document.getElementById('search-results-content');
+  const searchLoading = document.getElementById('search-loading');
+  const searchEmpty = document.getElementById('search-empty');
+  const searchFooter = document.getElementById('search-footer');
+  const searchViewAll = document.getElementById('search-view-all');
+
+  let debounceTimer;
+  let currentQuery = '';
+
+  if (!searchInput || !searchDropdown) return;
+
+  // Debounce function
+  function debounce(func, delay) {
+    return function(...args) {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(this, args), delay);
+    };
+  }
+
+  // Format price with Shopify money format
+  function formatMoney(cents) {
+    const dollars = (cents / 100).toFixed(2);
+    return `$${dollars.replace(/\B(?=(\d{3})+(?!\d))/g, '.')} ARS`;
+  }
+
+  // Fetch search results using Predictive Search API
+  async function fetchSearchResults(query) {
+    try {
+      const response = await fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=6`);
+      if (!response.ok) throw new Error('Search failed');
+      const data = await response.json();
+      return data.resources.results.products || [];
+    } catch (error) {
+      console.error('Search error:', error);
+      return [];
+    }
+  }
+
+  // Render search results
+  function renderResults(products, query) {
+    searchLoading.style.display = 'none';
+
+    if (products.length === 0) {
+      searchContent.innerHTML = '';
+      searchEmpty.style.display = 'flex';
+      searchFooter.style.display = 'none';
+      return;
+    }
+
+    searchEmpty.style.display = 'none';
+    searchFooter.style.display = 'block';
+
+    // Update "View all" link
+    searchViewAll.href = `/search?q=${encodeURIComponent(query)}`;
+
+    // Render product items
+    searchContent.innerHTML = products.map(product => {
+      const price = product.price;
+      const comparePrice = Math.round(price * 1.5);
+      const image = product.featured_image || '';
+
+      return `
+        <a href="${product.url}" class="search-result-item" role="option">
+          <img src="${image}" alt="${product.title}" class="search-result-image" loading="lazy">
+          <div class="search-result-info">
+            <div class="search-result-title">${product.title}</div>
+            <div class="search-result-price">
+              <span class="search-result-price-sale">${formatMoney(price)}</span>
+              <span class="search-result-price-regular">${formatMoney(comparePrice)}</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  // Show dropdown
+  function showDropdown() {
+    searchDropdown.classList.add('active');
+    searchInput.setAttribute('aria-expanded', 'true');
+  }
+
+  // Hide dropdown
+  function hideDropdown() {
+    searchDropdown.classList.remove('active');
+    searchInput.setAttribute('aria-expanded', 'false');
+  }
+
+  // Perform search
+  async function performSearch(query) {
+    if (query.length < 2) {
+      hideDropdown();
+      return;
+    }
+
+    currentQuery = query;
+    showDropdown();
+
+    // Show loading state
+    searchLoading.style.display = 'flex';
+    searchEmpty.style.display = 'none';
+    searchFooter.style.display = 'none';
+    searchContent.innerHTML = '';
+
+    // Fetch and render results
+    const products = await fetchSearchResults(query);
+
+    // Only update if this is still the current query
+    if (query === currentQuery) {
+      renderResults(products, query);
+    }
+  }
+
+  // Event listeners
+  searchInput.addEventListener('input', debounce((e) => {
+    const query = e.target.value.trim();
+    performSearch(query);
+  }, 300));
+
+  searchInput.addEventListener('focus', () => {
+    if (searchInput.value.trim().length >= 2) {
+      showDropdown();
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!searchDropdown.contains(e.target) && !searchInput.contains(e.target)) {
+      hideDropdown();
+    }
+  });
+
+  // Prevent form submission if there are results (let user click on them)
+  searchForm.addEventListener('submit', (e) => {
+    const query = searchInput.value.trim();
+    if (query.length < 2) {
+      e.preventDefault();
+      searchInput.focus();
+    }
+  });
+
+  // Close dropdown on Escape key
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      hideDropdown();
+      searchInput.blur();
+    }
+  });
+})();
+</script>
 
 {% schema %}
 {
