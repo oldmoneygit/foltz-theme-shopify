@@ -802,7 +802,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
 
-    // Enhanced Swipe/Drag functionality
+    // Enhanced Swipe/Drag functionality with click detection
     let isDown = false;
     let startX;
     let scrollLeft;
@@ -810,6 +810,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastX = 0;
     let lastTime = Date.now();
     let animationFrame = null;
+    let hasMoved = false; // Track if user actually dragged
+    const DRAG_THRESHOLD = 5; // Minimum pixels to consider as drag
 
     // Easing function for momentum
     const easeOutQuint = (t) => 1 + (--t) * t * t * t * t;
@@ -835,6 +837,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Mouse events (Desktop)
     track.addEventListener('mousedown', (e) => {
+      // Don't interfere with direct clicks on links
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+
       // Cancel any ongoing momentum
       if (animationFrame) {
         cancelAnimationFrame(animationFrame);
@@ -842,7 +849,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       isDown = true;
-      track.classList.add('is-dragging');
+      hasMoved = false; // Reset moved flag
       startX = e.pageX - track.offsetLeft;
       scrollLeft = track.scrollLeft;
       velocity = 0;
@@ -858,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
         track.classList.remove('is-dragging');
 
         // Apply momentum on mouse leave
-        if (Math.abs(velocity) > 0.3) {
+        if (hasMoved && Math.abs(velocity) > 0.3) {
           applyMomentum();
         }
       }
@@ -867,10 +874,18 @@ document.addEventListener('DOMContentLoaded', function() {
     track.addEventListener('mouseup', () => {
       if (isDown) {
         isDown = false;
-        track.classList.remove('is-dragging');
+
+        // Only remove dragging class after a small delay to block click
+        if (hasMoved) {
+          setTimeout(() => {
+            track.classList.remove('is-dragging');
+          }, 50);
+        } else {
+          track.classList.remove('is-dragging');
+        }
 
         // Apply momentum scrolling with enhanced physics
-        if (Math.abs(velocity) > 0.3) {
+        if (hasMoved && Math.abs(velocity) > 0.3) {
           applyMomentum();
         }
       }
@@ -878,23 +893,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     track.addEventListener('mousemove', (e) => {
       if (!isDown) return;
-      e.preventDefault();
 
       const x = e.pageX - track.offsetLeft;
-      const walk = (x - startX) * 2.2; // Increased multiplier for better fluidity
-      track.scrollLeft = scrollLeft - walk;
+      const walk = x - startX;
 
-      // Calculate velocity for momentum with smoother sampling
-      const now = Date.now();
-      const dt = Math.max(now - lastTime, 1);
-      const dx = e.pageX - lastX;
+      // Only start dragging if movement exceeds threshold
+      if (!hasMoved && Math.abs(walk) > DRAG_THRESHOLD) {
+        hasMoved = true;
+        track.classList.add('is-dragging');
+      }
 
-      // Smooth velocity calculation
-      const newVelocity = dx / dt;
-      velocity = velocity * 0.6 + newVelocity * 0.4; // Weighted average for smoothness
+      if (hasMoved) {
+        e.preventDefault();
+        track.scrollLeft = scrollLeft - (walk * 2.2);
 
-      lastX = e.pageX;
-      lastTime = now;
+        // Calculate velocity for momentum with smoother sampling
+        const now = Date.now();
+        const dt = Math.max(now - lastTime, 1);
+        const dx = e.pageX - lastX;
+
+        // Smooth velocity calculation
+        const newVelocity = dx / dt;
+        velocity = velocity * 0.6 + newVelocity * 0.4; // Weighted average for smoothness
+
+        lastX = e.pageX;
+        lastTime = now;
+      }
     });
 
     // Touch events (Mobile) - Ultra-smooth native scrolling
@@ -903,6 +927,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchScrollLeft = 0;
     let isDragging = false;
     let isScrollingVertically = false;
+    let touchHasMoved = false;
 
     track.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].pageX;
@@ -910,6 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
       touchScrollLeft = track.scrollLeft;
       isDragging = false;
       isScrollingVertically = false;
+      touchHasMoved = false;
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
@@ -920,25 +946,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Detect scroll direction on first move
       if (!isDragging && !isScrollingVertically) {
-        if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        // Only consider as drag if movement exceeds threshold
+        if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > DRAG_THRESHOLD) {
           isScrollingVertically = true;
           return;
         }
-        isDragging = true;
-        track.classList.add('is-dragging');
+        if (Math.abs(deltaX) > DRAG_THRESHOLD) {
+          isDragging = true;
+          touchHasMoved = true;
+          track.classList.add('is-dragging');
+        }
       }
 
       // Allow vertical scrolling
       if (isScrollingVertically) return;
 
       // Ultra-smooth horizontal scrolling
-      track.scrollLeft = touchScrollLeft + deltaX;
+      if (isDragging) {
+        track.scrollLeft = touchScrollLeft + deltaX;
+      }
     }, { passive: true });
 
     track.addEventListener('touchend', () => {
-      track.classList.remove('is-dragging');
+      // Delay removing class to block accidental clicks after swipe
+      if (touchHasMoved) {
+        setTimeout(() => {
+          track.classList.remove('is-dragging');
+        }, 100);
+      } else {
+        track.classList.remove('is-dragging');
+      }
       isDragging = false;
       isScrollingVertically = false;
+      touchHasMoved = false;
     }, { passive: true });
 
     // Prevent default drag behavior on images and links
