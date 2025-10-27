@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "background_image": "shopify://shop_images/replicate-prediction-t2vebz5qshrm80ct2hn8ec59e4.jpg",
+        "background_image_desktop": "shopify://shop_images/replicate-prediction-t2vebz5qshrm80ct2hn8ec59e4.jpg",
         "badge_text": "",
         "title": "",
         "button_text": "",
