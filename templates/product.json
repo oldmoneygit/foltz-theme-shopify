@@ -172,7 +172,7 @@
         "review_HbUqMb": {
           "type": "review",
           "settings": {
-            "customer_name": "Mateo Villalba",
+            "customer_name": "Mateo V",
             "rating": 5,
             "review_text": "Pedí un domingo y me llegó el martes! Una locura lo rápido que fue. La camiseta es hermosa, se ve re premium.",
             "image_1": "shopify://shop_images/replicate-prediction-x5h7e3tn3srma0ct4rvbbhzvnm.jpg",
@@ -190,6 +190,17 @@
             "verified": true,
             "date": "Hace 2 días"
           }
+        },
+        "review_bGDcwq": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Lucas G.",
+            "rating": 5,
+            "review_text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
+            "image_1": "shopify://shop_images/replicate-prediction-8kz3hrkjd5rmc0ct4s0srcv70w.jpg",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -204,7 +215,8 @@
         "review_iracmf",
         "review_3GneHC",
         "review_HbUqMb",
-        "review_HDBMGb"
+        "review_HDBMGb",
+        "review_bGDcwq"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
