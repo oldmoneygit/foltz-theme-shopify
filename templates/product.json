@@ -223,6 +223,16 @@
             "verified": true,
             "date": "Hace 8 días"
           }
+        },
+        "review_GhyWGm": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sofía B",
+            "rating": 5,
+            "review_text": "Mi primera camiseta de fútbol! Siempre quise una del Real Madrid y la calidad me sorprendió. Gracias Foltz por tener talles de mujer! 🤍",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -240,7 +250,8 @@
         "review_HDBMGb",
         "review_bGDcwq",
         "review_d7AqJP",
-        "review_LLdJtr"
+        "review_LLdJtr",
+        "review_GhyWGm"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
