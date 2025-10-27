@@ -1,0 +1,562 @@
+{% comment %}
+  Home Page Reviews Section
+  Customer testimonials with photos and shipping proofs for homepage
+  Shows featured reviews across all products
+{% endcomment %}
+
+<section class="product-reviews" data-section-id="{{ section.id }}">
+  <div class="product-reviews__container">
+    <!-- Header -->
+    <div class="product-reviews__header">
+      <h2 class="product-reviews__heading">{{ section.settings.heading }}</h2>
+      <p class="product-reviews__subtitle">{{ section.settings.subtitle }}</p>
+
+      <div class="product-reviews__stats">
+        <div class="product-reviews__rating">
+          <div class="product-reviews__stars">
+            {% for i in (1..5) %}
+              <svg class="product-reviews__star product-reviews__star--filled" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+            {% endfor %}
+          </div>
+          <span class="product-reviews__rating-text">{{ section.settings.rating }}/5</span>
+        </div>
+        <span class="product-reviews__count">{{ section.blocks.size }} Reseñas Verificadas</span>
+      </div>
+    </div>
+
+    <!-- Reviews Grid -->
+    {% if section.blocks.size > 0 %}
+      <div class="product-reviews__grid">
+        {% for block in section.blocks %}
+          <div class="product-review" {{ block.shopify_attributes }}>
+            <!-- Review Header -->
+            <div class="product-review__header">
+              <div class="product-review__author">
+                <div class="product-review__avatar">
+                  {{ block.settings.customer_name | slice: 0 | upcase }}
+                </div>
+                <div class="product-review__author-info">
+                  <h3 class="product-review__name">{{ block.settings.customer_name }}</h3>
+                  <div class="product-review__stars">
+                    {% for i in (1..5) %}
+                      {% if i <= block.settings.rating %}
+                        <svg class="product-review__star product-review__star--filled" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                      {% else %}
+                        <svg class="product-review__star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                        </svg>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+
+              {% if block.settings.verified %}
+                <span class="product-review__badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                  Verificado
+                </span>
+              {% endif %}
+            </div>
+
+            <!-- Review Content -->
+            {% if block.settings.review_text != blank %}
+              <p class="product-review__text">{{ block.settings.review_text }}</p>
+            {% endif %}
+
+            <!-- Review Images -->
+            {% if block.settings.image_1 != blank or block.settings.image_2 != blank %}
+              <div class="product-review__images">
+                {% if block.settings.image_1 != blank %}
+                  <div class="product-review__image-wrapper">
+                    <img
+                      src="{{ block.settings.image_1 | image_url: width: 400 }}"
+                      alt="Foto del cliente"
+                      class="product-review__image"
+                      loading="lazy"
+                    >
+                  </div>
+                {% endif %}
+
+                {% if block.settings.image_2 != blank %}
+                  <div class="product-review__image-wrapper">
+                    <img
+                      src="{{ block.settings.image_2 | image_url: width: 400 }}"
+                      alt="Comprobación de envío"
+                      class="product-review__image"
+                    >
+                    <span class="product-review__image-badge">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                      </svg>
+                      Envío
+                    </span>
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <!-- Review Footer -->
+            <div class="product-review__footer">
+              <span class="product-review__date">{{ block.settings.date }}</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="product-reviews__empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+        </svg>
+        <p>Aún no hay reseñas. ¡Sé el primero en dejar una!</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.product-reviews {
+  background: #000;
+  padding: 3rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.product-reviews::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.product-reviews__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.product-reviews__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.product-reviews__heading {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .product-reviews__heading {
+    font-size: 2.5rem;
+  }
+}
+
+.product-reviews__subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 2rem 0;
+}
+
+.product-reviews__stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .product-reviews__stats {
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.product-reviews__rating {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.product-reviews__stars {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.product-reviews__star {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.product-reviews__star--filled {
+  color: #DAF10D;
+}
+
+.product-reviews__rating-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.product-reviews__count {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  padding-left: 1rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 639px) {
+  .product-reviews__count {
+    padding-left: 0;
+    border-left: none;
+  }
+}
+
+/* Reviews Grid */
+.product-reviews__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .product-reviews__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .product-reviews__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Individual Review */
+.product-review {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.product-review:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+.product-review__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.product-review__author {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.product-review__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.product-review__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.product-review__name {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.product-review__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.product-review__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  flex-shrink: 0;
+}
+
+.product-review__badge svg {
+  width: 14px;
+  height: 14px;
+}
+
+.product-review__text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+}
+
+/* Review Images */
+.product-review__images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.product-review__image-wrapper {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.product-review__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-review__image-wrapper:hover .product-review__image {
+  transform: scale(1.1);
+}
+
+.product-review__image-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: rgba(0, 0, 0, 0.8);
+  color: #DAF10D;
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  backdrop-filter: blur(10px);
+}
+
+.product-review__image-badge svg {
+  width: 12px;
+  height: 12px;
+}
+
+.product-review__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.product-review__date {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Empty State */
+.product-reviews__empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.product-reviews__empty svg {
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 1rem;
+}
+
+.product-reviews__empty p {
+  font-size: 1.125rem;
+  margin: 0;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Reseñas (Home)",
+  "tag": "section",
+  "class": "section-home-reviews",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Lo Que Dicen Nuestros Clientes"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Miles de clientes satisfechos con nuestros productos"
+    },
+    {
+      "type": "text",
+      "id": "rating",
+      "label": "Average Rating",
+      "default": "4.9"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "customer_name",
+          "label": "Customer Name",
+          "default": "Juan P."
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "¡Excelente calidad! La camiseta llegó perfecta y el envío fue muy rápido."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Customer Photo"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Shipping Proof"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified Purchase",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Hace 2 días"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reseñas Home",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Lucas M.",
+            "rating": 5,
+            "review_text": "¡Increíble! La calidad es idéntica a la original. Llegó en 5 días.",
+            "verified": true,
+            "date": "Hace 1 día"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Mariana S.",
+            "rating": 5,
+            "review_text": "Perfecta, tal cual las fotos. El envío fue súper rápido y seguro.",
+            "verified": true,
+            "date": "Hace 3 días"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Diego R.",
+            "rating": 5,
+            "review_text": "Calidad premium 1:1. Ya es mi tercera compra y siempre perfecta.",
+            "verified": true,
+            "date": "Hace 5 días"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Camila T.",
+            "rating": 5,
+            "review_text": "Excelente atención y producto de primera. 100% recomendado.",
+            "verified": true,
+            "date": "Hace 1 semana"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Mateo P.",
+            "rating": 5,
+            "review_text": "Mejor de lo que esperaba. La tela es de muy buena calidad.",
+            "verified": true,
+            "date": "Hace 1 semana"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "customer_name": "Sofía L.",
+            "rating": 5,
+            "review_text": "¡Me encantó! Todos me preguntan dónde la compré. Gran compra.",
+            "verified": true,
+            "date": "Hace 2 semanas"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
