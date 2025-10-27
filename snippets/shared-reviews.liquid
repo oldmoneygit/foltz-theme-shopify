@@ -5,60 +5,141 @@
 {% endcomment %}
 
 {%- liquid
-  # Configuração central de reviews
+  # Configuração central de reviews - 15 reviews reais do product.json
   assign reviews = '
   [
     {
-      "name": "Lucas M.",
+      "name": "Martín R.",
       "rating": 5,
-      "text": "¡Increíble! La calidad es idéntica a la original. Llegó en 5 días y el empaque era perfecto.",
-      "verified": true,
-      "date": "Hace 1 día",
-      "image_1": "",
-      "image_2": ""
-    },
-    {
-      "name": "Mariana S.",
-      "rating": 5,
-      "text": "Perfecta, tal cual las fotos. El envío fue súper rápido y seguro. Ya compré 3 camisetas.",
+      "text": "¡Increíble! La camiseta es idéntica a la original. Calidad premium, envío rápido y el packaging impecable. 100% recomendado.",
       "verified": true,
       "date": "Hace 3 días",
-      "image_1": "",
+      "image_1": "shopify://shop_images/replicate-prediction-h52srnp11srmc0ct4jrt3bb7ww.jpg",
       "image_2": ""
     },
     {
-      "name": "Diego R.",
+      "name": "Lucas G.",
       "rating": 5,
-      "text": "Calidad premium 1:1. Ya es mi tercera compra y siempre perfecta. Recomiendo 100%.",
-      "verified": true,
-      "date": "Hace 5 días",
-      "image_1": "",
-      "image_2": ""
-    },
-    {
-      "name": "Camila T.",
-      "rating": 5,
-      "text": "Excelente atención y producto de primera. El chat me respondió al instante. Muy contenta!",
+      "text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
       "verified": true,
       "date": "Hace 1 semana",
-      "image_1": "",
+      "image_1": "shopify://shop_images/replicate-prediction-egn1amdknnrmc0ct4jtty6zex4.jpg",
       "image_2": ""
     },
     {
-      "name": "Mateo P.",
+      "name": "Tiago F.",
       "rating": 5,
-      "text": "Mejor de lo que esperaba. La tela es de muy buena calidad y los detalles son perfectos.",
-      "verified": true,
-      "date": "Hace 1 semana",
-      "image_1": "",
-      "image_2": ""
-    },
-    {
-      "name": "Sofía L.",
-      "rating": 5,
-      "text": "¡Me encantó! Todos me preguntan dónde la compré. Gran compra, súper recomendado.",
+      "text": "Es mi tercera compra y siempre perfecto. La promoción 3x1 es lo mejor! Muy buena atención al cliente también.",
       "verified": true,
       "date": "Hace 2 semanas",
+      "image_1": "shopify://shop_images/replicate-prediction-1pdfsabyz5rm80ct4jt9vs09pg.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Juan P.",
+      "rating": 5,
+      "text": "¡Excelente calidad! La camiseta llegó perfecta y el envío fue muy rápido.",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-6qtmjrem81rmc0ct4jv8pj2mrr.jpg",
+      "image_2": "shopify://shop_images/replicate-prediction-ky9az0dcknrmc0ct4jvvq2njtr.jpg"
+    },
+    {
+      "name": "Camila S",
+      "rating": 5,
+      "text": "Súper conforme con mi compra! La calidad es increíble y el packaging venía hermoso. Volveré a comprar seguro 💙",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-ze48am313hrma0ct4jzsrmjaac.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Franco R.",
+      "rating": 5,
+      "text": "Llegó en tiempo récord! La promo 3x1 es real, no es chamuyo. Calidad 10 puntos.",
+      "verified": true,
+      "date": "Hace 1 día",
+      "image_1": "shopify://shop_images/replicate-prediction-y9g6mshvvxrma0ct4k0se7e7pr.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Agustín M.",
+      "rating": 5,
+      "text": "Impecable todo! Desde el pedido hasta la entrega. La camiseta es tal cual las fotos. Gracias Foltz! 🔴",
+      "verified": true,
+      "date": "Hace 4 días",
+      "image_1": "shopify://shop_images/replicate-prediction-45zw2cbzcsrm80ct4k1txeeqaw.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Valentina L.",
+      "rating": 5,
+      "text": "Mi primera compra en Foltz y quedé fascinada! La atención al cliente fue excelente y el producto llegó perfecto. Super recomendado",
+      "verified": true,
+      "date": "Hace 8 días",
+      "image_1": "shopify://shop_images/replicate-prediction-j9vedpd8z9rm80ct4k292hth88.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Santiago D.",
+      "rating": 5,
+      "text": "La camiseta de Messi es una locura! Calidad A1, envío rapidísimo. Ya le recomendé Foltz a todos mis amigos.",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-d9rjeg3vxdrma0ct4k3sc0drrc.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Micaela B.",
+      "rating": 5,
+      "text": "NO PUEDO CREER QUE LA PROMO ES POSTA! 😱 Compré 1 y me llegaron 3. Todas de excelente calidad. GRACIAS FOLTZ! 💛",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-pcwtycba1srmc0ct4k4acd81pg.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Mateo V",
+      "rating": 5,
+      "text": "Pedí un domingo y me llegó el martes! Una locura lo rápido que fue. La camiseta es hermosa, se ve re premium.",
+      "verified": true,
+      "date": "Hace 5 días",
+      "image_1": "shopify://shop_images/replicate-prediction-x5h7e3tn3srma0ct4rvbbhzvnm.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Florencia M.",
+      "rating": 5,
+      "text": "Compré para mi novio y quedó re contento! La calidad es excelente y el delivery súper rápido. Foltz no decepciona 🤍",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-fke4h7vxj1rmc0ct4s186eks0g.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Lucas G.",
+      "rating": 5,
+      "text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-8kz3hrkjd5rmc0ct4s0srcv70w.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Delfina C",
+      "rating": 5,
+      "text": "FINALMENTE una tienda que tiene talles de mujer! Me queda perfecto, no es unisex genérico. La tela es re suave. Gracias Foltz! 💙",
+      "verified": true,
+      "date": "Hace 2 días",
+      "image_1": "shopify://shop_images/replicate-prediction-va08pm2npnrma0ct4s48hrdq4m.jpg",
+      "image_2": ""
+    },
+    {
+      "name": "Tomás Luna",
+      "rating": 4,
+      "text": "Hincha de River desde chico. Esta camiseta es perfecta, todos los detalles bien hechos. Foltz entiende a los verdaderos fanáticos! 🔴⚪",
+      "verified": true,
+      "date": "Hace 2 días",
       "image_1": "",
       "image_2": ""
     }
