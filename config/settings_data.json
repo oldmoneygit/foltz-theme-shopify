@@ -66,7 +66,7 @@
         "settings": {
           "button_color": "#DAF10D",
           "secondary_color": "#1a1a1a",
-          "ternary_color": "#DAF10D",
+          "ternary_color": "#c8dc00",
           "button_icon": "chat_bubble",
           "button_text": "chat_with_us",
           "button_horizontal_position": "bottom_right",
