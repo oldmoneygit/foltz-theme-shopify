@@ -146,6 +146,16 @@
             "verified": true,
             "date": "Hace 8 días"
           }
+        },
+        "review_iracmf": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Santiago D.",
+            "rating": 5,
+            "review_text": "La camiseta de Messi es una locura! Calidad A1, envío rapidísimo. Ya le recomendé Foltz a todos mis amigos.",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
@@ -156,7 +166,8 @@
         "review_KbHUV4",
         "review_LyLdkj",
         "review_JaQRJC",
-        "review_KLKEbx"
+        "review_KLKEbx",
+        "review_iracmf"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
