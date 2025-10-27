@@ -71,7 +71,7 @@
         "review_2": {
           "type": "review",
           "settings": {
-            "customer_name": "Lucía G.",
+            "customer_name": "Lucas G.",
             "rating": 5,
             "review_text": "Excelente compra! Llegó antes de lo esperado y la calidad superó mis expectativas. La talla M me quedó perfecta.",
             "verified": true,
@@ -81,7 +81,7 @@
         "review_3": {
           "type": "review",
           "settings": {
-            "customer_name": "Diego F.",
+            "customer_name": "Tiago F.",
             "rating": 5,
             "review_text": "Es mi tercera compra y siempre perfecto. La promoción 3x1 es lo mejor! Muy buena atención al cliente también.",
             "verified": true,
