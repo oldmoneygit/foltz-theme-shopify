@@ -146,18 +146,18 @@
   ]
   ' | parse_json
 
-  assign heading = section.settings.heading | default: "Lo Que Dicen Nuestros Clientes"
-  assign subtitle = section.settings.subtitle | default: "Miles de clientes satisfechos con nuestros productos"
-  assign avg_rating = section.settings.rating | default: "4.9"
+  assign final_heading = heading | default: "Lo Que Dicen Nuestros Clientes"
+  assign final_subtitle = subtitle | default: "Miles de clientes satisfechos con nuestros productos"
+  assign final_rating = rating | default: "4.9"
   assign review_count = reviews.size
 -%}
 
-<section class="product-reviews shared-reviews" data-section-id="{{ section.id }}">
+<section class="product-reviews shared-reviews" data-section-id="{{ section_id }}">
   <div class="product-reviews__container">
     <!-- Header -->
     <div class="product-reviews__header">
-      <h2 class="product-reviews__heading">{{ heading }}</h2>
-      <p class="product-reviews__subtitle">{{ subtitle }}</p>
+      <h2 class="product-reviews__heading">{{ final_heading }}</h2>
+      <p class="product-reviews__subtitle">{{ final_subtitle }}</p>
 
       <div class="product-reviews__stats">
         <div class="product-reviews__rating">
@@ -168,7 +168,7 @@
               </svg>
             {% endfor %}
           </div>
-          <span class="product-reviews__rating-text">{{ avg_rating }}/5</span>
+          <span class="product-reviews__rating-text">{{ final_rating }}/5</span>
         </div>
         <span class="product-reviews__count">{{ review_count }} Reseñas Verificadas</span>
       </div>

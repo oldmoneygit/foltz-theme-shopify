@@ -4,7 +4,12 @@
   Funciona tanto em home quanto em páginas de produto
 {% endcomment %}
 
-{%- render 'shared-reviews' -%}
+{%- render 'shared-reviews',
+  heading: section.settings.heading,
+  subtitle: section.settings.subtitle,
+  rating: section.settings.rating,
+  section_id: section.id
+-%}
 
 <style>
 /* Reviews Section Styles */
