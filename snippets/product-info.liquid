@@ -13,24 +13,12 @@
 
       {%- when 'price' -%}
         <div class="product-info__promo-banner" {{ block.shopify_attributes }}>
-          <div class="promo-banner">
-            <div class="promo-banner__inner">
-              <div class="promo-banner__bg-blur promo-banner__bg-blur--top"></div>
-              <div class="promo-banner__bg-blur promo-banner__bg-blur--bottom"></div>
-
-              <div class="promo-banner__content">
-                <div class="promo-banner__text">
-                  <p class="promo-banner__label">PROMOCIÓN</p>
-                  <h3 class="promo-banner__title">
-                    COMPRA 1 LLEVA 3
-                  </h3>
-                </div>
-                <div class="promo-banner__badge">
-                  <span>3x1</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <img
+            src="{{ 'etiqueta-promocional.jpeg' | asset_url }}"
+            alt="Compra 1 y gana 2 camisetas gratis"
+            class="promo-banner__image"
+            loading="eager"
+          >
         </div>
 
         <div class="product-info__price" {{ block.shopify_attributes }}>
@@ -230,158 +218,26 @@
   /* Promotional Banner */
   .product-info__promo-banner {
     margin: 8px 0;
+    width: 100%;
   }
 
-  .promo-banner {
-    position: relative;
+  .promo-banner__image {
     width: 100%;
     max-width: 100%;
-    background: linear-gradient(to right, #DAF10D, #FAFF00, #DAF10D);
-    border-radius: 8px;
-    padding: 1px;
-    overflow: hidden;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
 
   @media (min-width: 768px) {
-    .promo-banner {
-      max-width: 28rem;
-      border-radius: 12px;
-    }
-  }
-
-  .promo-banner__inner {
-    background: #000000;
-    border-radius: 6px;
-    padding: 10px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  @media (min-width: 768px) {
-    .promo-banner__inner {
-      padding: 16px;
-      border-radius: 11px;
+    .promo-banner__image {
+      max-width: 450px;
     }
   }
 
   @media (min-width: 1024px) {
-    .promo-banner__inner {
-      padding: 24px;
-    }
-  }
-
-  .promo-banner__bg-blur {
-    position: absolute;
-    width: 128px;
-    height: 128px;
-    background: rgba(218, 241, 13, 0.1);
-    border-radius: 50%;
-    filter: blur(48px);
-    z-index: 0;
-  }
-
-  .promo-banner__bg-blur--top {
-    top: 0;
-    right: 0;
-  }
-
-  .promo-banner__bg-blur--bottom {
-    bottom: 0;
-    left: 0;
-    width: 96px;
-    height: 96px;
-  }
-
-  .promo-banner__content {
-    position: relative;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .promo-banner__text {
-    flex: 1;
-  }
-
-  .promo-banner__label {
-    color: #DAF10D;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: 4px;
-  }
-
-  @media (min-width: 768px) {
-    .promo-banner__label {
-      font-size: 0.875rem;
-    }
-  }
-
-  .promo-banner__title {
-    color: #FFFFFF;
-    font-size: 1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    line-height: 1.2;
-    margin: 0;
-  }
-
-  @media (min-width: 768px) {
-    .promo-banner__title {
-      font-size: 1.25rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .promo-banner__title {
-      font-size: 1.5rem;
-    }
-  }
-
-  .promo-banner__badge {
-    flex-shrink: 0;
-    width: 40px;
-    height: 40px;
-    background: #DAF10D;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  }
-
-  @media (min-width: 768px) {
-    .promo-banner__badge {
-      width: 64px;
-      height: 64px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .promo-banner__badge {
-      width: 80px;
-      height: 80px;
-    }
-  }
-
-  .promo-banner__badge span {
-    color: #000000;
-    font-size: 1rem;
-    font-weight: 900;
-  }
-
-  @media (min-width: 768px) {
-    .promo-banner__badge span {
-      font-size: 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .promo-banner__badge span {
-      font-size: 1.875rem;
+    .promo-banner__image {
+      max-width: 520px;
     }
   }
 
@@ -545,26 +401,9 @@
       padding: 3px 6px !important;
     }
 
-    /* Promo Banner: reduzir padding e fonte */
-    .promo-banner__inner {
-      padding: 8px !important;
-    }
-
-    .promo-banner__label {
-      font-size: 0.65rem !important;
-    }
-
-    .promo-banner__title {
-      font-size: 0.85rem !important;
-    }
-
-    .promo-banner__badge {
-      width: 35px !important;
-      height: 35px !important;
-    }
-
-    .promo-banner__badge span {
-      font-size: 0.85rem !important;
+    /* Promo Banner Image */
+    .promo-banner__image {
+      max-width: 100% !important;
     }
 
     /* Preço: AUMENTADO promocional, DIMINUÍDO comparado */
