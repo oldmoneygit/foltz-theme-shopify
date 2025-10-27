@@ -365,8 +365,9 @@
   padding: 1rem 0;
   cursor: grab;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
   will-change: scroll-position;
+  scroll-padding: 0 1rem;
 }
 
 .collection-carousel__track::-webkit-scrollbar {
@@ -376,7 +377,7 @@
 .collection-carousel__track.is-dragging {
   cursor: grabbing;
   scroll-behavior: auto;
-  scroll-snap-type: none;
+  scroll-snap-type: x mandatory;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -394,6 +395,8 @@
 .collection-carousel__slide {
   flex: 0 0 85%;
   min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 @media (min-width: 480px) {
@@ -770,6 +773,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const prevBtn = track.parentElement.querySelector('[data-carousel-prev]');
     const nextBtn = track.parentElement.querySelector('[data-carousel-next]');
 
+    // Detect iOS for optimal handling
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
     // Calculate optimal scroll distance based on viewport
     const getScrollDistance = () => {
       const slideWidth = track.querySelector('.collection-carousel__slide')?.offsetWidth || 300;
@@ -808,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Easing function for momentum
     const easeOutQuint = (t) => 1 + (--t) * t * t * t * t;
 
-    // Apply momentum with smooth easing
+    // Apply momentum with smooth easing - Optimized for snap points
     const applyMomentum = () => {
       if (Math.abs(velocity) < 0.1) {
         velocity = 0;
@@ -816,8 +822,8 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
-      // Friction coefficient
-      const friction = 0.92;
+      // Higher friction for faster stops (works better with scroll-snap)
+      const friction = isIOS ? 0.88 : 0.90;
       velocity *= friction;
 
       // Apply scroll
@@ -891,10 +897,11 @@ document.addEventListener('DOMContentLoaded', function() {
       lastTime = now;
     });
 
-    // Touch events (Mobile) - Enhanced for ultra-smooth experience
+    // Touch events (Mobile) - Optimized for iPhone responsiveness
     let touchStartX = 0;
     let touchScrollLeft = 0;
     let touchVelocities = [];
+    let isDragging = false;
 
     track.addEventListener('touchstart', (e) => {
       // Cancel any ongoing momentum
@@ -909,16 +916,23 @@ document.addEventListener('DOMContentLoaded', function() {
       touchVelocities = [];
       lastX = e.touches[0].pageX;
       lastTime = Date.now();
+      isDragging = false;
 
       track.classList.add('is-dragging');
     }, { passive: true });
 
     track.addEventListener('touchmove', (e) => {
       const x = e.touches[0].pageX;
-      const walk = (touchStartX - x) * 1.8; // Increased multiplier for mobile
+      const walk = (touchStartX - x) * (isIOS ? 2.2 : 1.8); // Higher multiplier for iOS
+
+      // Mark as dragging if moved more than 5px
+      if (Math.abs(walk) > 5) {
+        isDragging = true;
+      }
+
       track.scrollLeft = touchScrollLeft + walk;
 
-      // Calculate velocity with multiple samples for accuracy
+      // Simplified velocity calculation for faster response
       const now = Date.now();
       const dt = Math.max(now - lastTime, 1);
       const dx = x - lastX;
@@ -926,12 +940,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const currentVelocity = dx / dt;
       touchVelocities.push(currentVelocity);
 
-      // Keep only last 5 samples
-      if (touchVelocities.length > 5) {
+      // Keep only last 3 samples for faster response (reduced from 5)
+      if (touchVelocities.length > 3) {
         touchVelocities.shift();
       }
 
-      // Average velocity for smoothness
+      // Direct velocity calculation - less smoothing for faster response
       velocity = touchVelocities.reduce((a, b) => a + b, 0) / touchVelocities.length;
 
       lastX = x;
@@ -941,11 +955,21 @@ document.addEventListener('DOMContentLoaded', function() {
     track.addEventListener('touchend', () => {
       track.classList.remove('is-dragging');
 
-      // Apply momentum scrolling on mobile with enhanced physics
-      if (Math.abs(velocity) > 0.2) {
+      // On iOS, rely more on native scroll-snap, use lighter momentum
+      const momentumThreshold = isIOS ? 0.3 : 0.2;
+
+      if (isDragging && Math.abs(velocity) > momentumThreshold) {
         velocity *= -1; // Invert for touch
+
+        // On iOS, apply less aggressive momentum to work with scroll-snap
+        if (isIOS) {
+          velocity *= 0.7;
+        }
+
         applyMomentum();
       }
+
+      isDragging = false;
     }, { passive: true });
 
     // Prevent default drag behavior on images and links

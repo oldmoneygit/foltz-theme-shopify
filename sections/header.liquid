@@ -78,8 +78,13 @@
         </div>
       </div>
 
-      <!-- Actions: Wishlist & Cart -->
+      <!-- Actions: Search (mobile), Wishlist & Cart -->
       <div class="header-actions">
+        <!-- Mobile Search Toggle -->
+        <button class="header-icon mobile-search-toggle" id="mobile-search-toggle" aria-label="Buscar">
+          {% render 'icon-search', size: 24 %}
+        </button>
+
         <!-- Wishlist Icon -->
         <a href="/pages/favoritos" class="header-icon" aria-label="Favoritos">
           {% render 'icon-heart', size: 24 %}
@@ -185,6 +190,75 @@
           {% render 'icon-search', size: 20 %}
         </button>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Search Modal (Fullscreen) -->
+<div class="mobile-search-modal" id="mobile-search-modal">
+  <div class="mobile-search-modal__header">
+    <button class="mobile-search-modal__close" id="mobile-search-close" aria-label="Cerrar búsqueda">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="mobile-search-modal__content">
+    <form action="/search" method="get" id="mobile-search-form">
+      <div class="mobile-search-modal__input-wrapper">
+        <svg class="mobile-search-modal__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          name="q"
+          placeholder="Buscar camisetas..."
+          autocomplete="off"
+          id="mobile-search-input"
+          aria-label="Buscar productos"
+        >
+        <button type="button" class="mobile-search-modal__clear" id="mobile-search-clear" style="display: none;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="15" y1="9" x2="9" y2="15"></line>
+            <line x1="9" y1="9" x2="15" y2="15"></line>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Results -->
+    <div class="mobile-search-modal__results" id="mobile-search-results">
+      <div class="mobile-search-modal__loading" id="mobile-search-loading" style="display: none;">
+        <div class="search-spinner"></div>
+        <span>Buscando...</span>
+      </div>
+
+      <div class="mobile-search-modal__products" id="mobile-search-products">
+        <!-- Products will be inserted here -->
+      </div>
+
+      <div class="mobile-search-modal__empty" id="mobile-search-empty" style="display: none;">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <p>No se encontraron productos</p>
+        <span>Intenta con otro término de búsqueda</span>
+      </div>
+
+      <div class="mobile-search-modal__view-all" id="mobile-search-view-all" style="display: none;">
+        <a href="#" id="mobile-search-view-all-link" class="mobile-search-modal__view-all-btn">
+          Ver todos los resultados
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+      </div>
     </div>
   </div>
 </div>
@@ -531,6 +605,308 @@
   border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
 }
 
+/* Mobile Search Toggle - Only visible on mobile */
+.mobile-search-toggle {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-search-toggle {
+    display: none;
+  }
+}
+
+/* Mobile Search Modal - Fullscreen on mobile */
+.mobile-search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  z-index: 10000;
+  display: none;
+  flex-direction: column;
+  animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-search-modal.active {
+  display: flex;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-search-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-search-modal__close {
+  padding: 0.5rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-search-modal__close:hover {
+  background: rgba(218, 241, 13, 0.2);
+  border-color: #DAF10D;
+  color: #DAF10D;
+}
+
+.mobile-search-modal__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0 1rem;
+}
+
+.mobile-search-modal__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1rem;
+  padding: 0 1rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.mobile-search-modal__input-wrapper:focus-within {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #DAF10D;
+  box-shadow: 0 0 0 3px rgba(218, 241, 13, 0.1);
+}
+
+.mobile-search-modal__icon {
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+
+.mobile-search-modal__input-wrapper input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.0625rem;
+  padding: 1rem 0;
+  outline: none;
+}
+
+.mobile-search-modal__input-wrapper input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mobile-search-modal__clear {
+  padding: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.mobile-search-modal__clear:hover {
+  color: #DAF10D;
+}
+
+.mobile-search-modal__results {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 2rem;
+}
+
+.mobile-search-modal__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 24px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9375rem;
+}
+
+.mobile-search-modal__products {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-search-product {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-search-product:active {
+  transform: scale(0.98);
+  background: rgba(218, 241, 13, 0.08);
+  border-color: rgba(218, 241, 13, 0.2);
+}
+
+.mobile-search-product__image {
+  width: 72px;
+  height: 72px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-search-product__image-placeholder {
+  width: 72px;
+  height: 72px;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mobile-search-product__image-placeholder::before {
+  content: '';
+  width: 36px;
+  height: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.mobile-search-product__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.mobile-search-product__title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 0.375rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+}
+
+.mobile-search-product__price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.mobile-search-product__price-sale {
+  color: #DAF10D;
+  font-weight: 700;
+}
+
+.mobile-search-product__price-regular {
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: line-through;
+  font-size: 0.8125rem;
+}
+
+.mobile-search-modal__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 24px;
+  text-align: center;
+}
+
+.mobile-search-modal__empty svg {
+  color: rgba(255, 255, 255, 0.15);
+  margin-bottom: 1.5rem;
+}
+
+.mobile-search-modal__empty p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.mobile-search-modal__empty span {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+}
+
+.mobile-search-modal__view-all {
+  padding: 1rem 0;
+  margin-top: 1rem;
+}
+
+.mobile-search-modal__view-all-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(218, 241, 13, 0.1);
+  border: 2px solid rgba(218, 241, 13, 0.25);
+  border-radius: 1rem;
+  color: #DAF10D;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mobile-search-modal__view-all-btn:active {
+  transform: scale(0.97);
+  background: rgba(218, 241, 13, 0.15);
+  border-color: rgba(218, 241, 13, 0.4);
+}
+
+/* Scrollbar for mobile search results */
+.mobile-search-modal__results::-webkit-scrollbar {
+  width: 4px;
+}
+
+.mobile-search-modal__results::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mobile-search-modal__results::-webkit-scrollbar-thumb {
+  background: rgba(218, 241, 13, 0.3);
+  border-radius: 2px;
+}
+
 /* Desktop Dropdown Navigation */
 .header-nav-item-dropdown {
   position: relative;
@@ -750,6 +1126,178 @@
     if (e.key === 'Escape') {
       hideDropdown();
       searchInput.blur();
+    }
+  });
+})();
+
+// Mobile Search Modal JavaScript
+(function() {
+  const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+  const mobileSearchModal = document.getElementById('mobile-search-modal');
+  const mobileSearchClose = document.getElementById('mobile-search-close');
+  const mobileSearchInput = document.getElementById('mobile-search-input');
+  const mobileSearchClear = document.getElementById('mobile-search-clear');
+  const mobileSearchLoading = document.getElementById('mobile-search-loading');
+  const mobileSearchProducts = document.getElementById('mobile-search-products');
+  const mobileSearchEmpty = document.getElementById('mobile-search-empty');
+  const mobileSearchViewAll = document.getElementById('mobile-search-view-all');
+  const mobileSearchViewAllLink = document.getElementById('mobile-search-view-all-link');
+
+  let mobileDebounceTimer;
+  let mobileCurrentQuery = '';
+
+  if (!mobileSearchToggle || !mobileSearchModal) return;
+
+  // Format price with ARS currency
+  function formatMoney(cents) {
+    const amount = parseFloat(cents);
+    if (isNaN(amount)) return '$0 ARS';
+    const formatted = amount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    return `$${formatted}`;
+  }
+
+  // Fetch search results
+  async function fetchMobileSearchResults(query) {
+    try {
+      const response = await fetch(`/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=product&resources[limit]=8`);
+      if (!response.ok) throw new Error('Search failed');
+      const data = await response.json();
+      return data.resources.results.products || [];
+    } catch (error) {
+      console.error('Mobile search error:', error);
+      return [];
+    }
+  }
+
+  // Render mobile search results
+  function renderMobileResults(products, query) {
+    mobileSearchLoading.style.display = 'none';
+
+    if (products.length === 0) {
+      mobileSearchProducts.innerHTML = '';
+      mobileSearchEmpty.style.display = 'flex';
+      mobileSearchViewAll.style.display = 'none';
+      return;
+    }
+
+    mobileSearchEmpty.style.display = 'none';
+    mobileSearchViewAll.style.display = 'block';
+    mobileSearchViewAllLink.href = `/search?q=${encodeURIComponent(query)}`;
+
+    // Render products
+    mobileSearchProducts.innerHTML = products.map(product => {
+      const price = product.price;
+      const comparePrice = Math.round(price * 1.5);
+
+      let imageUrl = '';
+      if (product.image) {
+        imageUrl = product.image;
+      } else if (product.featured_image) {
+        imageUrl = product.featured_image;
+      }
+
+      if (imageUrl && !imageUrl.includes('_')) {
+        imageUrl = imageUrl.replace('.jpg', '_200x200.jpg').replace('.png', '_200x200.png').replace('.webp', '_200x200.webp');
+      }
+
+      return `
+        <a href="${product.url}" class="mobile-search-product">
+          ${imageUrl ? `<img src="${imageUrl}" alt="${product.title}" class="mobile-search-product__image" loading="lazy">` : `<div class="mobile-search-product__image-placeholder"></div>`}
+          <div class="mobile-search-product__info">
+            <div class="mobile-search-product__title">${product.title}</div>
+            <div class="mobile-search-product__price">
+              <span class="mobile-search-product__price-sale">${formatMoney(price)}</span>
+              <span class="mobile-search-product__price-regular">${formatMoney(comparePrice)}</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+  }
+
+  // Perform mobile search
+  async function performMobileSearch(query) {
+    if (query.length < 2) {
+      mobileSearchProducts.innerHTML = '';
+      mobileSearchEmpty.style.display = 'none';
+      mobileSearchViewAll.style.display = 'none';
+      return;
+    }
+
+    mobileCurrentQuery = query;
+
+    // Show loading
+    mobileSearchLoading.style.display = 'flex';
+    mobileSearchEmpty.style.display = 'none';
+    mobileSearchViewAll.style.display = 'none';
+    mobileSearchProducts.innerHTML = '';
+
+    // Fetch results
+    const products = await fetchMobileSearchResults(query);
+
+    // Update only if still current query
+    if (query === mobileCurrentQuery) {
+      renderMobileResults(products, query);
+    }
+  }
+
+  // Debounced search
+  function debouncedMobileSearch(query) {
+    clearTimeout(mobileDebounceTimer);
+    mobileDebounceTimer = setTimeout(() => {
+      performMobileSearch(query);
+    }, 300);
+  }
+
+  // Open modal
+  function openMobileSearch() {
+    mobileSearchModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Focus input after animation
+    setTimeout(() => {
+      mobileSearchInput.focus();
+    }, 100);
+  }
+
+  // Close modal
+  function closeMobileSearch() {
+    mobileSearchModal.classList.remove('active');
+    document.body.style.overflow = '';
+    mobileSearchInput.value = '';
+    mobileSearchClear.style.display = 'none';
+    mobileSearchProducts.innerHTML = '';
+    mobileSearchEmpty.style.display = 'none';
+    mobileSearchViewAll.style.display = 'none';
+  }
+
+  // Event listeners
+  mobileSearchToggle.addEventListener('click', openMobileSearch);
+  mobileSearchClose.addEventListener('click', closeMobileSearch);
+
+  mobileSearchInput.addEventListener('input', (e) => {
+    const value = e.target.value.trim();
+
+    // Show/hide clear button
+    mobileSearchClear.style.display = value.length > 0 ? 'block' : 'none';
+
+    // Perform search
+    debouncedMobileSearch(value);
+  });
+
+  mobileSearchClear.addEventListener('click', () => {
+    mobileSearchInput.value = '';
+    mobileSearchClear.style.display = 'none';
+    mobileSearchProducts.innerHTML = '';
+    mobileSearchEmpty.style.display = 'none';
+    mobileSearchViewAll.style.display = 'none';
+    mobileSearchInput.focus();
+  });
+
+  // Close on ESC key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileSearchModal.classList.contains('active')) {
+      closeMobileSearch();
     }
   });
 })();
