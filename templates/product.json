@@ -90,12 +90,25 @@
             "verified": true,
             "date": "Hace 2 semanas"
           }
+        },
+        "review_QWG4zV": {
+          "type": "review",
+          "settings": {
+            "customer_name": "Juan P.",
+            "rating": 5,
+            "review_text": "¡Excelente calidad! La camiseta llegó perfecta y el envío fue muy rápido.",
+            "image_1": "shopify://shop_images/replicate-prediction-6qtmjrem81rmc0ct4jv8pj2mrr.jpg",
+            "image_2": "shopify://shop_images/replicate-prediction-ky9az0dcknrmc0ct4jvvq2njtr.jpg",
+            "verified": true,
+            "date": "Hace 2 días"
+          }
         }
       },
       "block_order": [
         "review_1",
         "review_2",
-        "review_3"
+        "review_3",
+        "review_QWG4zV"
       ],
       "settings": {
         "heading": "Reseñas de Clientes",
