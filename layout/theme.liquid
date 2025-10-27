@@ -24,9 +24,51 @@
 
   {%- if page_description -%}
     <meta name="description" content="{{ page_description | escape }}">
+  {%- else -%}
+    <meta name="description" content="{{ shop.description | default: shop.name | escape }}">
   {%- endif -%}
 
   <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- comment -%} Open Graph / Facebook {%- endcomment -%}
+  <meta property="og:site_name" content="{{ shop.name }}">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:title" content="{{ page_title }}{{ page_title | default_errors }}">
+  <meta property="og:type" content="{% if template contains 'product' %}product{% elsif template contains 'article' %}article{% else %}website{% endif %}">
+  <meta property="og:description" content="{% if page_description %}{{ page_description | escape }}{% else %}{{ shop.description | default: shop.name | escape }}{% endif %}">
+
+  {%- if template contains 'product' and product.featured_image -%}
+    <meta property="og:image" content="http:{{ product.featured_image | img_url: '1200x1200' }}">
+    <meta property="og:image:secure_url" content="https:{{ product.featured_image | img_url: '1200x1200' }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:image:alt" content="{{ product.featured_image.alt | escape | default: product.title }}">
+
+    {%- if product.variants.first.price -%}
+      <meta property="og:price:amount" content="{{ product.variants.first.price | money_without_currency | strip }}">
+      <meta property="og:price:currency" content="{{ shop.currency }}">
+    {%- endif -%}
+  {%- elsif template contains 'article' and article.image -%}
+    <meta property="og:image" content="http:{{ article.image | img_url: '1200x1200' }}">
+    <meta property="og:image:secure_url" content="https:{{ article.image | img_url: '1200x1200' }}">
+  {%- elsif template contains 'collection' and collection.image -%}
+    <meta property="og:image" content="http:{{ collection.image | img_url: '1200x1200' }}">
+    <meta property="og:image:secure_url" content="https:{{ collection.image | img_url: '1200x1200' }}">
+  {%- endif -%}
+
+  {%- comment -%} Twitter Card {%- endcomment -%}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ page_title }}{{ page_title | default_errors }}">
+  <meta name="twitter:description" content="{% if page_description %}{{ page_description | escape }}{% else %}{{ shop.description | default: shop.name | escape }}{% endif %}">
+
+  {%- if template contains 'product' and product.featured_image -%}
+    <meta name="twitter:image" content="https:{{ product.featured_image | img_url: '1200x1200' }}">
+    <meta name="twitter:image:alt" content="{{ product.featured_image.alt | escape | default: product.title }}">
+  {%- elsif template contains 'article' and article.image -%}
+    <meta name="twitter:image" content="https:{{ article.image | img_url: '1200x1200' }}">
+  {%- elsif template contains 'collection' and collection.image -%}
+    <meta name="twitter:image" content="https:{{ collection.image | img_url: '1200x1200' }}">
+  {%- endif -%}
 
   {%- if settings.favicon != blank -%}
     <link rel="icon" type="image/png" href="{{ settings.favicon | img_url: '32x32' }}">

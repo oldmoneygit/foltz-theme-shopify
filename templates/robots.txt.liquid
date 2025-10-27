@@ -1,0 +1,46 @@
+# robots.txt - Foltz Store
+# Optimized for SEO and e-commerce best practices
+
+# Allow all search engines to crawl the site
+User-agent: *
+
+# Disallow administrative and checkout areas
+Disallow: /admin
+Disallow: /cart
+Disallow: /orders
+Disallow: /checkouts/
+Disallow: /checkout
+Disallow: /carts
+Disallow: /account
+Disallow: /collections/*sort_by*
+Disallow: /*/collections/*sort_by*
+Disallow: /collections/*+*
+Disallow: /collections/*%2B*
+Disallow: /collections/*%2b*
+Disallow: /*/collections/*+*
+Disallow: /*/collections/*%2B*
+Disallow: /*/collections/*%2b*
+Disallow: */collections/*filter*&*filter*
+Disallow: /blogs/*+*
+Disallow: /blogs/*%2B*
+Disallow: /blogs/*%2b*
+Disallow: /*/blogs/*+*
+Disallow: /*/blogs/*%2B*
+Disallow: /*/blogs/*%2b*
+Disallow: /*?*oseid=*
+Disallow: /*preview_theme_id*
+Disallow: /*preview_script_id*
+Disallow: /policies/
+Disallow: /search
+Disallow: /apple-app-site-association
+
+# Allow crawling of images and CSS/JS
+Allow: /products/*.jpg$
+Allow: /products/*.jpeg$
+Allow: /products/*.png$
+Allow: /products/*.webp$
+Allow: /assets/*.css$
+Allow: /assets/*.js$
+
+# Sitemap location
+Sitemap: {{ shop.url }}/sitemap.xml

@@ -27,120 +27,123 @@
         </div>
       </fieldset>
     {%- endfor -%}
-
-    <button type="button" class="variant-picker__size-guide" id="open-size-guide-modal">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-        <circle cx="12" cy="10" r="3"></circle>
-      </svg>
-      <span>Guía de tallas</span>
-    </button>
-  </div>
-
-  {%- comment %} Modal da Guia de Tallas {%- endcomment -%}
-  <div class="size-guide-modal" id="size-guide-modal">
-    <div class="size-guide-modal__overlay" id="size-guide-modal-overlay"></div>
-    <div class="size-guide-modal__content">
-      <button class="size-guide-modal__close" id="close-size-guide-modal" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      </button>
-
-      <div class="size-guide-modal__header">
-        <svg class="size-guide-modal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
-          <path d="m14.5 12.5 2-2"></path>
-          <path d="m11.5 9.5 2-2"></path>
-          <path d="m8.5 6.5 2-2"></path>
-          <path d="m17.5 15.5 2-2"></path>
-        </svg>
-        <h2 class="size-guide-modal__title">GUÍA DE TALLES</h2>
-        <p class="size-guide-modal__subtitle">Encontrá el talle perfecto para tu camiseta</p>
-      </div>
-
-      <div class="size-guide-modal__table-wrapper">
-        <table class="size-guide-modal__table">
-          <thead>
-            <tr>
-              <th>TALLE</th>
-              <th>PECHO (CM)</th>
-              <th>ANCHO (CM)</th>
-              <th>LARGO (CM)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="size-guide-modal__size">S</td>
-              <td>88-96</td>
-              <td>49</td>
-              <td>68</td>
-            </tr>
-            <tr>
-              <td class="size-guide-modal__size">M</td>
-              <td>96-104</td>
-              <td>52</td>
-              <td>70</td>
-            </tr>
-            <tr>
-              <td class="size-guide-modal__size">L</td>
-              <td>104-112</td>
-              <td>55</td>
-              <td>72</td>
-            </tr>
-            <tr>
-              <td class="size-guide-modal__size">XL</td>
-              <td>112-120</td>
-              <td>58</td>
-              <td>74</td>
-            </tr>
-            <tr>
-              <td class="size-guide-modal__size">XXL</td>
-              <td>120-128</td>
-              <td>61</td>
-              <td>76</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="size-guide-modal__tips">
-        <h3 class="size-guide-modal__tips-title">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 16v-4"></path>
-            <path d="M12 8h.01"></path>
-          </svg>
-          Consejos importantes
-        </h3>
-        <ul class="size-guide-modal__tips-list">
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            Nuestras camisetas tienen corte entallado tipo slim fit
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            Si preferís un calce más holgado, te recomendamos elegir un talle más grande
-          </li>
-          <li>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            Las medidas son aproximadas y pueden variar ±2cm
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 {%- endunless -%}
+
+{%- comment %} Size Guide Button and Modal - Always visible {%- endcomment -%}
+<div class="variant-picker__size-guide-wrapper">
+  <button type="button" class="variant-picker__size-guide" id="open-size-guide-modal">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+      <circle cx="12" cy="10" r="3"></circle>
+    </svg>
+    <span>Guía de tallas</span>
+  </button>
+</div>
+
+{%- comment %} Modal da Guia de Tallas {%- endcomment -%}
+<div class="size-guide-modal" id="size-guide-modal">
+  <div class="size-guide-modal__overlay" id="size-guide-modal-overlay"></div>
+  <div class="size-guide-modal__content">
+    <button class="size-guide-modal__close" id="close-size-guide-modal" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+
+    <div class="size-guide-modal__header">
+      <svg class="size-guide-modal__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path>
+        <path d="m14.5 12.5 2-2"></path>
+        <path d="m11.5 9.5 2-2"></path>
+        <path d="m8.5 6.5 2-2"></path>
+        <path d="m17.5 15.5 2-2"></path>
+      </svg>
+      <h2 class="size-guide-modal__title">GUÍA DE TALLES</h2>
+      <p class="size-guide-modal__subtitle">Encontrá el talle perfecto para tu camiseta</p>
+    </div>
+
+    <div class="size-guide-modal__table-wrapper">
+      <table class="size-guide-modal__table">
+        <thead>
+          <tr>
+            <th>TALLE</th>
+            <th>PECHO (CM)</th>
+            <th>ANCHO (CM)</th>
+            <th>LARGO (CM)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="size-guide-modal__size">S</td>
+            <td>88-96</td>
+            <td>49</td>
+            <td>68</td>
+          </tr>
+          <tr>
+            <td class="size-guide-modal__size">M</td>
+            <td>96-104</td>
+            <td>52</td>
+            <td>70</td>
+          </tr>
+          <tr>
+            <td class="size-guide-modal__size">L</td>
+            <td>104-112</td>
+            <td>55</td>
+            <td>72</td>
+          </tr>
+          <tr>
+            <td class="size-guide-modal__size">XL</td>
+            <td>112-120</td>
+            <td>58</td>
+            <td>74</td>
+          </tr>
+          <tr>
+            <td class="size-guide-modal__size">XXL</td>
+            <td>120-128</td>
+            <td>61</td>
+            <td>76</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="size-guide-modal__tips">
+      <h3 class="size-guide-modal__tips-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+        Consejos importantes
+      </h3>
+      <ul class="size-guide-modal__tips-list">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Nuestras camisetas tienen corte entallado tipo slim fit
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Si preferís un calce más holgado, te recomendamos elegir un talle más grande
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+          Las medidas son aproximadas y pueden variar ±2cm
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <style>
   .variant-picker {

@@ -138,23 +138,16 @@ async function updateLongSleevePrices() {
   // Filtrar APENAS produtos Long Sleeve
   console.log('🔍 Filtrando produtos Long Sleeve...');
   const longSleeveProducts = [];
-  const regularProducts = [];
 
   for (const product of allProducts) {
-    // Verificar se é long sleeve
-    const isLS = isLongSleeve(product);
-
-    if (isLS) {
+    if (isLongSleeve(product)) {
       longSleeveProducts.push(product);
       console.log(`   ✅ "${product.title}"`);
-    } else {
-      regularProducts.push(product);
     }
   }
 
   console.log(`\n📊 Resumo:`);
-  console.log(`   ✅ Produtos Long Sleeve encontrados: ${longSleeveProducts.length}`);
-  console.log(`   ⏭️  Produtos regulares (ignorados): ${regularProducts.length}\n`);
+  console.log(`   ✅ Produtos Long Sleeve encontrados: ${longSleeveProducts.length}\n`);
 
   if (longSleeveProducts.length === 0) {
     console.log('⚠️  Nenhum produto Long Sleeve encontrado.\n');
