@@ -242,6 +242,74 @@
     margin-bottom: 32px;
   }
 
+  .search-main__cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 32px;
+    background: var(--color-brand-yellow);
+    color: #000000;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-brand-yellow);
+  }
+
+  .search-main__cta-button:hover {
+    background: transparent;
+    color: var(--color-brand-yellow);
+    transform: translateY(-2px);
+  }
+
+  /* Loading state for search */
+  .search-main__loading {
+    display: none;
+    text-align: center;
+    padding: 60px 24px;
+    color: var(--color-text-subdued);
+  }
+
+  .search-main__loading.active {
+    display: block;
+  }
+
+  .search-main__spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(218, 241, 13, 0.2);
+    border-top-color: var(--color-brand-yellow);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Highlight search terms in results */
+  .search-main mark {
+    background: rgba(218, 241, 13, 0.3);
+    color: var(--color-brand-yellow);
+    padding: 2px 4px;
+    border-radius: 4px;
+  }
+
+  /* Accessibility: visually hidden class for screen readers */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   @media (max-width: 768px) {
     .search-main {
       padding: 20px 0 60px;
@@ -435,7 +503,7 @@
           <h2 class="search-main__empty-title">{{ 'search.general.no_results_title' | t }}</h2>
           <p class="search-main__empty-text">{{ 'search.general.no_results_message' | t }}</p>
 
-          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">
+          <a href="{{ routes.all_products_collection_url }}" class="search-main__cta-button">
             {{ 'search.general.view_all' | t }}
           </a>
         </div>
@@ -456,33 +524,127 @@
 
 <script>
   (function() {
+    // Filter functionality
     const filterButtons = document.querySelectorAll('[data-filter]');
     const sections = document.querySelectorAll('[data-section]');
 
-    if (filterButtons.length === 0 || sections.length === 0) return;
+    if (filterButtons.length > 0 && sections.length > 0) {
+      filterButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
 
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
+          // Update active button
+          filterButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
 
-        // Update active button
-        filterButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        // Show/hide sections
-        if (filter === 'all') {
-          sections.forEach(section => section.classList.add('active'));
-        } else {
+          // Show/hide sections with animation
           sections.forEach(section => {
-            if (section.dataset.section === filter) {
+            if (filter === 'all') {
               section.classList.add('active');
             } else {
-              section.classList.remove('active');
+              if (section.dataset.section === filter) {
+                section.classList.add('active');
+              } else {
+                section.classList.remove('active');
+              }
             }
           });
-        }
+
+          // Scroll to results smoothly
+          if (filter !== 'all') {
+            const activeSection = document.querySelector(`[data-section="${filter}"]`);
+            if (activeSection) {
+              activeSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+          }
+        });
       });
+    }
+
+    // Auto-focus search input on page load (only if no search was performed)
+    const searchInput = document.querySelector('.search-main__input');
+    const searchPerformed = {{ search.performed | json }};
+
+    if (searchInput && !searchPerformed) {
+      // Small delay to ensure smooth loading
+      setTimeout(() => {
+        searchInput.focus();
+      }, 300);
+    }
+
+    // Add keyboard shortcut (Ctrl/Cmd + K) to focus search
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        if (searchInput) {
+          searchInput.focus();
+          searchInput.select();
+        }
+      }
     });
+
+    // Clear button for search input
+    if (searchInput && searchInput.value) {
+      const inputWrapper = searchInput.closest('.search-main__input-wrapper');
+      const submitButton = inputWrapper.querySelector('.search-main__submit');
+
+      // Create clear button
+      const clearButton = document.createElement('button');
+      clearButton.type = 'button';
+      clearButton.className = 'search-main__clear';
+      clearButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      clearButton.setAttribute('aria-label', 'Limpiar búsqueda');
+
+      // Add styles for clear button
+      clearButton.style.cssText = `
+        position: absolute;
+        right: 60px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: transparent;
+        border: none;
+        color: var(--color-text-subdued);
+        cursor: pointer;
+        transition: color 0.3s ease;
+      `;
+
+      inputWrapper.insertBefore(clearButton, submitButton);
+
+      clearButton.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        clearButton.style.display = 'none';
+      });
+
+      clearButton.addEventListener('mouseenter', () => {
+        clearButton.style.color = 'var(--color-brand-yellow)';
+      });
+
+      clearButton.addEventListener('mouseleave', () => {
+        clearButton.style.color = 'var(--color-text-subdued)';
+      });
+
+      // Show/hide clear button based on input value
+      searchInput.addEventListener('input', () => {
+        clearButton.style.display = searchInput.value ? 'flex' : 'none';
+      });
+    }
+
+    // Announce results count to screen readers
+    const resultsCount = {{ search.results_count | json }};
+    if (searchPerformed && resultsCount !== null) {
+      const announcement = document.createElement('div');
+      announcement.setAttribute('role', 'status');
+      announcement.setAttribute('aria-live', 'polite');
+      announcement.className = 'visually-hidden';
+      announcement.textContent = `{{ 'search.general.results_count' | t: count: search.results_count }}`;
+      document.body.appendChild(announcement);
+    }
   })();
 </script>
 
