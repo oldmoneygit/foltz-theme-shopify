@@ -1,48 +1,1030 @@
-<section style="background:#000;min-height:100vh;padding:2rem 1rem;color:#fff">
-<div style="max-width:1280px;margin:0 auto"><h1 style="font-size:3rem;font-weight:900;margin-bottom:2rem">Seguimiento de <span style="color:#D4FF00">Pedido</span></h1>
-<p style="color:rgba(255,255,255,0.8);font-size:1.25rem;margin-bottom:3rem;text-align:center">Rastrea tu pedido en tiempo real</p>
-<div style="max-width:48rem;margin:0 auto;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:3rem">
-<form id="tracking-form" onsubmit="handleTrackingSubmit(event)" style="margin-bottom:2rem">
-<label style="display:block;color:#fff;font-weight:700;margin-bottom:1rem;font-size:1.125rem">Número de Seguimiento</label>
-<div style="position:relative;margin-bottom:1rem">
-<input type="text" id="tracking-number" required placeholder="Ej: FZ123456" style="width:100%;padding:1rem;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);border-radius:0.5rem;color:#fff;font-size:1.125rem">
-</div>
-<p style="color:rgba(255,255,255,0.4);font-size:0.875rem;margin-bottom:1.5rem">Puedes encontrar tu número de seguimiento en el email de confirmación</p>
-<button type="submit" style="width:100%;background:#D4FF00;color:#000;padding:1rem;border-radius:0.5rem;font-weight:900;font-size:1.125rem;text-transform:uppercase;border:none;cursor:pointer">Rastrear Pedido</button>
-</form>
-<div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:2rem">
-<p style="color:rgba(255,255,255,0.6);font-size:0.875rem;margin-bottom:1rem">Para probar, usa estos números de ejemplo:</p>
-<div style="display:flex;gap:0.5rem;flex-wrap:wrap">
-<button onclick="document.getElementById('tracking-number').value='FZ123456'" style="padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.25rem;color:#D4FF00;font-size:0.875rem;cursor:pointer">FZ123456 (Entregado)</button>
-<button onclick="document.getElementById('tracking-number').value='FZ789012'" style="padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:0.25rem;color:#D4FF00;font-size:0.875rem;cursor:pointer">FZ789012 (En Camino)</button>
-</div></div></div>
-<div id="tracking-result" style="display:none;max-width:64rem;margin:3rem auto">
-<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:2rem;margin-bottom:1.5rem">
-<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem">
-<div><h2 style="font-size:1.875rem;font-weight:700;margin-bottom:0.5rem">Pedido <span id="order-number"></span></h2>
-<p style="color:rgba(255,255,255,0.6)">Fecha: <span id="order-date"></span></p></div>
-<div id="order-status-badge" style="background:rgba(212,255,0,0.1);border:1px solid rgba(212,255,0,0.3);color:#D4FF00;padding:0.5rem 1rem;border-radius:0.5rem;font-weight:700"></div></div>
-<div style="background:rgba(0,0,0,0.5);padding:1rem;border-radius:0.5rem;margin-bottom:1rem"><h3 style="margin-bottom:1rem">Productos:</h3>
-<div id="order-items"></div></div>
-<div id="estimated-delivery" style="background:rgba(212,255,0,0.1);border:1px solid rgba(212,255,0,0.3);padding:1rem;border-radius:0.5rem"></div></div>
-<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:1rem;padding:2rem">
-<h3 style="font-size:1.5rem;font-weight:700;margin-bottom:2rem">Estado del Envío</h3>
-<div id="timeline"></div></div></div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin-top:3rem">
-<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
-<div style="font-size:2.5rem;margin-bottom:1rem">⏰</div><h3 style="margin-bottom:0.5rem">Tiempo de Envío</h3>
-<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">3-5 días hábiles a toda Argentina</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
-<div style="font-size:2.5rem;margin-bottom:1rem">🚚</div><h3 style="margin-bottom:0.5rem">Envío Gratis</h3>
-<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">En todos los pedidos sin mínimo</p></div>
-<div style="background:rgba(255,255,255,0.05);padding:2rem;border-radius:1rem;text-align:center">
-<div style="font-size:2.5rem;margin-bottom:1rem">📦</div><h3 style="margin-bottom:0.5rem">Embalaje Seguro</h3>
-<p style="color:rgba(255,255,255,0.7);font-size:0.875rem">Protección total durante el transporte</p></div></div></div>
+<section class="seguimiento-page-section">
+  <div class="seguimiento-page__container">
+
+    <!-- Hero Section -->
+    <div class="seguimiento-page__hero">
+      <div class="seguimiento-page__header-icon-wrapper">
+        <svg class="seguimiento-page__header-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.29 7 12 12 20.71 7"></polyline>
+          <line x1="12" y1="22" x2="12" y2="12"></line>
+        </svg>
+      </div>
+      <h1 class="seguimiento-page__title">
+        SEGUIMIENTO DE <span class="seguimiento-page__title-highlight">PEDIDO</span>
+      </h1>
+      <p class="seguimiento-page__subtitle">
+        Rastrea tu pedido en tiempo real y conoce su ubicación exacta
+      </p>
+    </div>
+
+    <!-- Search Section -->
+    <div class="seguimiento-page__search-wrapper">
+      <div class="seguimiento-page__search-box">
+        <form id="tracking-form" class="seguimiento-page__form">
+          <div class="seguimiento-page__form-group">
+            <label for="tracking-number" class="seguimiento-page__label">
+              Número de Seguimiento
+            </label>
+            <div class="seguimiento-page__input-wrapper">
+              <input
+                type="text"
+                id="tracking-number"
+                class="seguimiento-page__input"
+                placeholder="Ej: FZ123456"
+                required
+              />
+              <svg class="seguimiento-page__input-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.29 7 12 12 20.71 7"></polyline>
+                <line x1="12" y1="22" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <p class="seguimiento-page__input-hint">
+              Puedes encontrar tu número de seguimiento en el email de confirmación
+            </p>
+          </div>
+
+          <button type="submit" class="seguimiento-page__submit-btn">
+            <svg class="seguimiento-page__btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.3-4.3"></path>
+            </svg>
+            <span class="seguimiento-page__btn-text">Rastrear Pedido</span>
+          </button>
+        </form>
+
+        <!-- Demo Tracking Numbers -->
+        <div class="seguimiento-page__demo-section">
+          <p class="seguimiento-page__demo-label">
+            Para probar, usa estos números de ejemplo:
+          </p>
+          <div class="seguimiento-page__demo-buttons">
+            <button
+              type="button"
+              class="seguimiento-page__demo-btn"
+              onclick="document.getElementById('tracking-number').value='FZ123456'"
+            >
+              FZ123456 (Entregado)
+            </button>
+            <button
+              type="button"
+              class="seguimiento-page__demo-btn"
+              onclick="document.getElementById('tracking-number').value='FZ789012'"
+            >
+              FZ789012 (En Camino)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Not Found Section -->
+    <div id="not-found" class="seguimiento-page__not-found" style="display: none;">
+      <svg class="seguimiento-page__not-found-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+      <h3 class="seguimiento-page__not-found-title">
+        Pedido No Encontrado
+      </h3>
+      <p class="seguimiento-page__not-found-text">
+        No pudimos encontrar un pedido con este número de seguimiento.
+      </p>
+      <p class="seguimiento-page__not-found-hint">
+        Verifica que el número sea correcto o contacta a nuestro equipo de soporte.
+      </p>
+    </div>
+
+    <!-- Order Results -->
+    <div id="order-results" class="seguimiento-page__results" style="display: none;">
+
+      <!-- Order Summary Card -->
+      <div class="seguimiento-page__order-card">
+        <div class="seguimiento-page__order-header">
+          <div class="seguimiento-page__order-info">
+            <h2 class="seguimiento-page__order-title">
+              Pedido <span id="order-number"></span>
+            </h2>
+            <p class="seguimiento-page__order-date">
+              Fecha de pedido: <span id="order-date"></span>
+            </p>
+          </div>
+          <div id="order-status-badge" class="seguimiento-page__status-badge"></div>
+        </div>
+
+        <!-- Order Items -->
+        <div class="seguimiento-page__items-box">
+          <h3 class="seguimiento-page__items-title">Productos:</h3>
+          <div id="order-items" class="seguimiento-page__items-list"></div>
+        </div>
+
+        <!-- Estimated Delivery -->
+        <div id="estimated-delivery" class="seguimiento-page__delivery-banner" style="display: none;">
+          <svg class="seguimiento-page__delivery-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          <p class="seguimiento-page__delivery-text">
+            Entrega estimada: <span id="delivery-date"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Timeline Card -->
+      <div class="seguimiento-page__timeline-card">
+        <h3 class="seguimiento-page__timeline-title">Estado del Envío</h3>
+
+        <div class="seguimiento-page__timeline-wrapper">
+          <!-- Vertical line -->
+          <div class="seguimiento-page__timeline-line"></div>
+
+          <div id="timeline" class="seguimiento-page__timeline"></div>
+        </div>
+      </div>
+
+      <!-- Help Section -->
+      <div class="seguimiento-page__help-card">
+        <svg class="seguimiento-page__help-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <h3 class="seguimiento-page__help-title">¿Necesitas Ayuda?</h3>
+        <p class="seguimiento-page__help-text">
+          Si tienes alguna pregunta sobre tu pedido, no dudes en contactarnos. Nuestro equipo está disponible para ayudarte.
+        </p>
+        <a href="/pages/contacto" class="seguimiento-page__help-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+          Contactar Soporte
+        </a>
+      </div>
+    </div>
+
+    <!-- Info Cards (shown when no search results) -->
+    <div id="info-cards" class="seguimiento-page__info-grid">
+      <div class="seguimiento-page__info-card">
+        <svg class="seguimiento-page__info-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        <h3 class="seguimiento-page__info-title">Tiempo de Envío</h3>
+        <p class="seguimiento-page__info-text">3-5 días hábiles a toda Argentina</p>
+      </div>
+
+      <div class="seguimiento-page__info-card">
+        <svg class="seguimiento-page__info-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+          <path d="M15 18H9"></path>
+          <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+          <circle cx="17" cy="18" r="2"></circle>
+          <circle cx="7" cy="18" r="2"></circle>
+        </svg>
+        <h3 class="seguimiento-page__info-title">Envío Gratis</h3>
+        <p class="seguimiento-page__info-text">En todos los pedidos sin mínimo</p>
+      </div>
+
+      <div class="seguimiento-page__info-card">
+        <svg class="seguimiento-page__info-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+          <polyline points="3.29 7 12 12 20.71 7"></polyline>
+          <line x1="12" y1="22" x2="12" y2="12"></line>
+        </svg>
+        <h3 class="seguimiento-page__info-title">Embalaje Seguro</h3>
+        <p class="seguimiento-page__info-text">Protección total durante el transporte</p>
+      </div>
+    </div>
+
+  </div>
 </section>
+
+<style>
+.seguimiento-page-section {
+  background: #000;
+  min-height: 100vh;
+  padding: 2rem 0 4rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.seguimiento-page-section::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1000px;
+  height: 1000px;
+  background: radial-gradient(circle, rgba(218, 241, 13, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.seguimiento-page__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Hero */
+.seguimiento-page__hero {
+  padding: 2rem 0 3rem;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.seguimiento-page__header-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(218, 241, 13, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px 10px rgba(218, 241, 13, 0);
+  }
+}
+
+.seguimiento-page__header-icon {
+  color: #DAF10D;
+}
+
+.seguimiento-page__title {
+  font-size: 2rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__title {
+    font-size: 3rem;
+  }
+}
+
+.seguimiento-page__title-highlight {
+  color: #DAF10D;
+}
+
+.seguimiento-page__subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Search Section */
+.seguimiento-page__search-wrapper {
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.seguimiento-page__search-box {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .seguimiento-page__search-box {
+    padding: 2.5rem;
+  }
+}
+
+.seguimiento-page__search-box:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.seguimiento-page__form-group {
+  margin-bottom: 1.5rem;
+}
+
+.seguimiento-page__label {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.seguimiento-page__input-wrapper {
+  position: relative;
+}
+
+.seguimiento-page__input {
+  width: 100%;
+  padding: 1rem 3.5rem 1rem 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 1.125rem;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.seguimiento-page__input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.seguimiento-page__input:focus {
+  outline: none;
+  border-color: #DAF10D;
+  background: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 0 4px rgba(218, 241, 13, 0.1);
+}
+
+.seguimiento-page__input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  transition: color 0.3s ease;
+}
+
+.seguimiento-page__input:focus + .seguimiento-page__input-icon {
+  color: #DAF10D;
+}
+
+.seguimiento-page__input-hint {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+  margin-top: 0.75rem;
+  line-height: 1.5;
+}
+
+.seguimiento-page__submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  font-weight: 900;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 10px 25px rgba(218, 241, 13, 0.3);
+}
+
+.seguimiento-page__submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(218, 241, 13, 0.4);
+  background: linear-gradient(135deg, #FAFF00, #DAF10D);
+}
+
+.seguimiento-page__submit-btn:active {
+  transform: translateY(0);
+}
+
+.seguimiento-page__btn-icon {
+  flex-shrink: 0;
+}
+
+/* Demo Section */
+.seguimiento-page__demo-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.seguimiento-page__demo-label {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.seguimiento-page__demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.seguimiento-page__demo-btn {
+  padding: 0.625rem 1rem;
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.5rem;
+  color: #DAF10D;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.seguimiento-page__demo-btn:hover {
+  background: linear-gradient(to bottom right, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  border-color: rgba(218, 241, 13, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(218, 241, 13, 0.2);
+}
+
+/* Not Found */
+.seguimiento-page__not-found {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  background: linear-gradient(to bottom right, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  border-radius: 1.5rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  backdrop-filter: blur(20px);
+}
+
+.seguimiento-page__not-found-icon {
+  color: #EF4444;
+  margin: 0 auto 1.5rem;
+}
+
+.seguimiento-page__not-found-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__not-found-title {
+    font-size: 1.875rem;
+  }
+}
+
+.seguimiento-page__not-found-text {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.seguimiento-page__not-found-hint {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+/* Results */
+.seguimiento-page__results {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Order Card */
+.seguimiento-page__order-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__order-card {
+    padding: 2.5rem;
+  }
+}
+
+.seguimiento-page__order-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.seguimiento-page__order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.seguimiento-page__order-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__order-title {
+    font-size: 1.875rem;
+  }
+}
+
+.seguimiento-page__order-date {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.seguimiento-page__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(10px);
+}
+
+.seguimiento-page__status-badge--delivered {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+  border: 2px solid rgba(16, 185, 129, 0.4);
+  color: #10B981;
+}
+
+.seguimiento-page__status-badge--shipped {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.2), rgba(218, 241, 13, 0.1));
+  border: 2px solid rgba(218, 241, 13, 0.4);
+  color: #DAF10D;
+}
+
+.seguimiento-page__items-box {
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.seguimiento-page__items-title {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seguimiento-page__items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.seguimiento-page__item {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9375rem;
+  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  font-weight: 500;
+}
+
+.seguimiento-page__delivery-banner {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.seguimiento-page__delivery-icon {
+  color: #DAF10D;
+  flex-shrink: 0;
+}
+
+.seguimiento-page__delivery-text {
+  color: #DAF10D;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  margin: 0;
+}
+
+/* Timeline */
+.seguimiento-page__timeline-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__timeline-card {
+    padding: 2.5rem;
+  }
+}
+
+.seguimiento-page__timeline-card:hover {
+  border-color: rgba(218, 241, 13, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.seguimiento-page__timeline-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__timeline-title {
+    font-size: 1.5rem;
+  }
+}
+
+.seguimiento-page__timeline-wrapper {
+  position: relative;
+}
+
+.seguimiento-page__timeline-line {
+  position: absolute;
+  left: 0.875rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, rgba(218, 241, 13, 0.4) 0%, rgba(255, 255, 255, 0.1) 100%);
+  border-radius: 10px;
+}
+
+.seguimiento-page__timeline {
+  position: relative;
+}
+
+.seguimiento-page__timeline-item {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.seguimiento-page__timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.seguimiento-page__timeline-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.seguimiento-page__timeline-icon--completed {
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  box-shadow: 0 0 20px rgba(218, 241, 13, 0.5);
+}
+
+.seguimiento-page__timeline-icon--pending {
+  background: rgba(0, 0, 0, 0.6);
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.seguimiento-page__timeline-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.seguimiento-page__timeline-content {
+  flex: 1;
+  padding-top: 0.125rem;
+}
+
+.seguimiento-page__timeline-text {
+  font-weight: 700;
+  margin-bottom: 0.375rem;
+  font-size: 0.9375rem;
+  letter-spacing: 0.02em;
+}
+
+.seguimiento-page__timeline-text--completed {
+  color: #fff;
+}
+
+.seguimiento-page__timeline-text--pending {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.seguimiento-page__timeline-date {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.seguimiento-page__timeline-date--completed {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.seguimiento-page__timeline-date--pending {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Help Card */
+.seguimiento-page__help-card {
+  background: linear-gradient(135deg, rgba(218, 241, 13, 0.15), rgba(218, 241, 13, 0.05));
+  border: 2px solid rgba(218, 241, 13, 0.3);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(20px);
+}
+
+@media (min-width: 768px) {
+  .seguimiento-page__help-card {
+    padding: 2.5rem;
+  }
+}
+
+.seguimiento-page__help-card:hover {
+  border-color: rgba(218, 241, 13, 0.5);
+  box-shadow: 0 20px 40px rgba(218, 241, 13, 0.2);
+  transform: translateY(-4px);
+}
+
+.seguimiento-page__help-icon {
+  color: #DAF10D;
+  margin: 0 auto 1.5rem;
+}
+
+.seguimiento-page__help-title {
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seguimiento-page__help-text {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  font-size: 0.9375rem;
+}
+
+.seguimiento-page__help-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #DAF10D, #FAFF00);
+  color: #000;
+  padding: 0.875rem 1.75rem;
+  border-radius: 0.75rem;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 25px rgba(218, 241, 13, 0.3);
+}
+
+.seguimiento-page__help-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(218, 241, 13, 0.4);
+  background: linear-gradient(135deg, #FAFF00, #DAF10D);
+}
+
+/* Info Grid */
+.seguimiento-page__info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+
+@media (min-width: 640px) {
+  .seguimiento-page__info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .seguimiento-page__info-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.seguimiento-page__info-card {
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.seguimiento-page__info-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(218, 241, 13, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+}
+
+.seguimiento-page__info-icon {
+  color: #DAF10D;
+  margin: 0 auto 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.seguimiento-page__info-card:hover .seguimiento-page__info-icon {
+  transform: scale(1.1);
+}
+
+.seguimiento-page__info-title {
+  font-weight: 900;
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.seguimiento-page__info-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+</style>
+
 <script>
-const orders={'FZ123456':{number:'FZ123456',status:'delivered',statusText:'Entregado',date:'15/10/2024',est:'12-15/10/2024',items:[{name:'Real Madrid 24/25 Home',size:'L',qty:1}],timeline:[{text:'Pedido Confirmado',date:'10/10/2024 09:30',done:true},{text:'Preparando Envío',date:'10/10/2024 14:20',done:true},{text:'En Camino',date:'11/10/2024 08:15',done:true},{text:'En Reparto',date:'15/10/2024 07:00',done:true},{text:'Entregado',date:'15/10/2024 11:45',done:true}]},'FZ789012':{number:'FZ789012',status:'shipped',statusText:'En Camino',date:'23/10/2024',est:'26-28/10/2024',items:[{name:'Barcelona 24/25 Away',size:'M',qty:1},{name:'PSG 24/25 Home',size:'XL',qty:1}],timeline:[{text:'Pedido Confirmado',date:'23/10/2024 10:15',done:true},{text:'Preparando Envío',date:'23/10/2024 16:30',done:true},{text:'En Camino',date:'24/10/2024 09:00',done:true},{text:'En Reparto',date:'Pendiente',done:false},{text:'Entregado',date:'Pendiente',done:false}]}};
-function handleTrackingSubmit(e){e.preventDefault();const num=document.getElementById('tracking-number').value.toUpperCase();const order=orders[num];if(!order){alert('Pedido no encontrado');return;}
-document.getElementById('order-number').textContent='#'+order.number;document.getElementById('order-date').textContent=order.date;document.getElementById('order-status-badge').textContent=order.statusText;let itemsHtml='';order.items.forEach(item=>{itemsHtml+=`<div style="font-size:0.875rem;margin-bottom:0.5rem">${item.qty}x ${item.name} - Talla ${item.size}</div>`;});document.getElementById('order-items').innerHTML=itemsHtml;if(order.status!=='delivered'){document.getElementById('estimated-delivery').innerHTML=`<p style="color:#D4FF00;font-weight:700">📦 Entrega estimada: ${order.est}</p>`;document.getElementById('estimated-delivery').style.display='block';}else{document.getElementById('estimated-delivery').style.display='none';}
-let timelineHtml='';order.timeline.forEach(t=>{const color=t.done?'#D4FF00':'rgba(255,255,255,0.1)';const textColor=t.done?'#fff':'rgba(255,255,255,0.4)';timelineHtml+=`<div style="display:flex;gap:1rem;margin-bottom:1.5rem"><div style="width:1.5rem;height:1.5rem;background:${color};border-radius:50%;flex-shrink:0"></div><div style="flex:1"><h4 style="color:${textColor};font-weight:700;margin-bottom:0.25rem">${t.text}</h4><p style="color:${textColor};font-size:0.875rem">${t.date}</p></div></div>`;});document.getElementById('timeline').innerHTML=timelineHtml;document.getElementById('tracking-result').style.display='block';}
+// Mock order data
+const mockOrders = {
+  'FZ123456': {
+    number: 'FZ123456',
+    status: 'delivered',
+    statusText: 'Entregado',
+    date: '15/10/2024',
+    estimatedDelivery: '12-15/10/2024',
+    items: [
+      { name: 'Real Madrid 24/25 Home', size: 'L', quantity: 1 }
+    ],
+    timeline: [
+      { text: 'Pedido Confirmado', date: '10/10/2024 09:30', completed: true },
+      { text: 'Preparando Envío', date: '10/10/2024 14:20', completed: true },
+      { text: 'En Camino', date: '11/10/2024 08:15', completed: true },
+      { text: 'En Reparto', date: '15/10/2024 07:00', completed: true },
+      { text: 'Entregado', date: '15/10/2024 11:45', completed: true }
+    ]
+  },
+  'FZ789012': {
+    number: 'FZ789012',
+    status: 'shipped',
+    statusText: 'En Camino',
+    date: '23/10/2024',
+    estimatedDelivery: '26-28/10/2024',
+    items: [
+      { name: 'Barcelona 24/25 Away', size: 'M', quantity: 1 },
+      { name: 'PSG 24/25 Home', size: 'XL', quantity: 1 }
+    ],
+    timeline: [
+      { text: 'Pedido Confirmado', date: '23/10/2024 10:15', completed: true },
+      { text: 'Preparando Envío', date: '23/10/2024 16:30', completed: true },
+      { text: 'En Camino', date: '24/10/2024 09:00', completed: true },
+      { text: 'En Reparto', date: 'Pendiente', completed: false },
+      { text: 'Entregado', date: 'Pendiente', completed: false }
+    ]
+  }
+};
+
+// Handle form submission
+document.getElementById('tracking-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const trackingNumber = document.getElementById('tracking-number').value.toUpperCase();
+  const order = mockOrders[trackingNumber];
+
+  // Hide info cards
+  document.getElementById('info-cards').style.display = 'none';
+
+  if (!order) {
+    // Show not found
+    document.getElementById('not-found').style.display = 'block';
+    document.getElementById('order-results').style.display = 'none';
+    return;
+  }
+
+  // Hide not found
+  document.getElementById('not-found').style.display = 'none';
+
+  // Populate order data
+  document.getElementById('order-number').textContent = '#' + order.number;
+  document.getElementById('order-date').textContent = order.date;
+
+  // Status badge
+  const badge = document.getElementById('order-status-badge');
+  badge.textContent = order.statusText;
+  badge.className = 'seguimiento-page__status-badge';
+  if (order.status === 'delivered') {
+    badge.classList.add('seguimiento-page__status-badge--delivered');
+  } else {
+    badge.classList.add('seguimiento-page__status-badge--shipped');
+  }
+
+  // Items
+  const itemsHtml = order.items.map(item =>
+    `<div class="seguimiento-page__item">${item.quantity}x ${item.name} - Talla ${item.size}</div>`
+  ).join('');
+  document.getElementById('order-items').innerHTML = itemsHtml;
+
+  // Estimated delivery
+  const deliveryBanner = document.getElementById('estimated-delivery');
+  if (order.status !== 'delivered') {
+    document.getElementById('delivery-date').textContent = order.estimatedDelivery;
+    deliveryBanner.style.display = 'flex';
+  } else {
+    deliveryBanner.style.display = 'none';
+  }
+
+  // Timeline
+  const timelineHtml = order.timeline.map(item => `
+    <div class="seguimiento-page__timeline-item">
+      <div class="seguimiento-page__timeline-icon ${item.completed ? 'seguimiento-page__timeline-icon--completed' : 'seguimiento-page__timeline-icon--pending'}">
+        ${item.completed
+          ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+          : '<div class="seguimiento-page__timeline-dot"></div>'
+        }
+      </div>
+      <div class="seguimiento-page__timeline-content">
+        <h4 class="seguimiento-page__timeline-text ${item.completed ? 'seguimiento-page__timeline-text--completed' : 'seguimiento-page__timeline-text--pending'}">
+          ${item.text}
+        </h4>
+        <p class="seguimiento-page__timeline-date ${item.completed ? 'seguimiento-page__timeline-date--completed' : 'seguimiento-page__timeline-date--pending'}">
+          ${item.date}
+        </p>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('timeline').innerHTML = timelineHtml;
+
+  // Show results
+  document.getElementById('order-results').style.display = 'block';
+
+  // Scroll to results
+  document.getElementById('order-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 </script>
-{% schema %}{"name":"Seguimiento","settings":[],"presets":[{"name":"Seguimiento"}]}{% endschema %}
+
+{% schema %}
+{
+  "name": "Seguimiento",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Seguimiento"
+    }
+  ]
+}
+{% endschema %}
