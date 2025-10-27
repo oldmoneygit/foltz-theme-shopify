@@ -125,7 +125,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
     overflow: visible;
   `;
   button.id = 'foltz-widget-button';
@@ -144,8 +143,14 @@
       }
     }
 
+    #foltz-widget-button {
+      position: relative;
+    }
+
     .foltz-widget-pulse {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       border-radius: 50%;
