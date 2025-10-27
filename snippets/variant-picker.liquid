@@ -575,39 +575,42 @@
 
 <script>
 (function() {
+  // Variant Picker Logic - only runs if variant picker exists
   const variantPicker = document.querySelector('.variant-picker');
-  if (!variantPicker) return;
 
-  const form = document.querySelector('#{{ product_form_id }}');
-  if (!form) return;
+  if (variantPicker) {
+    const form = document.querySelector('#{{ product_form_id }}');
 
-  const radioButtons = variantPicker.querySelectorAll('.variant-radio');
-  const selectedDisplays = variantPicker.querySelectorAll('.variant-picker__selected');
+    if (form) {
+      const radioButtons = variantPicker.querySelectorAll('.variant-radio');
+      const selectedDisplays = variantPicker.querySelectorAll('.variant-picker__selected');
 
-  radioButtons.forEach((radio, index) => {
-    radio.addEventListener('change', function() {
-      if (this.checked) {
-        // Update selected display
-        const fieldset = this.closest('.variant-picker__option');
-        const selectedDisplay = fieldset.querySelector('.variant-picker__selected');
-        if (selectedDisplay) {
-          selectedDisplay.textContent = this.value;
-        }
+      radioButtons.forEach((radio, index) => {
+        radio.addEventListener('change', function() {
+          if (this.checked) {
+            // Update selected display
+            const fieldset = this.closest('.variant-picker__option');
+            const selectedDisplay = fieldset.querySelector('.variant-picker__selected');
+            if (selectedDisplay) {
+              selectedDisplay.textContent = this.value;
+            }
 
-        // Trigger variant change event
-        const event = new CustomEvent('variant:changed', {
-          bubbles: true,
-          detail: {
-            optionName: this.name,
-            optionValue: this.value
+            // Trigger variant change event
+            const event = new CustomEvent('variant:changed', {
+              bubbles: true,
+              detail: {
+                optionName: this.name,
+                optionValue: this.value
+              }
+            });
+            document.dispatchEvent(event);
           }
         });
-        document.dispatchEvent(event);
-      }
-    });
-  });
+      });
+    }
+  }
 
-  // Size Guide Modal Control
+  // Size Guide Modal Control - always runs
   const sizeGuideModal = document.getElementById('size-guide-modal');
   const openModalBtn = document.getElementById('open-size-guide-modal');
   const closeModalBtn = document.getElementById('close-size-guide-modal');
@@ -621,7 +624,9 @@
       // Add focus trap
       sizeGuideModal.setAttribute('role', 'dialog');
       sizeGuideModal.setAttribute('aria-modal', 'true');
-      closeModalBtn.focus();
+      if (closeModalBtn) {
+        closeModalBtn.focus();
+      }
     }
   }
 
