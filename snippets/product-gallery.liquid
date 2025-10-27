@@ -2,6 +2,16 @@
 {%- assign first_image = product.featured_image | default: product.images.first -%}
 
 <div class="product-gallery">
+  {%- comment -%} Etiqueta Promocional {%- endcomment -%}
+  <div class="promo-tag">
+    <img
+      src="{{ 'etiqueta-promocional.jpeg' | asset_url }}"
+      alt="Compra 1 y gana 2 camisetas gratis"
+      class="promo-tag__image"
+      loading="eager"
+    >
+  </div>
+
   {%- if images.size > 0 -%}
     {%- comment %} Main Image Container {%- endcomment -%}
     <div class="product-gallery__main">
@@ -73,10 +83,41 @@
 </div>
 
 <style>
+  /* Etiqueta Promocional */
+  .promo-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    max-width: 280px;
+    pointer-events: none;
+  }
+
+  @media (min-width: 750px) {
+    .promo-tag {
+      max-width: 350px;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .promo-tag {
+      max-width: 420px;
+    }
+  }
+
+  .promo-tag__image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
   .product-gallery {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    position: relative;
   }
 
   /* Main Image Container */
