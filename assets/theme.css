@@ -302,6 +302,7 @@ ul, ol {
   justify-content: space-between;
   padding: var(--spacing-3) 0;
   gap: var(--spacing-4);
+  position: relative;
 }
 
 @media (min-width: 1024px) {
@@ -313,11 +314,16 @@ ul, ol {
 .header-logo {
   flex-shrink: 0;
   order: 2;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 @media (min-width: 1024px) {
   .header-logo {
     order: 1;
+    position: static;
+    transform: none;
   }
 }
 
@@ -435,6 +441,11 @@ ul, ol {
   padding: var(--spacing-2);
   color: var(--color-brand-white);
   transition: color var(--transition-base);
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-icon:hover {
@@ -458,10 +469,15 @@ ul, ol {
 }
 
 .mobile-menu-toggle {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--spacing-2);
   color: var(--color-brand-white);
   order: 1;
+  min-width: 48px;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (min-width: 1024px) {
@@ -713,15 +729,50 @@ ul, ol {
   object-position: center;
 }
 
-/* Mobile-specific adjustments */
+/* Mobile-specific adjustments - Show full image without cropping */
 @media (max-width: 749px) {
   .hero {
-    height: 70vh;
-    min-height: 500px;
+    height: auto;
+    min-height: unset;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    position: relative;
+  }
+
+  .hero-background {
+    background: var(--color-brand-black);
+    position: relative;
+    display: block;
+    height: auto;
+  }
+
+  .hero-background picture {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .hero-background img {
+    object-fit: contain;
+    object-position: center;
+    height: auto;
+    min-height: unset;
+    max-height: unset;
+    width: 100%;
+    display: block;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
   }
 
   .hero-content {
     padding: var(--spacing-6) var(--spacing-4);
+    position: absolute;
+    bottom: var(--spacing-8);
+    left: 0;
+    right: 0;
   }
 
   .hero-title {
@@ -732,6 +783,22 @@ ul, ol {
   .hero-badge {
     font-size: 0.75rem;
     padding: 6px 12px;
+  }
+
+  /* Hide scroll indicator on mobile */
+  .scroll-indicator {
+    display: none !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 374px) {
+  .hero-title {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+  }
+
+  .hero-content {
+    bottom: var(--spacing-4);
   }
 }
 
@@ -820,15 +887,16 @@ ul, ol {
 }
 
 /* ============================================
-   7. BUTTONS
+   7. BUTTONS - Mobile-First Optimized
    ============================================ */
 
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: var(--spacing-3) var(--spacing-8);
-  font-size: var(--font-size-sm);
+  padding: var(--spacing-4) var(--spacing-8);
+  min-height: 48px;
+  font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   text-transform: uppercase;
   letter-spacing: var(--letter-spacing-wider);
@@ -836,6 +904,15 @@ ul, ol {
   transition: all var(--transition-base);
   cursor: pointer;
   border: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (min-width: 768px) {
+  .btn {
+    padding: var(--spacing-3) var(--spacing-8);
+    font-size: var(--font-size-sm);
+  }
 }
 
 .btn-primary {
@@ -936,15 +1013,24 @@ ul, ol {
   top: var(--spacing-2);
   right: var(--spacing-2);
   z-index: 10;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(16px);
   border-radius: var(--radius-full);
   transition: all var(--transition-base);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@media (min-width: 768px) {
+  .product-card-wishlist {
+    width: 40px;
+    height: 40px;
+  }
 }
 
 .product-card-wishlist:hover {
@@ -981,13 +1067,20 @@ ul, ol {
 }
 
 .product-card-content {
-  padding: var(--spacing-3);
+  padding: var(--spacing-4);
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  gap: var(--spacing-2);
+  gap: var(--spacing-3);
   align-items: center;
   text-align: center;
+}
+
+@media (min-width: 768px) {
+  .product-card-content {
+    padding: var(--spacing-3);
+    gap: var(--spacing-2);
+  }
 }
 
 .product-card-name {
@@ -1452,4 +1545,212 @@ ul, ol {
 .text-mobile-sm { font-size: 0.75rem; }  /* 12px */
 .text-mobile-base { font-size: 0.875rem; } /* 14px */
 .text-mobile-lg { font-size: 1rem; }     /* 16px */
+
+/* ============================================
+   17. MOBILE-FIRST OPTIMIZATIONS (Impact-Inspired)
+   ============================================ */
+
+/* Touch Optimization - Remove tap highlight on all interactive elements */
+a, button, input, select, textarea, .clickable {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* Smooth scrolling for better mobile UX */
+html {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Prevent zoom on input focus (iOS) */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Thumb Zone Optimization - Easy reach areas */
+@media (max-width: 768px) {
+  /* Primary actions at bottom (thumb-friendly) */
+  .product-card-content {
+    padding-bottom: var(--spacing-5);
+  }
+  
+  /* Increase tap targets for small elements */
+  .header-icon svg,
+  .mobile-menu-toggle svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Better spacing for clickable lists */
+  .mobile-menu-list > li {
+    margin-bottom: var(--spacing-3);
+  }
+}
+
+/* Performance - GPU Acceleration for animations */
+.product-card,
+.header,
+.btn,
+.mobile-menu {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Lazy Loading - Native browser support */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"][src] {
+  opacity: 1;
+}
+
+/* Touch-friendly form elements */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  input[type="search"],
+  textarea,
+  select {
+    min-height: 48px;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: 16px;
+  }
+  
+  /* Larger checkboxes and radios */
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    min-height: 24px;
+  }
+}
+
+/* Better touch feedback */
+@media (hover: none) and (pointer: coarse) {
+  .btn:active,
+  .header-icon:active,
+  .product-card:active {
+    transform: scale(0.98);
+  }
+  
+  .product-card:hover {
+    transform: none;
+  }
+  
+  .product-card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Mobile Typography Optimization */
+@media (max-width: 768px) {
+  /* Readable line lengths on mobile */
+  p, li {
+    max-width: 100%;
+    line-height: 1.6;
+  }
+  
+  /* Better heading hierarchy */
+  h1 {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+    line-height: 1.2;
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 6vw, 2rem);
+    line-height: 1.25;
+  }
+  
+  h3 {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    line-height: 1.3;
+  }
+}
+
+/* Swipe-friendly carousels */
+.swiper-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+.swiper-slide {
+  scroll-snap-align: center;
+}
+
+/* Performance - Reduce motion for users who prefer */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Accessibility - Focus visible for keyboard navigation */
+@media (hover: hover) and (pointer: fine) {
+  *:focus-visible {
+    outline: 2px solid var(--color-brand-yellow);
+    outline-offset: 2px;
+  }
+}
+
+/* Mobile Grid Optimization */
+@media (max-width: 768px) {
+  .product-grid {
+    gap: var(--spacing-3);
+  }
+  
+  .league-grid {
+    gap: var(--spacing-3);
+  }
+}
+
+/* Safe Area Insets (iPhone notch, etc) */
+@supports (padding: max(0px)) {
+  .header,
+  .footer,
+  .mobile-menu {
+    padding-left: max(var(--spacing-4), env(safe-area-inset-left));
+    padding-right: max(var(--spacing-4), env(safe-area-inset-right));
+  }
+  
+  .mobile-menu {
+    padding-bottom: max(var(--spacing-6), env(safe-area-inset-bottom));
+  }
+}
+
+/* Loading Performance - Content Visibility */
+.product-card,
+.league-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
+/* Mobile Menu Optimization */
+@media (max-width: 1024px) {
+  .mobile-menu-list > li > a,
+  .mobile-menu-dropdown-toggle {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Better contrast for mobile readability */
+@media (max-width: 768px) and (prefers-contrast: more) {
+  .hero-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.5) 40%, transparent 70%);
+  }
+}
 

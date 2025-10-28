@@ -1,0 +1,237 @@
+<!--
+  Section: Collection Grid
+  Descrição: Banner grande + Grid de produtos (sem carrossel)
+  Estilo: Imagem featured em destaque + Cards centralizados
+-->
+
+<style>
+  /* MOBILE FIRST */
+  .collection-grid {
+    padding: 0;
+    background: #000000;
+  }
+
+  /* Featured Image Banner - Com Espaçamento e Cantos Arredondados */
+  .collection-grid__banner {
+    width: 100%;
+    position: relative;
+    margin-bottom: 60px;
+    padding: 0 16px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+
+  .collection-grid__banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .collection-grid__banner {
+      padding: 0 24px;
+      border-radius: 28px;
+    }
+    
+    .collection-grid__banner img {
+      border-radius: 28px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .collection-grid__banner {
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 24px;
+    }
+  }
+
+  .collection-grid__container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  .collection-grid__products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .collection-grid__cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .collection-grid__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 2px solid #DAF10D;
+    color: #DAF10D;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    cursor: pointer;
+    min-height: 48px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .collection-grid__button:hover {
+    background: #DAF10D;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(218, 241, 13, 0.3);
+  }
+
+  .collection-grid__button svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-grid__button:hover svg {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 750px) {
+    .collection-grid__container {
+      padding: 0 24px 80px;
+    }
+
+    .collection-grid__products {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .collection-grid__cta {
+      margin-top: 60px;
+    }
+
+    .collection-grid__button {
+      font-size: 1rem;
+      padding: 1.25rem 2.5rem;
+    }
+  }
+</style>
+
+<div class="collection-grid" data-section-id="{{ section.id }}">
+  {%- if section.settings.show_section -%}
+    {%- comment -%} Banner da Coleção - Imagem em Destaque {%- endcomment -%}
+    {%- if section.settings.featured_image -%}
+      <div class="collection-grid__banner">
+        <img 
+          src="{{ section.settings.featured_image | image_url: width: 2000 }}" 
+          srcset="
+            {{ section.settings.featured_image | image_url: width: 750 }} 750w,
+            {{ section.settings.featured_image | image_url: width: 1100 }} 1100w,
+            {{ section.settings.featured_image | image_url: width: 1500 }} 1500w,
+            {{ section.settings.featured_image | image_url: width: 2000 }} 2000w
+          "
+          sizes="100vw"
+          alt="{{ section.settings.title }}"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="collection-grid__container">
+      <div class="collection-grid__products">
+        {%- assign collection = collections[section.settings.collection] -%}
+        {%- if collection -%}
+          {%- for product in collection.products limit: section.settings.products_to_show -%}
+            {%- render 'product-card', product: product -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- comment -%} Placeholder se coleção não existir {%- endcomment -%}
+          <p style="color: #888; text-align: center; grid-column: 1/-1;">
+            Selecione uma coleção nas configurações da seção
+          </p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_view_all and collection -%}
+        <div class="collection-grid__cta">
+          <a href="{{ collection.url }}" class="collection-grid__button">
+            Ver toda la colección
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </a>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Grid",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show Section",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "featured_image",
+      "label": "Featured Background Image",
+      "info": "Imagem de fundo da seção (aparece com opacidade 15%)"
+    },
+    {
+      "type": "text",
+      "id": "emoji",
+      "label": "Emoji",
+      "default": "⚽"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Discover our latest products"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 4,
+      "max": 16,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View All' button",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Grid"
+    }
+  ]
+}
+{% endschema %}
+

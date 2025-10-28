@@ -25,7 +25,7 @@
         "subtitle": "Lo Más Vendido",
         "title_prefix": "NUESTROS",
         "title_highlight": "BEST SELLERS",
-        "description": "Calidad premium 1:1. Réplicas idénticas fabricadas en las mismas fábricas que las grandes marcas.",
+        "description": "",
         "collection": "best-sellers",
         "products_to_show": 8,
         "show_view_all_button": true,
@@ -54,18 +54,17 @@
       }
     },
     "collection_carousel_UF3VbC": {
-      "type": "collection-carousel",
-      "name": "Collection Carousel",
+      "type": "collection-grid",
+      "name": "Argentina Legends",
       "settings": {
         "show_section": true,
         "collection": "argentina-legends",
         "featured_image": "shopify://shop_images/replicate-prediction-ag1ydm19gxrma0ct47vtkppz5g.jpg",
         "emoji": "⚽",
-        "title": "Featured Collection",
-        "subtitle": "Discover our latest products",
+        "title": "ARGENTINA LEGENDS",
+        "subtitle": "Las camisetas más icónicas de la selección argentina",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "league-collections": {
@@ -80,7 +79,7 @@
       }
     },
     "premier-league-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "premier-league",
@@ -89,12 +88,11 @@
         "title": "PREMIER LEAGUE",
         "subtitle": "Las camisetas más icónicas de la liga inglesa",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "la-liga-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "la-liga",
@@ -103,12 +101,11 @@
         "title": "LA LIGA",
         "subtitle": "Los clásicos del fútbol español",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "serie-a-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "serie-a",
@@ -117,12 +114,11 @@
         "title": "SERIE A",
         "subtitle": "Elegancia italiana en cada camiseta",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "bundesliga-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "bundesliga",
@@ -131,12 +127,11 @@
         "title": "BUNDESLIGA",
         "subtitle": "La potencia del fútbol alemán",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "ligue-1-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "ligue-1",
@@ -145,12 +140,11 @@
         "title": "LIGUE 1",
         "subtitle": "El estilo francés en tu camiseta",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "long-sleeve-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "long-sleeve",
@@ -159,12 +153,11 @@
         "title": "LONG SLEEVE",
         "subtitle": "Camisetas de manga larga para todos los estilos",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "retro-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "retro",
@@ -173,12 +166,11 @@
         "title": "RETRO",
         "subtitle": "Revive la nostalgia del fútbol clásico",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "national-teams-carousel": {
-      "type": "collection-carousel",
+      "type": "collection-grid",
       "settings": {
         "show_section": true,
         "collection": "national-teams",
@@ -187,8 +179,7 @@
         "title": "NATIONAL TEAMS",
         "subtitle": "Representa tu país con orgullo",
         "products_to_show": 8,
-        "show_view_all": true,
-        "enable_background_effects": true
+        "show_view_all": true
       }
     },
     "faq-home": {

@@ -19,6 +19,13 @@
             "
             sizes="100vw"
           >
+        {%- else -%}
+          {%- comment -%} Fallback to asset image for mobile {%- endcomment -%}
+          <source
+            media="(max-width: 749px)"
+            srcset="{{ 'hero-mobile-banner.jpeg' | asset_url }}"
+            sizes="100vw"
+          >
         {%- endif -%}
 
         {%- comment -%} Tablet image (for screens 750px to 989px) {%- endcomment -%}
