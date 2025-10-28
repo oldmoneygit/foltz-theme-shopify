@@ -300,14 +300,16 @@ ul, ol {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-3) 0;
-  gap: var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-2);
+  gap: var(--spacing-2);
   position: relative;
 }
 
 @media (min-width: 1024px) {
   .header-top {
     justify-content: center;
+    padding: var(--spacing-3) 0;
+    gap: var(--spacing-4);
   }
 }
 
