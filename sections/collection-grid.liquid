@@ -39,21 +39,22 @@
     border-radius: 20px;
   }
 
-  /* Desktop: Image ao lado */
+  /* Desktop: Image ao lado - Menor para caber 4 produtos */
   @media (min-width: 1024px) {
     .collection-grid__wrapper {
       padding: 80px 24px;
+      max-width: 1600px;
     }
 
     .collection-grid__content {
       flex-direction: row;
-      gap: 32px;
+      gap: 24px;
       align-items: flex-start;
     }
     
     .collection-grid__banner {
-      flex: 0 0 400px;
-      max-width: 400px;
+      flex: 0 0 280px;
+      max-width: 280px;
       border-radius: 24px;
       position: sticky;
       top: 100px;
@@ -65,9 +66,20 @@
   }
 
   @media (min-width: 1280px) {
+    .collection-grid__wrapper {
+      max-width: 1800px;
+    }
+
     .collection-grid__banner {
-      flex: 0 0 500px;
-      max-width: 500px;
+      flex: 0 0 320px;
+      max-width: 320px;
+    }
+  }
+
+  @media (min-width: 1400px) {
+    .collection-grid__banner {
+      flex: 0 0 350px;
+      max-width: 350px;
     }
   }
 
