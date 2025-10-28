@@ -10,7 +10,7 @@
 {
   "general": {
     "search": {
-      "placeholder": "Buscar camisas...",
+      "placeholder": "Buscar camisetas...",
       "submit": "Buscar"
     },
     "cart": {
@@ -34,7 +34,7 @@
       "pages": "Páginas",
       "articles": "Artículos",
       "no_results_title": "Sin resultados",
-      "no_results_message": "No se encontraron resultados para tu búsqueda. Intentá con otros términos o explorá nuestros productos.",
+      "no_results_message": "No se encontraron resultados para tu búsqueda. Probá con otros términos o explorá nuestros productos.",
       "view_all": "Ver Todos los Productos",
       "search_title": "Comenzá tu búsqueda",
       "search_message": "Usá el buscador para encontrar tus camisetas favoritas"
