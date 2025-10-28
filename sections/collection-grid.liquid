@@ -11,12 +11,23 @@
     background: #000000;
   }
 
-  /* Featured Image Banner - Com Espaçamento e Cantos Arredondados */
+  /* Layout Container - Side by Side no Desktop */
+  .collection-grid__wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 60px 16px;
+  }
+
+  .collection-grid__content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* Featured Image - Mobile: Top, Desktop: Left Side */
   .collection-grid__banner {
     width: 100%;
     position: relative;
-    margin-bottom: 60px;
-    padding: 0 16px;
     overflow: hidden;
     border-radius: 20px;
   }
@@ -28,30 +39,41 @@
     border-radius: 20px;
   }
 
-  @media (min-width: 768px) {
+  /* Desktop: Image ao lado */
+  @media (min-width: 1024px) {
+    .collection-grid__wrapper {
+      padding: 80px 24px;
+    }
+
+    .collection-grid__content {
+      flex-direction: row;
+      gap: 32px;
+      align-items: flex-start;
+    }
+    
     .collection-grid__banner {
-      padding: 0 24px;
-      border-radius: 28px;
+      flex: 0 0 400px;
+      max-width: 400px;
+      border-radius: 24px;
+      position: sticky;
+      top: 100px;
     }
     
     .collection-grid__banner img {
-      border-radius: 28px;
+      border-radius: 24px;
     }
   }
 
-  @media (min-width: 1400px) {
+  @media (min-width: 1280px) {
     .collection-grid__banner {
-      max-width: 1400px;
-      margin-left: auto;
-      margin-right: auto;
-      padding: 0 24px;
+      flex: 0 0 500px;
+      max-width: 500px;
     }
   }
 
   .collection-grid__container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 16px 60px;
+    flex: 1;
+    min-width: 0;
   }
 
   .collection-grid__products {
@@ -125,51 +147,55 @@
 
 <div class="collection-grid" data-section-id="{{ section.id }}">
   {%- if section.settings.show_section -%}
-    {%- comment -%} Banner da Coleção - Imagem em Destaque {%- endcomment -%}
-    {%- if section.settings.featured_image -%}
-      <div class="collection-grid__banner">
-        <img 
-          src="{{ section.settings.featured_image | image_url: width: 2000 }}" 
-          srcset="
-            {{ section.settings.featured_image | image_url: width: 750 }} 750w,
-            {{ section.settings.featured_image | image_url: width: 1100 }} 1100w,
-            {{ section.settings.featured_image | image_url: width: 1500 }} 1500w,
-            {{ section.settings.featured_image | image_url: width: 2000 }} 2000w
-          "
-          sizes="100vw"
-          alt="{{ section.settings.title }}"
-          loading="lazy"
-        >
-      </div>
-    {%- endif -%}
-
-    <div class="collection-grid__container">
-      <div class="collection-grid__products">
-        {%- assign collection = collections[section.settings.collection] -%}
-        {%- if collection -%}
-          {%- for product in collection.products limit: section.settings.products_to_show -%}
-            {%- render 'product-card', product: product -%}
-          {%- endfor -%}
-        {%- else -%}
-          {%- comment -%} Placeholder se coleção não existir {%- endcomment -%}
-          <p style="color: #888; text-align: center; grid-column: 1/-1;">
-            Selecione uma coleção nas configurações da seção
-          </p>
+    <div class="collection-grid__wrapper">
+      <div class="collection-grid__content">
+        {%- comment -%} Banner da Coleção - Mobile: Top, Desktop: Left Side {%- endcomment -%}
+        {%- if section.settings.featured_image -%}
+          <div class="collection-grid__banner">
+            <img 
+              src="{{ section.settings.featured_image | image_url: width: 2000 }}" 
+              srcset="
+                {{ section.settings.featured_image | image_url: width: 750 }} 750w,
+                {{ section.settings.featured_image | image_url: width: 1100 }} 1100w,
+                {{ section.settings.featured_image | image_url: width: 1500 }} 1500w,
+                {{ section.settings.featured_image | image_url: width: 2000 }} 2000w
+              "
+              sizes="(min-width: 1024px) 500px, 100vw"
+              alt="{{ section.settings.title }}"
+              loading="lazy"
+            >
+          </div>
         {%- endif -%}
-      </div>
 
-      {%- if section.settings.show_view_all and collection -%}
-        <div class="collection-grid__cta">
-          <a href="{{ collection.url }}" class="collection-grid__button">
-            Ver toda la colección
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </a>
+        <div class="collection-grid__container">
+          <div class="collection-grid__products">
+            {%- assign collection = collections[section.settings.collection] -%}
+            {%- if collection -%}
+              {%- for product in collection.products limit: section.settings.products_to_show -%}
+                {%- render 'product-card', product: product -%}
+              {%- endfor -%}
+            {%- else -%}
+              {%- comment -%} Placeholder se coleção não existir {%- endcomment -%}
+              <p style="color: #888; text-align: center; grid-column: 1/-1;">
+                Selecione uma coleção nas configurações da seção
+              </p>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.show_view_all and collection -%}
+            <div class="collection-grid__cta">
+              <a href="{{ collection.url }}" class="collection-grid__button">
+                Ver toda la colección
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </a>
+            </div>
+          {%- endif -%}
         </div>
-      {%- endif -%}
-    {%- endif -%}
-  </div>
+      </div>
+    </div>
+  {%- endif -%}
 </div>
 
 {% schema %}
