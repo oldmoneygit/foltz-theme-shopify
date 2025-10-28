@@ -25,21 +25,32 @@
     {% render 'icon-heart', size: 18 %}
   </button>
 
-  <!-- Product Image -->
+  <!-- Product Image - Optimized Loading -->
   <div class="product-card-image">
     {%- if product.featured_image -%}
       <img
         src="{{ product.featured_image | img_url: '600x' }}"
-        alt="{{ product.featured_image.alt | escape }}"
+        srcset="
+          {{ product.featured_image | img_url: '300x' }} 300w,
+          {{ product.featured_image | img_url: '400x' }} 400w,
+          {{ product.featured_image | img_url: '600x' }} 600w,
+          {{ product.featured_image | img_url: '800x' }} 800w
+        "
+        sizes="(min-width: 1400px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 33vw, 50vw"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
         loading="lazy"
+        decoding="async"
         width="600"
         height="800"
+        class="product-card-image__img"
       >
     {%- else -%}
       <img
         src="{{ 'product-placeholder.png' | asset_url }}"
         alt="{{ product.title | escape }}"
         loading="lazy"
+        decoding="async"
+        class="product-card-image__img"
       >
     {%- endif -%}
   </div>

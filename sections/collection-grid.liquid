@@ -82,6 +82,27 @@
     gap: 12px;
   }
 
+  @media (min-width: 768px) {
+    .collection-grid__products {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .collection-grid__products {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .collection-grid__products {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+  }
+
   .collection-grid__cta {
     text-align: center;
     margin-top: 40px;
