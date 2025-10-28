@@ -1052,6 +1052,22 @@ ul, ol {
   }
 }
 
+/* Mobile price adjustments - reduce size significantly */
+@media (max-width: 767px) {
+  .product-card-price-regular {
+    font-size: var(--font-size-xs);
+  }
+
+  .product-card-price-sale {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .product-card-promo span {
+    font-size: 9px;
+  }
+}
+
 /* ============================================
    9. FORMS
    ============================================ */
