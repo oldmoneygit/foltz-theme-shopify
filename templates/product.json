@@ -171,6 +171,7 @@
         },
         "review_HbUqMb": {
           "type": "review",
+          "disabled": true,
           "settings": {
             "customer_name": "Mateo V",
             "rating": 5,
