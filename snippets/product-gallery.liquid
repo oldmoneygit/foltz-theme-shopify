@@ -107,7 +107,13 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s ease;
+    opacity: 1;
+  }
+
+  /* Classe para fade durante troca de imagem */
+  .product-gallery__main-image img.transitioning {
+    opacity: 0;
   }
 
   .product-gallery__main-image:hover img {
@@ -338,17 +344,27 @@
     // Update current index
     currentIndex = index;
 
-    // Update main image
+    // Get new image URL
     const thumbnail = thumbnails[index];
     const imageUrl = thumbnail.dataset.imageUrl;
-    mainImage.src = imageUrl;
+
+    // Smooth fade transition
+    mainImage.classList.add('transitioning');
+    
+    setTimeout(() => {
+      // Update image source
+      mainImage.src = imageUrl;
+      
+      // Fade back in
+      mainImage.classList.remove('transitioning');
+    }, 200); // Half of the transition duration
 
     // Update counter
     if (currentIndexDisplay) {
       currentIndexDisplay.textContent = index + 1;
     }
 
-    // Update active thumbnail
+    // Update active thumbnail with smooth transition
     thumbnails.forEach((thumb, i) => {
       if (i === index) {
         thumb.classList.add('active');
