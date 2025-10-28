@@ -242,7 +242,6 @@
     },
     "contacto_Lck8mX": {
       "type": "contacto",
-      "disabled": true,
       "name": "Contacto",
       "settings": {}
     }
